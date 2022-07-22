@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WorksiteFormFragment">
+
+    <TextView
+        android:id="@+id/worksiteform_tv_workNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WorkName"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_workName"
+        app:layout_constraintStart_toStartOf="@+id/worksiteform_et_workName" />
+
+    <EditText
+        android:id="@+id/worksiteform_et_workName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:ems="15"
+        android:hint="WorkName"
+        android:inputType="textEmailAddress"
+        android:minHeight="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/worksiteform_tv_startDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Date"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_startDate"
+        app:layout_constraintStart_toStartOf="@+id/worksiteform_et_startDate" />
+
+    <EditText
+        android:id="@+id/worksiteform_et_startDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="15"
+        android:hint="StartDate"
+        android:minHeight="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/worksiteform_et_workName"/>
+
+    <TextView
+        android:id="@+id/worksiteform_tv_lastDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Date"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_lastDate"
+        app:layout_constraintStart_toStartOf="@+id/worksiteform_et_lastDate"/>
+
+    <EditText
+        android:id="@+id/worksiteform_et_lastDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="15"
+        android:hint="StartDate"
+        android:minHeight="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/worksiteform_et_startDate"/>
+
+    <TextView
+        android:id="@+id/worksiteform_tv_locationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_location"
+        app:layout_constraintStart_toStartOf="@+id/worksiteform_et_location" />
+
+    <EditText
+        android:id="@+id/worksiteform_et_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="15"
+        android:hint="Location"
+        android:minHeight="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/worksiteform_et_lastDate"/>
+
+    <Button
+        android:id="@+id/worksitrform_bt_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#000000"
+        android:text="Add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/worksiteform_et_location" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

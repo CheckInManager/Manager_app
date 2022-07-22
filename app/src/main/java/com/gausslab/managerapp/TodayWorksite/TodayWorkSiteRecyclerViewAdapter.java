@@ -2,6 +2,7 @@ package com.gausslab.managerapp.TodayWorksite;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +27,26 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TodayWorkSiteRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder. workName.setText(worksiteList.get(position).getWorkName());
+    }
 
+    @Override
+    public int getItemCount(){ return worksiteList.size();}
+
+    public void setWorksiteList(List<Worksite> newWorksiteList){
+        worksiteList = newWorksiteList;
+        notifyDataSetChanged();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public final TextView workName;
+
+        public ViewHolder(ObjectTodayworksiteBinding binding){
+            super(binding.getRoot());
+            workName = binding.todayworksiteTvWorkName;
+        }
+        @Override
+        public String toString(){return super.toString()+"";}
     }
 }

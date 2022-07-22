@@ -5,7 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.gausslab.managerapp.R;
+import com.gausslab.managerapp.Worksite;
 import com.gausslab.managerapp.databinding.FragmentTodayworksiteBinding;
+
+import java.util.List;
 
 public class TodayWorkSiteFragment extends Fragment {
 
@@ -27,13 +34,8 @@ public class TodayWorkSiteFragment extends Fragment {
     private Button bt_map;
     private Button bt_addWorksite;
 
+    private List<Worksite> todayWorksiteList;
 
-    public static TodayWorkSiteFragment newInstance(String param1, String param2) {
-        TodayWorkSiteFragment fragment = new TodayWorkSiteFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,9 @@ public class TodayWorkSiteFragment extends Fragment {
         bt_addWork = binding.todayworksiteBtAddWorker;
         bt_addNotice = binding.todayworksiteBtAddNotice;
         bt_map = binding.todayworksiteMap;
-        bt_addWorksite=binding.todayworksiteBtAddWorksite;
+        bt_addWorksite = binding.todayworksiteBtAddWorksite;
 
-        init();
+        //init();
 
         View root = binding.getRoot();
         return root;
@@ -62,11 +64,21 @@ public class TodayWorkSiteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        bt_addWorksite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_worksiteFormFragment);
+            }
+        });
     }
 
-    private void init(){
-        //todayWorkSiteViewModel.loadTodayWorksite();
-        //FM
-
+    private void init() {
+        todayWorkSiteViewModel.loadTodayWorksite();
+        todayWorksiteList = todayWorkSiteViewModel.getTodayWorksite();
+        FragmentManager fm = getChildFragmentManager();
+        Fragment myFrag = TodayWorkSiteListFragment.newInstance(1, todayWorksiteList);
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(fl_list.getId(), myFrag);
+        transaction.commit();
     }
 }
