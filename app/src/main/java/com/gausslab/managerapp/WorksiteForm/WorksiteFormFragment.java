@@ -1,4 +1,4 @@
-package com.gausslab.managerapp;
+package com.gausslab.managerapp.WorksiteForm;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -17,14 +17,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.gausslab.managerapp.TodayWorksite.TodayWorkSiteViewModel;
+import com.gausslab.managerapp.R;
+import com.gausslab.managerapp.model.Worksite;
 
 import java.util.Calendar;
 
 public class WorksiteFormFragment extends Fragment {
-    private TodayWorkSiteViewModel todayWorkSiteViewModel;
+    private WorksiteFormViewModel worksiteFormViewModel;
     private DialogInterface.OnCancelListener dateCancelListener;
 
     private EditText et_workName;
@@ -41,7 +41,7 @@ public class WorksiteFormFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        todayWorkSiteViewModel = new ViewModelProvider(this).get(TodayWorkSiteViewModel.class);
+        worksiteFormViewModel = new ViewModelProvider(this).get(WorksiteFormViewModel.class);
     }
 
     @Override
@@ -106,16 +106,18 @@ public class WorksiteFormFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Worksite worksite = new Worksite(et_workName.getText().toString(),et_startDate.getText().toString(),et_lastDate.getText().toString(),et_location.getText().toString());
-                todayWorkSiteViewModel.addWorksite(worksite);
+                worksiteFormViewModel.addWorksite(worksite);
+                worksiteFormViewModel.createQrForWorksite(worksite);
             }
         });
 
-        todayWorkSiteViewModel.addWorksiteSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        worksiteFormViewModel.addWorksiteSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isAdditionalSuccessful) {
                 if(isAdditionalSuccessful){
-                    NavHostFragment.findNavController(WorksiteFormFragment.this).navigate(R.id.action_worksiteFormFragment_to_todayWorkSiteFragment);
-                    todayWorkSiteViewModel.setAddWorksiteSuccess(false);
+                    //여기가 아니라 QR화면을 먼저 가자
+                    // NavHostFragment.findNavController(WorksiteFormFragment.this).navigate(R.id.action_worksiteFormFragment_to_todayWorkSiteFragment);
+                    worksiteFormViewModel.setAddWorksiteSuccess(false);
                 }
             }
         });

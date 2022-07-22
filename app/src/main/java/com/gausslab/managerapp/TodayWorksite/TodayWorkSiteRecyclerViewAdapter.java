@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gausslab.managerapp.Worksite;
+import com.gausslab.managerapp.model.Worksite;
 import com.gausslab.managerapp.databinding.ObjectTodayworksiteBinding;
 
 import java.util.List;

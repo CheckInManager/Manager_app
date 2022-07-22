@@ -1,4 +1,4 @@
-package com.gausslab.managerapp;
+package com.gausslab.managerapp.model;
 
 public class Worksite {
     private String workName;

@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gausslab.managerapp.R;
-import com.gausslab.managerapp.Worksite;
+import com.gausslab.managerapp.model.Worksite;
 
 import java.util.List;
 
@@ -57,6 +57,9 @@ public class TodayWorkSiteListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_todayworksite_list, container, false);
+
+        todayWorkSiteViewModel = new ViewModelProvider(requireActivity()).get(TodayWorkSiteViewModel.class);
+
         if(view instanceof RecyclerView){
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;

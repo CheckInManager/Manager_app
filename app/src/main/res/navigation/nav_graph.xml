@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/worksiteFormFragment"
-        android:name="com.gausslab.managerapp.WorksiteFormFragment"
+        android:name="com.gausslab.managerapp.WorksiteForm.WorksiteFormFragment"
         android:label="fragment_worksiteform"
         tools:layout="@layout/fragment_worksiteform" >
         <action

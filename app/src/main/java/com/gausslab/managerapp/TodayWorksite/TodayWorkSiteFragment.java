@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.gausslab.managerapp.R;
-import com.gausslab.managerapp.Worksite;
+import com.gausslab.managerapp.model.Worksite;
 import com.gausslab.managerapp.databinding.FragmentTodayworksiteBinding;
 
 import java.util.List;
@@ -48,6 +48,7 @@ public class TodayWorkSiteFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentTodayworksiteBinding.inflate(inflater, container, false);
+
         fl_list = binding.todayworksiteFlList;
         bt_worksite = binding.todayworksiteBtWorksite;
         bt_addWork = binding.todayworksiteBtAddWorker;
@@ -55,7 +56,7 @@ public class TodayWorkSiteFragment extends Fragment {
         bt_map = binding.todayworksiteMap;
         bt_addWorksite = binding.todayworksiteBtAddWorksite;
 
-        //init();
+        init();
 
         View root = binding.getRoot();
         return root;
@@ -64,12 +65,14 @@ public class TodayWorkSiteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         bt_addWorksite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_worksiteFormFragment);
             }
         });
+
     }
 
     private void init() {

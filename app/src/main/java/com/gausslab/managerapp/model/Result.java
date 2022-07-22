@@ -1,4 +1,4 @@
-package com.gausslab.managerapp;
+package com.gausslab.managerapp.model;
 
 public class Result {
     private Result() {
@@ -39,6 +39,19 @@ public class Result {
 
         public Exception getError() {
             return this.error;
+        }
+    }
+
+    // Loading sub-class
+    public final static class Loading extends Result {
+        private final String message;
+
+        public Loading(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
 }
