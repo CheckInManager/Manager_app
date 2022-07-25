@@ -33,6 +33,8 @@ public class WorksiteFormFragment extends Fragment {
     private EditText et_location;
     private Button bt_add;
 
+    private Worksite worksite;
+
 
     public WorksiteFormFragment() {
 
@@ -105,19 +107,25 @@ public class WorksiteFormFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Worksite worksite = new Worksite(et_workName.getText().toString(),et_startDate.getText().toString(),et_lastDate.getText().toString(),et_location.getText().toString());
+                worksite = new Worksite(et_workName.getText().toString(),et_startDate.getText().toString(),et_lastDate.getText().toString(),et_location.getText().toString());
                 worksiteFormViewModel.addWorksite(worksite);
-                worksiteFormViewModel.createQrForWorksite(worksite);
+            }
+        });
+
+        worksiteFormViewModel.doingWork().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean finish) {
+                if(finish){
+                    worksiteFormViewModel.createQrForWorksite(worksite);
+                }
             }
         });
 
         worksiteFormViewModel.addWorksiteSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isAdditionalSuccessful) {
-                if(isAdditionalSuccessful){
-                    //여기가 아니라 QR화면을 먼저 가자
-                    // NavHostFragment.findNavController(WorksiteFormFragment.this).navigate(R.id.action_worksiteFormFragment_to_todayWorkSiteFragment);
-                    worksiteFormViewModel.setAddWorksiteSuccess(false);
+            public void onChanged(Boolean isAdditionSuccessful) {
+                if(isAdditionSuccessful){
+                    NavHostFragment.findNavController(WorksiteFormFragment.this).navigate(R.id.action_worksiteFormFragment_to_qrEmailFragment);
                 }
             }
         });

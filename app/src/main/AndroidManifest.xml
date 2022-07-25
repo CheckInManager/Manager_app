@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManagerApp"
         tools:targetApi="31">
+        <service
+            android:name=".FileService"
+            android:enabled="true"
+            android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -8,6 +8,7 @@ import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
 
+import com.gausslab.managerapp.dataSource.DataSourceCallback;
 import com.gausslab.managerapp.dataSource.FirebaseDataSource;
 import com.gausslab.managerapp.model.Result;
 
@@ -77,10 +78,9 @@ public class FileService extends Service {
     public File createImageFile(String destination) {
         return createFile(imageStorageDir, destination);
     }
-    public void uploadFileToDatabase(File toSave, String destination, FileServiceCallback<Result<Uri>> callback)
+    public void  uploadFileToDatabase(File toSave, String destination, FileServiceCallback<Result<Uri>> callback)
     {
-        firebaseDataSource.uploadFile(toSave, destination, new FirebaseDataSource.DataSourceCallback<Result<Uri>>()
-        {
+        firebaseDataSource.uploadFile(toSave, destination, new DataSourceCallback<Result<Uri>>(){
             @Override
             public void onComplete(Result result)
             {
@@ -89,8 +89,18 @@ public class FileService extends Service {
         });
     }
 
-    public interface FileServiceCallback<Result> {
-        void onComplete(Result result);
+    public void setFirebaseDataSource(FirebaseDataSource fds)
+    {
+        this.firebaseDataSource = fds;
+    }
+
+    public void setExecutor(Executor e)
+    {
+        executor = e;
+    }
+
+    public interface FileServiceCallback<T> {
+        void onComplete(T result);
     }
 
     public class LocalBinder extends Binder {

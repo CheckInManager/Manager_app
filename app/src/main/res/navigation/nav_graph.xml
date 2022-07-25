@@ -20,7 +20,16 @@
         android:label="fragment_worksiteform"
         tools:layout="@layout/fragment_worksiteform" >
         <action
-            android:id="@+id/action_worksiteFormFragment_to_todayWorkSiteFragment"
+            android:id="@+id/action_worksiteFormFragment_to_qrEmailFragment"
+            app:destination="@id/qrEmailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/qrEmailFragment"
+        android:name="com.gausslab.managerapp.WorksiteForm.QrEmailFragment"
+        android:label="fragment_qremail"
+        tools:layout="@layout/fragment_qremail" >
+        <action
+            android:id="@+id/action_qrEmailFragment_to_todayWorkSiteFragment"
             app:destination="@id/todayWorkSiteFragment" />
     </fragment>
 </navigation>

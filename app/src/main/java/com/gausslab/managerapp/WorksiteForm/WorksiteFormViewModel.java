@@ -11,30 +11,34 @@ import com.gausslab.managerapp.model.Worksite;
 public class WorksiteFormViewModel extends ViewModel {
 
     private UserRepository userRepository = UserRepository.getInstance();
+    private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> addWorksiteSuccess = new MutableLiveData<>(false);
 
-    public void addWorksite(Worksite worksite){
-        userRepository.addWorksite(worksite, result->{
-            if(result instanceof Result.Success){
+    public void addWorksite(Worksite worksite) {
+        userRepository.addWorksite(worksite, result -> {
+            if (result instanceof Result.Success) {
+                doingWork.postValue(true);
+            } else {
+                doingWork.postValue(false);
+            }
+        });
+    }
+
+    public void createQrForWorksite(Worksite toCreate) {
+        userRepository.createQrForWorksite(toCreate, result -> {
+            if (result instanceof Result.Success) {
                 addWorksiteSuccess.postValue(true);
-            } else{
+            } else {
                 addWorksiteSuccess.postValue(false);
             }
         });
     }
 
-    public void createQrForWorksite(Worksite toCreate){
-        userRepository.createQrForWorksite(toCreate, result->{
-           if(result instanceof Result.Success){
-
-           } else{
-
-           }
-        });
+    public LiveData<Boolean> doingWork() {
+        return doingWork;
     }
 
-
-    public LiveData<Boolean> addWorksiteSuccess(){return addWorksiteSuccess;}
-
-    public void setAddWorksiteSuccess(Boolean value){ addWorksiteSuccess.postValue(value);}
+    public LiveData<Boolean> addWorksiteSuccess() {
+        return addWorksiteSuccess;
+    }
 }

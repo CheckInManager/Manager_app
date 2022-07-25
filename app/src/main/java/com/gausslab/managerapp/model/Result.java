@@ -1,6 +1,6 @@
 package com.gausslab.managerapp.model;
 
-public class Result {
+public class Result<T> {
     private Result() {
     }
 

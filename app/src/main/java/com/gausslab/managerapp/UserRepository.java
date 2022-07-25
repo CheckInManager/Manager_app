@@ -3,9 +3,6 @@ package com.gausslab.managerapp;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.gausslab.managerapp.dataSource.DataSource;
 import com.gausslab.managerapp.model.Result;
@@ -16,11 +13,13 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.File;
+import java.util.concurrent.Executor;
 
 public class UserRepository {
     private static volatile UserRepository INSTANCE = new UserRepository();
     private DataSource dataSource;
     private FileService fileService;
+    protected Executor executor;
 
     public static UserRepository getInstance() {
         return INSTANCE;
@@ -39,13 +38,19 @@ public class UserRepository {
         generateWorksiteQr(toAdd, new UserRepositoryCallback<Result>() {
             @Override
             public void onComplete(Result result) {
-
+                callback.onComplete(result);
             }
         });
     }
 
     private void generateWorksiteQr(Worksite worksite, UserRepositoryCallback<Result> callback) {
         String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorkName();
+        generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorkName()), new UserRepositoryCallback<Result>() {
+            @Override
+            public void onComplete(Result result) {
+                callback.onComplete(result);
+            }
+        });
 
     }
 
@@ -77,16 +82,24 @@ public class UserRepository {
                     }
                 }
             });
-        }catch(WriterException e){
-                e.printStackTrace();
-            }
-        }
-
-        public void setDataSource (DataSource ds){
-            this.dataSource = ds;
-        }
-
-        public interface UserRepositoryCallback<Result> {
-            void onComplete(Result result);
+        } catch (WriterException e) {
+            e.printStackTrace();
         }
     }
+
+    public void setExecutor(Executor exec)
+    {
+        this.executor = exec;
+    }
+
+    public void setDataSource(DataSource ds) {
+        this.dataSource = ds;
+    }
+
+    public void setFileService(FileService fs){this.fileService = fs;}
+
+
+    public interface UserRepositoryCallback<Result> {
+        void onComplete(Result result);
+    }
+}
