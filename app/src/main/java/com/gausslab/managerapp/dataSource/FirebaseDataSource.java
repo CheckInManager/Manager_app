@@ -17,6 +17,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -90,6 +91,49 @@ public class FirebaseDataSource implements DataSource {
             public void onFailure(@NonNull Exception e) {
                 callback.onComplete(new Result.Error(e));
                 Log.d("DEBUG", "DataSource: storeImage() failed!");
+            }
+        });
+    }
+
+    public void downloadFile(String downloadPath, File localFile, DataSourceCallback<Result> callback)
+    {
+        Log.d("DEBUG:DataSource", "downloadFile: " + downloadPath);
+        StorageReference ref = firebaseStorage.getReference().child(downloadPath);
+        ref.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task)
+            {
+                if(task.isSuccessful())
+                {
+                    callback.onComplete(new Result.Success<File>(localFile));
+                }
+                else
+                {
+                    callback.onComplete(new Result.Error(task.getException()));
+                }
+            }
+        });
+    }
+
+    public void getDocumentsFromCollection(String collectionName, DataSourceListenerCallback<Result> callback)
+    {
+        Log.d("DEBUG:DataSource", "getDocumentsFromCollection");
+        db.collection(collectionName).addSnapshotListener(new EventListener<QuerySnapshot>()
+        {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
+            {
+                if(error == null)
+                {
+                    List<DocumentSnapshot> documentsList = value.getDocuments();
+                    Log.d("DEBUG:DataSource", "getDocumentsFromCollection: Update callback");
+                    callback.onUpdate(new Result.Success<List<DocumentSnapshot>>(documentsList));
+                }
+                else
+                {
+                    callback.onUpdate(new Result.Error(error));
+                }
             }
         });
     }

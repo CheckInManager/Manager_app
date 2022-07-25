@@ -2,17 +2,27 @@ package com.gausslab.managerapp;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.gausslab.managerapp.dataSource.DataSource;
+import com.gausslab.managerapp.dataSource.DataSourceListenerCallback;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 public class UserRepository {
@@ -20,6 +30,11 @@ public class UserRepository {
     private DataSource dataSource;
     private FileService fileService;
     protected Executor executor;
+    private final MutableLiveData<Boolean> worksiteListUpdated = new MutableLiveData<>(false);
+
+    private Map<String, Drawable> worksiteQrDrawableMap = new HashMap<String, Drawable>();
+    private final Map<String, MutableLiveData<Boolean>> qrLoadedMap = new HashMap<>();
+    private Map<String, Worksite> worksiteMap = new HashMap<>();
 
     public static UserRepository getInstance() {
         return INSTANCE;
@@ -86,6 +101,61 @@ public class UserRepository {
             e.printStackTrace();
         }
     }
+
+    public List<Worksite> getWorksiteList(){return new ArrayList<Worksite>(worksiteMap.values());}
+
+    public Worksite getWorksite(String worksiteName){
+        if(worksiteMap.containsKey(worksiteName))
+            return worksiteMap.get(worksiteName);
+        return null;
+    }
+
+    public Drawable getQrDrawable(String workName){
+        return worksiteQrDrawableMap.get(workName);
+    }
+
+    public void loadQrDrawableForDevice(String workname, UserRepositoryCallback<Result> callback){
+        callback.onComplete(new Result.Loading("Loading QR drawable for : "+workname));
+        fileService.getImageDrawable(App.getWorksiteQrImagePath(workname), new FileService.FileServiceCallback<Result<Drawable>>(){
+           @Override
+           public void onComplete(Result result){
+               if(result instanceof Result.Success){
+                   Drawable drawable = ((Result.Success<Drawable>)result).getData();
+                   worksiteQrDrawableMap.put(workname, drawable);
+                   qrLoadedMap. get(workname).postValue(true);
+               }
+               callback.onComplete(result);
+           }
+        });
+    }
+    private void loadWorksiteList(UserRepositoryCallback<Result> callback){
+        dataSource.getDocumentsFromCollection("worksite", new DataSourceListenerCallback<Result>() {
+            @Override
+            public void onUpdate(Result result) {
+                if (result instanceof Result.Success) {
+                    List<DocumentSnapshot> snapshots = ((Result.Success<List<DocumentSnapshot>>) result).getData();
+                    Map<String, Worksite> newMap = new HashMap<>();
+                    for (DocumentSnapshot doc : snapshots) {
+                        Worksite toAdd = new Worksite(doc.getString("workName"),
+                                doc.getString("startDate"),
+                                doc.getString("lastDate"),
+                                doc.getString("location"));
+                        newMap.put(toAdd.getWorkName(), toAdd);
+                    }
+                    worksiteMap = newMap;
+                    worksiteListUpdated.postValue(true);
+                } else {
+                }
+            }
+        });
+    }
+
+    public LiveData<Boolean> isQrLoaded(String workName) {
+        if (!qrLoadedMap.containsKey(workName))
+            qrLoadedMap.put(workName, new MutableLiveData<>(false));
+        return qrLoadedMap.get(workName);
+    }
+
 
     public void setExecutor(Executor exec)
     {

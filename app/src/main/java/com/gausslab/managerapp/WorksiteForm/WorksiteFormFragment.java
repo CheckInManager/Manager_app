@@ -125,7 +125,9 @@ public class WorksiteFormFragment extends Fragment {
             @Override
             public void onChanged(Boolean isAdditionSuccessful) {
                 if(isAdditionSuccessful){
-                    NavHostFragment.findNavController(WorksiteFormFragment.this).navigate(R.id.action_worksiteFormFragment_to_qrEmailFragment);
+                    WorksiteFormFragmentDirections.ActionWorksiteFormFragmentToQrEmailFragment action = WorksiteFormFragmentDirections.actionWorksiteFormFragmentToQrEmailFragment();
+                    action.setWorksiteName(et_workName.getText().toString());
+                    NavHostFragment.findNavController(WorksiteFormFragment.this).navigate(action);
                 }
             }
         });

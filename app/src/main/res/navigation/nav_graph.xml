@@ -28,6 +28,10 @@
         android:name="com.gausslab.managerapp.WorksiteForm.QrEmailFragment"
         android:label="fragment_qremail"
         tools:layout="@layout/fragment_qremail" >
+        <argument
+            android:name="worksiteName"
+            android:defaultValue="worksite"
+            app:argType="string"/>
         <action
             android:id="@+id/action_qrEmailFragment_to_todayWorkSiteFragment"
             app:destination="@id/todayWorkSiteFragment" />

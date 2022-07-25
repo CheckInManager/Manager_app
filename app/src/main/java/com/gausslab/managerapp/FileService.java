@@ -3,10 +3,12 @@ package com.gausslab.managerapp;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.gausslab.managerapp.dataSource.DataSourceCallback;
 import com.gausslab.managerapp.dataSource.FirebaseDataSource;
@@ -70,6 +72,51 @@ public class FileService extends Service {
                 } catch (IOException e) {
                     e.printStackTrace();
                     callback.onComplete(new Result.Error(e));
+                }
+            }
+        });
+    }
+
+    public void getImageDrawable(String filePath, FileServiceCallback<Result<Drawable>> callback)
+    {
+        executor.execute(() ->
+        {
+            File file = new File(imageStorageDir, filePath);
+            if(file.exists())
+            {
+                Drawable d = Drawable.createFromPath(file.getAbsolutePath());
+                callback.onComplete(new Result.Success<Drawable>(d));
+            }
+            else
+            {
+                try
+                {
+                    file.getParentFile().mkdirs();
+                    file.createNewFile();
+                    firebaseDataSource.downloadFile(filePath, file, new DataSourceCallback<Result>()
+                    {
+                        @Override
+                        public void onComplete(Result result)
+                        {
+                            if(result instanceof Result.Success)
+                            {
+                                Log.d("DEBUG", "FileService : getImageDrawable() : " + filePath + " was downloaded");
+                                File toReturn = ((Result.Success<File>) result).getData();
+                                callback.onComplete(new Result.Success<Drawable>(Drawable.createFromPath(toReturn.getAbsolutePath())));
+                            }
+                            else
+                            {
+                                Log.d("DEBUG", "FileService : getImageDrawable() : " + filePath + " failed to download");
+                                Log.d("DEBUG", ((Result.Error) result).getError().getMessage());
+                                file.delete();
+                                callback.onComplete(result);
+                            }
+                        }
+                    });
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
                 }
             }
         });

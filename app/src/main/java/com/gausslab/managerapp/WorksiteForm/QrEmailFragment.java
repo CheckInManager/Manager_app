@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.gausslab.managerapp.databinding.FragmentQremailBinding;
 public class QrEmailFragment extends Fragment {
 
     private FragmentQremailBinding binding;
+    private WorksiteFormViewModel worksiteFormViewModel;
 
     private ImageView iv_qr;
     private Button bt_sendEmail;
@@ -29,16 +32,10 @@ public class QrEmailFragment extends Fragment {
     }
 
 
-    public static QrEmailFragment newInstance(String param1, String param2) {
-        QrEmailFragment fragment = new QrEmailFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        worksiteFormViewModel = new ViewModelProvider(this).get(WorksiteFormViewModel.class);
 
     }
 
@@ -49,6 +46,10 @@ public class QrEmailFragment extends Fragment {
         iv_qr = binding.qremailIvQr;
         bt_sendEmail = binding.qreamilBtSendEmail;
         bt_home = binding.qremailBtHome;
+        String worksiteName = QrEmailFragmentArgs.fromBundle(getArguments()).getWorksiteName();
+        worksiteFormViewModel.setCurrWorksite(worksiteName);
+        worksiteFormViewModel.loadDrawables();
+
         View root = binding.getRoot();
         return root;
     }
@@ -56,6 +57,15 @@ public class QrEmailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        worksiteFormViewModel.isQrLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loaded) {
+                if(loaded){
+                    iv_qr.setImageDrawable(worksiteFormViewModel.getQrDrawable());
+                }
+            }
+        });
 
         bt_home.setOnClickListener(new View.OnClickListener() {
             @Override

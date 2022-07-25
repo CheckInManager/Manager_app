@@ -1,5 +1,7 @@
 package com.gausslab.managerapp.WorksiteForm;
 
+import android.graphics.drawable.Drawable;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,6 +15,9 @@ public class WorksiteFormViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
     private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> addWorksiteSuccess = new MutableLiveData<>(false);
+    private LiveData<Boolean> qrLoaded;
+
+    private Worksite currWorksite;
 
     public void addWorksite(Worksite worksite) {
         userRepository.addWorksite(worksite, result -> {
@@ -33,6 +38,27 @@ public class WorksiteFormViewModel extends ViewModel {
             }
         });
     }
+    public void setCurrWorksite(Worksite w){
+        currWorksite = w;
+        qrLoaded = userRepository.isQrLoaded(currWorksite.getWorkName());
+    }
+
+    public void setCurrWorksite(String worksiteName){
+        setCurrWorksite(userRepository.getWorksite(worksiteName));
+    }
+
+    public Drawable getQrDrawable(){
+        return userRepository.getQrDrawable(currWorksite.getWorkName());
+    }
+
+    public void loadDrawables(){
+        userRepository.loadQrDrawableForDevice(currWorksite.getWorkName(), new UserRepository.UserRepositoryCallback<Result>(){
+           @Override
+           public void onComplete(Result result){
+
+           }
+        });
+    }
 
     public LiveData<Boolean> doingWork() {
         return doingWork;
@@ -41,4 +67,6 @@ public class WorksiteFormViewModel extends ViewModel {
     public LiveData<Boolean> addWorksiteSuccess() {
         return addWorksiteSuccess;
     }
+
+    public LiveData<Boolean> isQrLoaded(){return  qrLoaded;}
 }

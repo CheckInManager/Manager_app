@@ -7,4 +7,6 @@ public interface DataSource {
     void getTodayWorksite(DataSourceCallback<Result> callback);
 
     void addWorksite(Worksite worksite, DataSourceCallback<Result> callback);
+
+    void getDocumentsFromCollection(String collectionName, DataSourceListenerCallback<Result> callback);
 }
