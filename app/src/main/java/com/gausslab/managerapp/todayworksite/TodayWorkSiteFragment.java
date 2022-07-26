@@ -78,6 +78,7 @@ public class TodayWorkSiteFragment extends Fragment {
     private void init() {
         todayWorkSiteViewModel.loadTodayWorksite();
         todayWorksiteList = todayWorkSiteViewModel.getTodayWorksite();
+
         FragmentManager fm = getChildFragmentManager();
         Fragment myFrag = TodayWorkSiteListFragment.newInstance(1, todayWorksiteList);
         FragmentTransaction transaction = fm.beginTransaction();

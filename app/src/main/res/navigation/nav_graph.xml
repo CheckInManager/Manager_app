@@ -13,10 +13,13 @@
         <action
             android:id="@+id/action_todayWorkSiteFragment_to_worksiteFormFragment"
             app:destination="@id/worksiteFormFragment" />
+        <action
+            android:id="@+id/action_todayWorkSiteFragment_to_checkInWorkdersBySiteFragment"
+            app:destination="@id/checkInWorkdersBySiteFragment" />
     </fragment>
     <fragment
         android:id="@+id/worksiteFormFragment"
-        android:name="com.gausslab.managerapp.worksiteform.WorksiteFormFragment"
+        android:name="com.gausslab.managerapp.addnewworksiteform.AddNewWorksiteFormFragment"
         android:label="fragment_worksiteform"
         tools:layout="@layout/fragment_worksiteform" >
         <action
@@ -35,5 +38,15 @@
         <action
             android:id="@+id/action_qrEmailFragment_to_todayWorkSiteFragment"
             app:destination="@id/todayWorkSiteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkInWorkdersBySiteFragment"
+        android:name="com.gausslab.managerapp.checkinworkerbysite.CheckInWorkersBySiteFragment"
+        android:label="fragment_checkinworkdersbysite"
+        tools:layout="@layout/fragment_checkinworkersbysite">
+        <argument
+            android:name="worksiteName"
+            android:defaultValue="worksite"
+            app:argType="string"/>
     </fragment>
 </navigation>

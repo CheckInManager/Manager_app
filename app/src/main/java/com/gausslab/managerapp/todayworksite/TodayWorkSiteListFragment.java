@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -68,7 +69,20 @@ public class TodayWorkSiteListFragment extends Fragment {
             }else{
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter = new TodayWorkSiteRecyclerViewAdapter(worksiteList, new ViewModelProvider(requireActivity()).get(TodayWorkSiteViewModel.class));
+            adapter = new TodayWorkSiteRecyclerViewAdapter(worksiteList, new ViewModelProvider(requireActivity()).get(TodayWorkSiteViewModel.class), new OnTodayWorksiteContextMenuInteractionListener<Worksite>() {
+                @Override
+                public void onItemClick(Worksite obj) {
+                    String worksiteName = obj.getWorkName();
+                    TodayWorkSiteFragmentDirections.ActionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment action = TodayWorkSiteFragmentDirections.actionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment();
+                    action.setWorksiteName(worksiteName);
+                    NavHostFragment.findNavController(TodayWorkSiteListFragment.this).navigate(action);
+                }
+
+                @Override
+                public void onContextReturnWorksite(Worksite obj) {
+
+                }
+            });
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
         }
