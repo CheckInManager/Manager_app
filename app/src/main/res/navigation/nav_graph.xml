@@ -48,5 +48,18 @@
             android:name="worksiteName"
             android:defaultValue="worksite"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_checkInWorkdersBySiteFragment_to_userInformationFragment"
+            app:destination="@id/userInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userInformationFragment"
+        android:name="com.gausslab.managerapp.UserInformationFragment"
+        android:label="fragment_userinformation"
+        tools:layout="@layout/fragment_userinformation">
+        <argument
+            android:name="phonenum"
+            android:defaultValue="010-0000-0000"
+            app:argType="string"/>
     </fragment>
 </navigation>
