@@ -15,6 +15,8 @@ public class WorksiteFormViewModel extends ViewModel {
     private UserRepository userRepository = UserRepository.getInstance();
     private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> addWorksiteSuccess = new MutableLiveData<>(false);
+
+    private final MutableLiveData<Boolean> dataLoaded = new MutableLiveData<>(false);
     private LiveData<Boolean> qrLoaded;
 
     private Worksite currWorksite;
@@ -60,6 +62,16 @@ public class WorksiteFormViewModel extends ViewModel {
         });
     }
 
+    public void loadWorksiteList(){
+        userRepository.loadWorksiteList();
+        dataLoaded.postValue(true);
+    }
+
+    public void getWorksiteList(){
+        userRepository.getWorksiteList();
+    }
+
+
     public LiveData<Boolean> doingWork() {
         return doingWork;
     }
@@ -69,4 +81,8 @@ public class WorksiteFormViewModel extends ViewModel {
     }
 
     public LiveData<Boolean> isQrLoaded(){return  qrLoaded;}
+
+    public LiveData<Boolean> isDataLoaded() {
+        return dataLoaded;
+    }
 }

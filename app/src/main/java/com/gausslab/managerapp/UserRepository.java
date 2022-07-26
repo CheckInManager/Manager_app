@@ -102,53 +102,48 @@ public class UserRepository {
         }
     }
 
-    public List<Worksite> getWorksiteList(){return new ArrayList<Worksite>(worksiteMap.values());}
+    public List<Worksite> getWorksiteList() {
+        return new ArrayList<Worksite>(worksiteMap.values());
+    }
 
-    public Worksite getWorksite(String worksiteName){
-        if(worksiteMap.containsKey(worksiteName))
+    public Worksite getWorksite(String worksiteName) {
+        if (worksiteMap.containsKey(worksiteName))
             return worksiteMap.get(worksiteName);
         return null;
     }
 
-    public Drawable getQrDrawable(String workName){
+    public Drawable getQrDrawable(String workName) {
         return worksiteQrDrawableMap.get(workName);
     }
 
-    public void loadQrDrawableForDevice(String workname, UserRepositoryCallback<Result> callback){
-        callback.onComplete(new Result.Loading("Loading QR drawable for : "+workname));
-        fileService.getImageDrawable(App.getWorksiteQrImagePath(workname), new FileService.FileServiceCallback<Result<Drawable>>(){
-           @Override
-           public void onComplete(Result result){
-               if(result instanceof Result.Success){
-                   Drawable drawable = ((Result.Success<Drawable>)result).getData();
-                   worksiteQrDrawableMap.put(workname, drawable);
-                   qrLoadedMap. get(workname).postValue(true);
-               }
-               callback.onComplete(result);
-           }
+    public void loadQrDrawableForDevice(String workname, UserRepositoryCallback<Result> callback) {
+        callback.onComplete(new Result.Loading("Loading QR drawable for : " + workname));
+        fileService.getImageDrawable(App.getWorksiteQrImagePath(workname), new FileService.FileServiceCallback<Result<Drawable>>() {
+            @Override
+            public void onComplete(Result result) {
+                if (result instanceof Result.Success) {
+                    Drawable drawable = ((Result.Success<Drawable>) result).getData();
+                    worksiteQrDrawableMap.put(workname, drawable);
+                    qrLoadedMap.get(workname).postValue(true);
+                }
+                callback.onComplete(result);
+            }
         });
     }
-    private void loadWorksiteList(UserRepositoryCallback<Result> callback){
+
+    public void loadWorksiteList(UserRepositoryCallback<Result> callback) {
         dataSource.getDocumentsFromCollection("worksite", new DataSourceListenerCallback<Result>() {
             @Override
             public void onUpdate(Result result) {
                 if (result instanceof Result.Success) {
-                    List<DocumentSnapshot> snapshots = ((Result.Success<List<DocumentSnapshot>>) result).getData();
-                    Map<String, Worksite> newMap = new HashMap<>();
-                    for (DocumentSnapshot doc : snapshots) {
-                        Worksite toAdd = new Worksite(doc.getString("workName"),
-                                doc.getString("startDate"),
-                                doc.getString("lastDate"),
-                                doc.getString("location"));
-                        newMap.put(toAdd.getWorkName(), toAdd);
-                    }
+                    Map<String, Worksite> newMap = ((Result.Success<Map<String, Worksite>>) result).getData();
                     worksiteMap = newMap;
-                    worksiteListUpdated.postValue(true);
-                } else {
                 }
+                callback.onComplete(result);
             }
         });
     }
+
 
     public LiveData<Boolean> isQrLoaded(String workName) {
         if (!qrLoadedMap.containsKey(workName))
@@ -157,8 +152,7 @@ public class UserRepository {
     }
 
 
-    public void setExecutor(Executor exec)
-    {
+    public void setExecutor(Executor exec) {
         this.executor = exec;
     }
 
@@ -166,7 +160,9 @@ public class UserRepository {
         this.dataSource = ds;
     }
 
-    public void setFileService(FileService fs){this.fileService = fs;}
+    public void setFileService(FileService fs) {
+        this.fileService = fs;
+    }
 
 
     public interface UserRepositoryCallback<Result> {

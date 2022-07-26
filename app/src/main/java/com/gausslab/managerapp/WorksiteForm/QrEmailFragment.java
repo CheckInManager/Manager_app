@@ -46,6 +46,9 @@ public class QrEmailFragment extends Fragment {
         iv_qr = binding.qremailIvQr;
         bt_sendEmail = binding.qreamilBtSendEmail;
         bt_home = binding.qremailBtHome;
+
+        worksiteFormViewModel.loadWorksiteList();
+       // worksiteFormViewModel.getWorksiteList();
         String worksiteName = QrEmailFragmentArgs.fromBundle(getArguments()).getWorksiteName();
         worksiteFormViewModel.setCurrWorksite(worksiteName);
         worksiteFormViewModel.loadDrawables();

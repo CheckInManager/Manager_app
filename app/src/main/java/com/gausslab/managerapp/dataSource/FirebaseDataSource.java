@@ -95,44 +95,38 @@ public class FirebaseDataSource implements DataSource {
         });
     }
 
-    public void downloadFile(String downloadPath, File localFile, DataSourceCallback<Result> callback)
-    {
+    public void downloadFile(String downloadPath, File localFile, DataSourceCallback<Result> callback) {
         Log.d("DEBUG:DataSource", "downloadFile: " + downloadPath);
         StorageReference ref = firebaseStorage.getReference().child(downloadPath);
-        ref.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>()
-        {
+        ref.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task)
-            {
-                if(task.isSuccessful())
-                {
+            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()) {
                     callback.onComplete(new Result.Success<File>(localFile));
-                }
-                else
-                {
+                } else {
                     callback.onComplete(new Result.Error(task.getException()));
                 }
             }
         });
     }
 
-    public void getDocumentsFromCollection(String collectionName, DataSourceListenerCallback<Result> callback)
-    {
+    public void getDocumentsFromCollection(String collectionName, DataSourceListenerCallback<Result> callback) {
         Log.d("DEBUG:DataSource", "getDocumentsFromCollection");
-        db.collection(collectionName).addSnapshotListener(new EventListener<QuerySnapshot>()
-        {
+        db.collection(collectionName).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-            {
-                if(error == null)
-                {
-                    List<DocumentSnapshot> documentsList = value.getDocuments();
-                    Log.d("DEBUG:DataSource", "getDocumentsFromCollection: Update callback");
-                    callback.onUpdate(new Result.Success<List<DocumentSnapshot>>(documentsList));
-                }
-                else
-                {
-                    callback.onUpdate(new Result.Error(error));
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error==null){
+                    Map<String, Worksite> newMap = new HashMap<>();
+                    List<Worksite> toReturn = new ArrayList<>();
+                    List<DocumentSnapshot> snaps = value.getDocuments();
+                    for(int i=0;i<snaps.size();i++){
+                        Worksite toAdd = snaps.get(i).toObject(Worksite.class);
+                        toReturn.add(toAdd);
+                        newMap.put(toAdd.getWorkName(),toAdd);
+                    }
+                    callback.onUpdate(new Result.Success<Map<String, Worksite>>(newMap));
+                }else{
+                    callback.onUpdate(new Result.Error(new Exception("error")));
                 }
             }
         });
