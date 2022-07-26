@@ -8,11 +8,10 @@ import android.net.Uri;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.gausslab.managerapp.dataSource.DataSource;
-import com.gausslab.managerapp.dataSource.DataSourceListenerCallback;
+import com.gausslab.managerapp.datasource.DataSource;
+import com.gausslab.managerapp.datasource.DataSourceListenerCallback;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -25,18 +24,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
-public class UserRepository {
-    private static volatile UserRepository INSTANCE = new UserRepository();
+public class WorksiteRepository {
+    private static volatile WorksiteRepository INSTANCE = new WorksiteRepository();
+    private final MutableLiveData<Boolean> worksiteListUpdated = new MutableLiveData<>(false);
     private DataSource dataSource;
     private FileService fileService;
     protected Executor executor;
-    private final MutableLiveData<Boolean> worksiteListUpdated = new MutableLiveData<>(false);
 
     private Map<String, Drawable> worksiteQrDrawableMap = new HashMap<String, Drawable>();
-    private final Map<String, MutableLiveData<Boolean>> qrLoadedMap = new HashMap<>();
     private Map<String, Worksite> worksiteMap = new HashMap<>();
 
-    public static UserRepository getInstance() {
+    public static WorksiteRepository getInstance() {
         return INSTANCE;
     }
 
@@ -59,14 +57,18 @@ public class UserRepository {
     }
 
     private void generateWorksiteQr(Worksite worksite, UserRepositoryCallback<Result> callback) {
-        String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorkName();
-        generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorkName()), new UserRepositoryCallback<Result>() {
+        executor.execute(new Runnable() {
             @Override
-            public void onComplete(Result result) {
-                callback.onComplete(result);
+            public void run() {
+                String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorkName();
+                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorkName()), new UserRepositoryCallback<Result>() {
+                    @Override
+                    public void onComplete(Result result) {
+                        callback.onComplete(result);
+                    }
+                });
             }
         });
-
     }
 
     private void generateWorksiteQr_helper(String toEncode, String localDestinationPath, UserRepositoryCallback<Result> callback) {
@@ -116,22 +118,20 @@ public class UserRepository {
         return worksiteQrDrawableMap.get(workName);
     }
 
-    public void loadQrDrawableForDevice(String workname, UserRepositoryCallback<Result> callback) {
-        callback.onComplete(new Result.Loading("Loading QR drawable for : " + workname));
-        fileService.getImageDrawable(App.getWorksiteQrImagePath(workname), new FileService.FileServiceCallback<Result<Drawable>>() {
+    public void loadQrDrawableForWorksite(String workName, UserRepositoryCallback<Result<Drawable>> callback) {
+        fileService.getImageDrawable(App.getWorksiteQrImagePath(workName), new FileService.FileServiceCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result result) {
                 if (result instanceof Result.Success) {
                     Drawable drawable = ((Result.Success<Drawable>) result).getData();
-                    worksiteQrDrawableMap.put(workname, drawable);
-                    qrLoadedMap.get(workname).postValue(true);
+                    worksiteQrDrawableMap.put(workName, drawable);
                 }
                 callback.onComplete(result);
             }
         });
     }
 
-    public void loadWorksiteList(UserRepositoryCallback<Result> callback) {
+    public void loadWorksiteList() {
         dataSource.getDocumentsFromCollection("worksite", new DataSourceListenerCallback<Result>() {
             @Override
             public void onUpdate(Result result) {
@@ -139,16 +139,8 @@ public class UserRepository {
                     Map<String, Worksite> newMap = ((Result.Success<Map<String, Worksite>>) result).getData();
                     worksiteMap = newMap;
                 }
-                callback.onComplete(result);
             }
         });
-    }
-
-
-    public LiveData<Boolean> isQrLoaded(String workName) {
-        if (!qrLoadedMap.containsKey(workName))
-            qrLoadedMap.put(workName, new MutableLiveData<>(false));
-        return qrLoadedMap.get(workName);
     }
 
 

@@ -10,14 +10,13 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.gausslab.managerapp.dataSource.DataSourceCallback;
-import com.gausslab.managerapp.dataSource.FirebaseDataSource;
+import com.gausslab.managerapp.datasource.DataSourceCallback;
+import com.gausslab.managerapp.datasource.FirebaseDataSource;
 import com.gausslab.managerapp.model.Result;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.Provider;
 import java.util.concurrent.Executor;
 
 public class FileService extends Service {

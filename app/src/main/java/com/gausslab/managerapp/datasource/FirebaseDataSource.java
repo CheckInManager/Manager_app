@@ -1,4 +1,4 @@
-package com.gausslab.managerapp.dataSource;
+package com.gausslab.managerapp.datasource;
 
 import android.net.Uri;
 import android.util.Log;

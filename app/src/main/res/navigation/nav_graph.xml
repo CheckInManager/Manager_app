@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/todayWorkSiteFragment"
-        android:name="com.gausslab.managerapp.TodayWorksite.TodayWorkSiteFragment"
+        android:name="com.gausslab.managerapp.todayworksite.TodayWorkSiteFragment"
         android:label="fragment_todayworksite"
         tools:layout="@layout/fragment_todayworksite" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/worksiteFormFragment"
-        android:name="com.gausslab.managerapp.WorksiteForm.WorksiteFormFragment"
+        android:name="com.gausslab.managerapp.worksiteform.WorksiteFormFragment"
         android:label="fragment_worksiteform"
         tools:layout="@layout/fragment_worksiteform" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/qrEmailFragment"
-        android:name="com.gausslab.managerapp.WorksiteForm.QrEmailFragment"
+        android:name="com.gausslab.managerapp.qremailfragment.QrEmailFragment"
         android:label="fragment_qremail"
         tools:layout="@layout/fragment_qremail" >
         <argument

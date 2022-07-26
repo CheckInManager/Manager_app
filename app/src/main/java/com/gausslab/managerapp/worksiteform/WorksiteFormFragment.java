@@ -1,4 +1,4 @@
-package com.gausslab.managerapp.WorksiteForm;
+package com.gausslab.managerapp.worksiteform;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;

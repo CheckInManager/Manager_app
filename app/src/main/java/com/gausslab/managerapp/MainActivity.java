@@ -9,7 +9,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 
-import com.gausslab.managerapp.dataSource.FirebaseDataSource;
+import com.gausslab.managerapp.datasource.FirebaseDataSource;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 public class MainActivity extends AppCompatActivity {
 
     FileService fileService;
-    UserRepository userRepository;
+    WorksiteRepository worksiteRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         FirebaseDataSource ds = new FirebaseDataSource();
-        userRepository = UserRepository.getInstance();
-        userRepository.setDataSource(ds);
-        userRepository.setExecutor(executorService);
+        worksiteRepository = WorksiteRepository.getInstance();
+        worksiteRepository.setDataSource(ds);
+        worksiteRepository.setExecutor(executorService);
 
         ServiceConnection connection = new ServiceConnection() {
             @Override
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 FileService.LocalBinder binder = (FileService.LocalBinder) service;
                 fileService = binder.getService();
                 fileService.setFirebaseDataSource(ds);
-                userRepository.setFileService(fileService);
+                worksiteRepository.setFileService(fileService);
                 fileService.setExecutor(executorService);
             }
 

@@ -1,4 +1,4 @@
-package com.gausslab.managerapp.TodayWorksite;
+package com.gausslab.managerapp.todayworksite;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

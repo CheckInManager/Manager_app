@@ -1,4 +1,4 @@
-package com.gausslab.managerapp.dataSource;
+package com.gausslab.managerapp.datasource;
 
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;

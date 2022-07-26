@@ -8,7 +8,7 @@
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".WorksiteForm.WorksiteFormFragment">
+        tools:context=".worksiteform.WorksiteFormFragment">
 
         <TextView
             android:id="@+id/worksiteform_tv_workNameLabel"
