@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gausslab.managerapp.UserRepository;
-import com.gausslab.managerapp.WorksiteRepository;
+import com.gausslab.managerapp.Repository.UserRepository;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
-import com.gausslab.managerapp.model.Worksite;
 
 import java.util.ArrayList;
 import java.util.List;

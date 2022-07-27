@@ -1,4 +1,4 @@
-package com.gausslab.managerapp;
+package com.gausslab.managerapp.Repository;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -7,6 +7,8 @@ import android.net.Uri;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.gausslab.managerapp.App;
+import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.datasource.DataSource;
 import com.gausslab.managerapp.datasource.DataSourceListenerCallback;
 import com.gausslab.managerapp.model.Result;

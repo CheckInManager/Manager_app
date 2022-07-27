@@ -69,7 +69,20 @@ public class CheckInWorkersBySiteListFragment extends Fragment {
             }else{
                 recyclerView.setLayoutManager(new GridLayoutManager(context,mColumnCount));
             }
-            adapter = new CheckInWorkersBySiteRecyclerViewAdapter(userList, new ViewModelProvider(requireActivity()).get(CheckInWorkersBySiteViewModel.class));
+            adapter = new CheckInWorkersBySiteRecyclerViewAdapter(userList, new ViewModelProvider(requireActivity()).get(CheckInWorkersBySiteViewModel.class),new OnTodayWorksiteContextMenuInteractionListener<User>(){
+                @Override
+                public void onItemClick(User obj) {
+                    String phoneNumber = obj.getPhoneNumber();
+                    CheckInWorkersBySiteFragmentDirections.ActionCheckInWorkdersBySiteFragmentToUserInformationFragment action = CheckInWorkersBySiteFragmentDirections.actionCheckInWorkdersBySiteFragmentToUserInformationFragment();
+                    action.setPhoneNumber(phoneNumber);
+                    NavHostFragment.findNavController(CheckInWorkersBySiteListFragment.this).navigate(action);
+                }
+
+                @Override
+                public void onContextReturnWorksite(User obj) {
+
+                }
+            });
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
 

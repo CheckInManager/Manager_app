@@ -57,12 +57,12 @@
     </fragment>
     <fragment
         android:id="@+id/userInformationFragment"
-        android:name="com.gausslab.managerapp.UserInformationFragment"
+        android:name="com.gausslab.managerapp.workerinformation.WorkerInformationFragment"
         android:label="fragment_userinformation"
-        tools:layout="@layout/fragment_userinformation">
+        tools:layout="@layout/fragment_workerinformation">
         <argument
-            android:name="phonenum"
-            android:defaultValue="010-0000-0000"
+            android:name="phoneNumber"
+            android:defaultValue="01000000000"
             app:argType="string"/>
     </fragment>
 </navigation>

@@ -2,6 +2,8 @@ package com.gausslab.managerapp;
 
 import android.app.Application;
 
+import com.gausslab.managerapp.Repository.WorksiteRepository;
+
 public class App extends Application {
     private static FileService fileService;
 
