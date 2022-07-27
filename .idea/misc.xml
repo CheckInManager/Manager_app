@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/drawable/buttonstyle.xml" value="0.3995" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/activity_main.xml" value="0.5421195652173914" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_checkinworkersbysite.xml" value="0.3104166666666667" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_checkinworkersbysite_list.xml" value="0.3104166666666667" />

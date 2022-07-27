@@ -2,6 +2,7 @@ package com.gausslab.managerapp.todayworksite;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.model.Worksite;
@@ -35,12 +37,25 @@ public class TodayWorkSiteFragment extends Fragment {
     private Button bt_addWorksite;
 
     private List<Worksite> todayWorksiteList;
-
+    private  long pressedTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         todayWorkSiteViewModel = new ViewModelProvider(requireActivity()).get(TodayWorkSiteViewModel.class);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(System.currentTimeMillis()>pressedTime+2000){
+                    pressedTime = System.currentTimeMillis();
+                    Toast.makeText(requireContext(), "Press once more to exit", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(requireContext(),"Exit the app", Toast.LENGTH_SHORT).show();
+                    requireActivity().finish();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

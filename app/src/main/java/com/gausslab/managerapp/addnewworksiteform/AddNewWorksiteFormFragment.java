@@ -19,9 +19,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.model.Worksite;
+import com.google.android.gms.tasks.Task;
 
 import java.util.Calendar;
 
@@ -52,7 +54,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_worksiteform, container, false);
+        return inflater.inflate(R.layout.fragment_addnewworksiteform, container, false);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
         bt_add = view.findViewById(R.id.worksitrform_bt_add);
 
         //region observer
-        addNewWorksiteFormViewModel.doingWork().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        addNewWorksiteFormViewModel.addWorksiteFormSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean finish) {
                 if(finish){
@@ -151,9 +153,15 @@ public class AddNewWorksiteFormFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                worksite = new Worksite(et_workName.getText().toString(),et_startDate.getText().toString(),et_lastDate.getText().toString(),et_location.getText().toString());
-                addNewWorksiteFormViewModel.addWorksite(worksite);
-                bt_add.setEnabled(false);
+                if(addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(),et_lastDate.getText().toString())){
+                    worksite = new Worksite(et_workName.getText().toString(),et_startDate.getText().toString(),et_lastDate.getText().toString(),et_location.getText().toString());
+                    addNewWorksiteFormViewModel.addWorksite(worksite);
+                    bt_add.setEnabled(false);
+                }else{
+                    Toast.makeText(requireContext(),"Change the date", Toast.LENGTH_SHORT).show();
+                    et_startDate.setText(null);
+                    et_lastDate.setText(null);
+                }
             }
         });
 

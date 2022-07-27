@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <FrameLayout
         android:id="@+id/todayworksite_fl_list"
@@ -50,6 +50,8 @@
             android:id="@+id/todayworksite_bt_worksite"
             style="@style/navBar_button"
             android:layout_marginTop="20dp"
+            android:backgroundTint="#C5E1F8"
+            android:enabled="false"
             android:text="Work Site"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +106,7 @@
         android:backgroundTint="@color/white"
         android:text="+ Add WorkSite"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

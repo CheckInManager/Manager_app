@@ -21,7 +21,7 @@
         android:id="@+id/worksiteFormFragment"
         android:name="com.gausslab.managerapp.addnewworksiteform.AddNewWorksiteFormFragment"
         android:label="fragment_worksiteform"
-        tools:layout="@layout/fragment_worksiteform" >
+        tools:layout="@layout/fragment_addnewworksiteform" >
         <action
             android:id="@+id/action_worksiteFormFragment_to_qrEmailFragment"
             app:destination="@id/qrEmailFragment" />
@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_checkInWorkdersBySiteFragment_to_userInformationFragment"
             app:destination="@id/userInformationFragment" />
+        <action
+            android:id="@+id/action_checkInWorkdersBySiteFragment_to_todayWorkSiteFragment"
+            app:destination="@id/todayWorkSiteFragment" />
     </fragment>
     <fragment
         android:id="@+id/userInformationFragment"

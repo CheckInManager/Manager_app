@@ -11,7 +11,7 @@ import com.gausslab.managerapp.model.Worksite;
 public class AddNewWorksiteFormViewModel extends ViewModel {
 
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
-    private MutableLiveData<Boolean> doingWork = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> addWorksiteFormSuccess = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> addWorksiteSuccess = new MutableLiveData<>(false);
     private final MutableLiveData<AddNewWorksiteFormState> addNewWorksiteFormState = new MutableLiveData<>(new AddNewWorksiteFormState(null, null, null, null, false));
 
@@ -24,9 +24,9 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
         worksiteRepository.addWorksite(worksite, result ->
         {
             if (result instanceof Result.Success) {
-                doingWork.postValue(true);
+                addWorksiteFormSuccess.postValue(true);
             } else {
-                doingWork.postValue(false);
+                addWorksiteFormSuccess.postValue(false);
             }
         });
     }
@@ -110,8 +110,24 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
         return !(location.length() < 1);
     }
 
-    public LiveData<Boolean> doingWork() {
-        return doingWork;
+    public boolean isDatesValid(String startDate, String lastDate){
+        String[] splitStartDate = startDate.split("/");
+        String[] splitLastDate = lastDate.split("/");
+        String strStartDate = String.join("", splitStartDate);
+        String strLastDate = String.join("",splitLastDate);
+        if(Integer.parseInt(strStartDate)>Integer.parseInt(strLastDate)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+
+
+
+    public LiveData<Boolean> addWorksiteFormSuccess() {
+        return addWorksiteFormSuccess;
     }
 
     public LiveData<Boolean> addWorksiteSuccess() {
