@@ -1,5 +1,6 @@
 package com.gausslab.managerapp.qremailfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.gausslab.managerapp.R;
@@ -23,6 +25,7 @@ public class QrEmailFragment extends Fragment {
     private QrEmailViewModel qrEmailViewModel;
 
     private ImageView iv_qr;
+    private EditText et_emailAddress;
     private Button bt_sendEmail;
     private Button bt_home;
 
@@ -43,6 +46,7 @@ public class QrEmailFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentQremailBinding.inflate(inflater, container, false);
         iv_qr = binding.qremailIvQr;
+        et_emailAddress = binding.qremailEtEmailAddress;
         bt_sendEmail = binding.qreamilBtSendEmail;
         bt_home = binding.qremailBtHome;
 
@@ -64,6 +68,18 @@ public class QrEmailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(QrEmailFragment.this).navigate(R.id.action_qrEmailFragment_to_todayWorkSiteFragment);
+            }
+        });
+
+        bt_sendEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mail_intent = new Intent(Intent.ACTION_SEND);
+                mail_intent.setType("text/plain");
+                mail_intent.putExtra(Intent.EXTRA_EMAIL,et_emailAddress.getText().toString()); //받는 사람 이메일
+                mail_intent.putExtra(Intent.EXTRA_SUBJECT, qrEmailViewModel.getCurrWorksite().getWorkName()); //이메일 제목
+                mail_intent.putExtra(Intent.EXTRA_TEXT, "test"); //메일 내용
+                startActivity(mail_intent);
             }
         });
     }

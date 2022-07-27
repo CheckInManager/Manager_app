@@ -70,7 +70,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
         addNewWorksiteFormViewModel.addWorksiteFormSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean finish) {
-                if(finish){
+                if (finish) {
                     addNewWorksiteFormViewModel.createQrForWorksite(worksite);
                 }
             }
@@ -79,7 +79,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
         addNewWorksiteFormViewModel.addWorksiteSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isAdditionSuccessful) {
-                if(isAdditionSuccessful){
+                if (isAdditionSuccessful) {
                     AddNewWorksiteFormFragmentDirections.ActionWorksiteFormFragmentToQrEmailFragment action = AddNewWorksiteFormFragmentDirections.actionWorksiteFormFragmentToQrEmailFragment();
                     action.setWorksiteName(et_workName.getText().toString());
                     NavHostFragment.findNavController(AddNewWorksiteFormFragment.this).navigate(action);
@@ -90,16 +90,16 @@ public class AddNewWorksiteFormFragment extends Fragment {
         addNewWorksiteFormViewModel.getAddNewWorksiteFormState().observe(getViewLifecycleOwner(), new Observer<AddNewWorksiteFormState>() {
             @Override
             public void onChanged(AddNewWorksiteFormState addNewWorksiteFormState) {
-                if(addNewWorksiteFormState.getWorksiteNameErrorMessage()!=null){
+                if (addNewWorksiteFormState.getWorksiteNameErrorMessage() != null) {
                     et_workName.setError(addNewWorksiteFormState.getLastDateErrorMessage());
                 }
-                if(addNewWorksiteFormState.getStartDateErrorMessage()!=null){
+                if (addNewWorksiteFormState.getStartDateErrorMessage() != null) {
                     et_startDate.setError(addNewWorksiteFormState.getStartDateErrorMessage());
                 }
-                if(addNewWorksiteFormState.getLastDateErrorMessage()!=null){
+                if (addNewWorksiteFormState.getLastDateErrorMessage() != null) {
                     et_lastDate.setError(addNewWorksiteFormState.getLastDateErrorMessage());
                 }
-                if(addNewWorksiteFormState.getLocationErrorMessage()!=null){
+                if (addNewWorksiteFormState.getLocationErrorMessage() != null) {
                     et_location.setError(addNewWorksiteFormState.getLocationErrorMessage());
                 }
                 bt_add.setEnabled(addNewWorksiteFormState.isFieldsValid());
@@ -135,7 +135,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
         et_startDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     showDatePicker(startDateSetListener);
                 }
             }
@@ -144,7 +144,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
         et_lastDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     showDatePicker(lastDateListener);
                 }
             }
@@ -153,12 +153,12 @@ public class AddNewWorksiteFormFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(),et_lastDate.getText().toString())){
-                    worksite = new Worksite(et_workName.getText().toString(),et_startDate.getText().toString(),et_lastDate.getText().toString(),et_location.getText().toString());
+                if (addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(), et_lastDate.getText().toString())) {
+                    worksite = new Worksite(et_workName.getText().toString(), et_startDate.getText().toString(), et_lastDate.getText().toString(), et_location.getText().toString());
                     addNewWorksiteFormViewModel.addWorksite(worksite);
                     bt_add.setEnabled(false);
-                }else{
-                    Toast.makeText(requireContext(),"Change the date", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Change the date", Toast.LENGTH_SHORT).show();
                     et_startDate.setText(null);
                     et_lastDate.setText(null);
                 }
@@ -237,12 +237,12 @@ public class AddNewWorksiteFormFragment extends Fragment {
 
     }
 
-    private void showDatePicker(DatePickerDialog.OnDateSetListener listener){
-        Calendar c =Calendar.getInstance();
+    private void showDatePicker(DatePickerDialog.OnDateSetListener listener) {
+        Calendar c = Calendar.getInstance();
         int y = c.get(Calendar.YEAR);
         int m = c.get(Calendar.MONTH);
         int d = c.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog dpd = new DatePickerDialog(getContext(),listener,y,m,d);
+        DatePickerDialog dpd = new DatePickerDialog(getContext(), listener, y, m, d);
         dpd.setOnCancelListener(dateCancelListener);
         dpd.show();
     }

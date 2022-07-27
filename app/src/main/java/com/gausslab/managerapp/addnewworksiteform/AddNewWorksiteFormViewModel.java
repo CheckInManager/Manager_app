@@ -55,7 +55,7 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
         }
     }
 
-    public void onStartDateChanged(String writeStartDate){
+    public void onStartDateChanged(String writeStartDate) {
         startDate = writeStartDate;
         if (writeStartDate.length() == 0) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, false));
@@ -68,7 +68,7 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
         }
     }
 
-    public void onLastDateChanged(String writeLastDate){
+    public void onLastDateChanged(String writeLastDate) {
         lastDate = writeLastDate;
         if (writeLastDate.length() == 0) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, false));
@@ -81,7 +81,7 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
         }
     }
 
-    public void onLocationChanged(String writeLocation){
+    public void onLocationChanged(String writeLocation) {
         location = writeLocation;
         if (writeLocation.length() == 0) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, false));
@@ -103,28 +103,24 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
     }
 
     public boolean isLastDateValid(String lastDate) {
-       return !(lastDate.length()<8);
+        return !(lastDate.length() < 8);
     }
 
     public boolean isLocationValid(String location) {
         return !(location.length() < 1);
     }
 
-    public boolean isDatesValid(String startDate, String lastDate){
+    public boolean isDatesValid(String startDate, String lastDate) {
         String[] splitStartDate = startDate.split("/");
         String[] splitLastDate = lastDate.split("/");
         String strStartDate = String.join("", splitStartDate);
-        String strLastDate = String.join("",splitLastDate);
-        if(Integer.parseInt(strStartDate)>Integer.parseInt(strLastDate)){
+        String strLastDate = String.join("", splitLastDate);
+        if (Integer.parseInt(strStartDate) > Integer.parseInt(strLastDate)) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-
-
-
-
 
     public LiveData<Boolean> addWorksiteFormSuccess() {
         return addWorksiteFormSuccess;
