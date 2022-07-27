@@ -20,6 +20,8 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
     private String lastDate = "";
     private String location = "";
 
+
+
     public void addWorksite(Worksite worksite) {
         worksiteRepository.addWorksite(worksite, result ->
         {

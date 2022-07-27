@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gausslab.managerapp.datasource.DataSource;
@@ -38,17 +37,16 @@ public class WorksiteRepository {
         return INSTANCE;
     }
 
-
-    public void getTodayWorksite(final UserRepositoryCallback callback) {
-        dataSource.getTodayWorksite(callback::onComplete);
+    public void getTodayWorksite(final String todayCal,final WorksiteRepositoryCallback callback) {
+        dataSource.getTodayWorksite(todayCal,callback::onComplete);
     }
 
-    public void addWorksite(final Worksite worksite, UserRepositoryCallback<Result> callback) {
+    public void addWorksite(final Worksite worksite, WorksiteRepositoryCallback<Result> callback) {
         dataSource.addWorksite(worksite, callback::onComplete);
     }
 
-    public void createQrForWorksite(final Worksite toAdd, UserRepositoryCallback<Result> callback) {
-        generateWorksiteQr(toAdd, new UserRepositoryCallback<Result>() {
+    public void createQrForWorksite(final Worksite toAdd, WorksiteRepositoryCallback<Result> callback) {
+        generateWorksiteQr(toAdd, new WorksiteRepositoryCallback<Result>() {
             @Override
             public void onComplete(Result result) {
                 callback.onComplete(result);
@@ -56,12 +54,12 @@ public class WorksiteRepository {
         });
     }
 
-    private void generateWorksiteQr(Worksite worksite, UserRepositoryCallback<Result> callback) {
+    private void generateWorksiteQr(Worksite worksite, WorksiteRepositoryCallback<Result> callback) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorkName();
-                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorkName()), new UserRepositoryCallback<Result>() {
+                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorkName()), new WorksiteRepositoryCallback<Result>() {
                     @Override
                     public void onComplete(Result result) {
                         callback.onComplete(result);
@@ -71,7 +69,7 @@ public class WorksiteRepository {
         });
     }
 
-    private void generateWorksiteQr_helper(String toEncode, String localDestinationPath, UserRepositoryCallback<Result> callback) {
+    private void generateWorksiteQr_helper(String toEncode, String localDestinationPath, WorksiteRepositoryCallback<Result> callback) {
         QRCodeWriter writer = new QRCodeWriter();
         try {
             BitMatrix bitMatrix = writer.encode(toEncode, BarcodeFormat.QR_CODE, 512, 512);
@@ -118,7 +116,7 @@ public class WorksiteRepository {
         return worksiteQrDrawableMap.get(workName);
     }
 
-    public void loadQrDrawableForWorksite(String workName, UserRepositoryCallback<Result<Drawable>> callback) {
+    public void loadQrDrawableForWorksite(String workName, WorksiteRepositoryCallback<Result<Drawable>> callback) {
         fileService.getImageDrawable(App.getWorksiteQrImagePath(workName), new FileService.FileServiceCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result result) {
@@ -157,7 +155,7 @@ public class WorksiteRepository {
     }
 
 
-    public interface UserRepositoryCallback<Result> {
+    public interface WorksiteRepositoryCallback<Result> {
         void onComplete(Result result);
     }
 }

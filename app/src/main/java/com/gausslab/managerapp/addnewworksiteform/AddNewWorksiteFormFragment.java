@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
         et_lastDate = view.findViewById(R.id.worksiteform_et_lastDate);
         et_location = view.findViewById(R.id.worksiteform_et_location);
         bt_add = view.findViewById(R.id.worksitrform_bt_add);
+
 
         //region observer
         addNewWorksiteFormViewModel.addWorksiteFormSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -233,6 +235,8 @@ public class AddNewWorksiteFormFragment extends Fragment {
             }
         });
         //endregion
+
+
 
 
     }

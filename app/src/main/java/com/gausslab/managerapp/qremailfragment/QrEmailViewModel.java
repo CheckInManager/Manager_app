@@ -20,7 +20,7 @@ public class QrEmailViewModel extends ViewModel {
     public void setWorksite(String worksiteName) {
         currWorksite = worksiteRepository.getWorksite(worksiteName);
 
-        worksiteRepository.loadQrDrawableForWorksite(worksiteName, new WorksiteRepository.UserRepositoryCallback<Result<Drawable>>() {
+        worksiteRepository.loadQrDrawableForWorksite(worksiteName, new WorksiteRepository.WorksiteRepositoryCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result<Drawable> drawableResult) {
                 if (drawableResult instanceof Result.Success) {

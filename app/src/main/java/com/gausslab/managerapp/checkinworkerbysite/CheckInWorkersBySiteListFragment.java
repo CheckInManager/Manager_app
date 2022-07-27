@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -79,6 +80,14 @@ public class CheckInWorkersBySiteListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter.setUserList(checkInWorkersBySiteViewModel.getUserInformationList());
+
+        checkInWorkersBySiteViewModel.userListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if(isLoaded){
+                    adapter.setUserList(checkInWorkersBySiteViewModel.getUserByWorksite());
+                }
+            }
+        });
     }
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 
 import com.gausslab.managerapp.datasource.FirebaseDataSource;
+import com.gausslab.managerapp.model.User;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     FileService fileService;
     WorksiteRepository worksiteRepository;
+    UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         worksiteRepository = WorksiteRepository.getInstance();
         worksiteRepository.setDataSource(ds);
         worksiteRepository.setExecutor(executorService);
+        userRepository = UserRepository.getInstance();
+        userRepository.setDataSource(ds);
+        userRepository.setExecutor(executorService);
 
         ServiceConnection connection = new ServiceConnection() {
             @Override
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 fileService = binder.getService();
                 fileService.setFirebaseDataSource(ds);
                 worksiteRepository.setFileService(fileService);
+                userRepository.setFileService(fileService);
                 fileService.setExecutor(executorService);
             }
 

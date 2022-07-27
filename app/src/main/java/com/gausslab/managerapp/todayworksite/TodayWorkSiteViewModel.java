@@ -17,14 +17,16 @@ public class TodayWorkSiteViewModel extends ViewModel {
 
     private List<Worksite> worksiteList = new ArrayList<>();
 
-    public void loadTodayWorksite() {
-        worksiteRepository.getTodayWorksite(result -> {
+    public void loadTodayWorksite(String todayCal) {
+        worksiteRepository.getTodayWorksite(todayCal,result -> {
             if (result instanceof Result.Success) {
                 worksiteList = ((Result.Success<List<Worksite>>) result).getData();
                 todayWorksiteListLoaded.setValue(true);
             }
         });
     }
+
+
 
     public List<Worksite> getTodayWorksite() {
         return worksiteList;

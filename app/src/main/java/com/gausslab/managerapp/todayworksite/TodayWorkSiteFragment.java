@@ -22,6 +22,7 @@ import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.model.Worksite;
 import com.gausslab.managerapp.databinding.FragmentTodayworksiteBinding;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class TodayWorkSiteFragment extends Fragment {
@@ -37,6 +38,7 @@ public class TodayWorkSiteFragment extends Fragment {
     private Button bt_addWorksite;
 
     private List<Worksite> todayWorksiteList;
+
     private  long pressedTime = 0;
 
     @Override
@@ -90,8 +92,11 @@ public class TodayWorkSiteFragment extends Fragment {
 
     }
 
+    Calendar cal = Calendar.getInstance();
+    String todayCal =((cal.get(Calendar.YEAR))+""+(cal.get(Calendar.MONTH)+1)+""+(cal.get(Calendar.DATE)));
+
     private void init() {
-        todayWorkSiteViewModel.loadTodayWorksite();
+        todayWorkSiteViewModel.loadTodayWorksite(todayCal);
         todayWorksiteList = todayWorkSiteViewModel.getTodayWorksite();
 
         FragmentManager fm = getChildFragmentManager();

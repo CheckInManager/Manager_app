@@ -63,6 +63,8 @@ public class CheckInWorkersBySiteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         bt_worksite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +74,9 @@ public class CheckInWorkersBySiteFragment extends Fragment {
     }
 
     private void init(){
+        String worksiteName = CheckInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName();
+        checkInWorkersBySiteViewModel.loadUserByWorksite(worksiteName);
+        userList = checkInWorkersBySiteViewModel.getUserByWorksite();
         //userlist 로드해서 가져오기
         FragmentManager fm = getChildFragmentManager();
         Fragment myFrag = CheckInWorkersBySiteListFragment.newInstance(1, userList);
