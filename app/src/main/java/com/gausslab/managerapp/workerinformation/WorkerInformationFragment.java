@@ -9,8 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gausslab.managerapp.R;
+import com.gausslab.managerapp.databinding.FragmentCheckinworkersbysiteBinding;
+import com.gausslab.managerapp.model.User;
+
+import java.util.List;
 
 public class WorkerInformationFragment extends Fragment {
+    private FragmentCheckinworkersbysiteBinding binding;
+
+    private List<User> userList;
 
 
     public WorkerInformationFragment() {
