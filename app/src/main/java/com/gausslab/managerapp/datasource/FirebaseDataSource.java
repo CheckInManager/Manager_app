@@ -35,7 +35,7 @@ public class FirebaseDataSource implements DataSource {
     private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     @Override
-    public void getTodayWorksite(String todayCal, DataSourceCallback<Result> callback) {
+    public void getTodayWorksite(String todayCal, DataSourceCallback<Result<List<Worksite>>> callback) {
         db.collection("worksite")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -146,7 +146,7 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void getUserByWorksite(String worksiteName, DataSourceCallback<Result> callback) {
+    public void getUsersByWorksite(String worksiteName, DataSourceListenerCallback<Result<List<User>>> callback) {
         db.collection("user")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -160,30 +160,31 @@ public class FirebaseDataSource implements DataSource {
                                     toReturn.add(toAdd);
                                 }
                             }
-                            callback.onComplete(new Result.Success<List<User>>(toReturn));
+                            callback.onUpdate(new Result.Success<List<User>>(toReturn));
                         } else {
-                            callback.onComplete(new Result.Error(new Exception("error")));
+                            callback.onUpdate(new Result.Error(new Exception("error")));
                         }
                     }
                 });
     }
 
     @Override
-    public void getUserInformation(String phoneNumber, DataSourceCallback<Result> callback) {
+    public void getUserByPhoneNumber(String phoneNumber, DataSourceCallback<Result<User>> callback) {
         db.collection("user")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .whereEqualTo("phoneNumber", phoneNumber)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error == null) {
-                            User toReturn = new User(null, null, null, null, null, null, null, null);
-                            List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (int i = 0; i < snaps.size(); i++) {
-                                if (snaps.get(i).getString("phoneNumber").equals(phoneNumber)) {
-                                    toReturn = new User(snaps.get(i).getString("phoneNumber"), snaps.get(i).getString("password"), snaps.get(i).getString("userName"), snaps.get(i).getString("userImage"), snaps.get(i).getString("career"), snaps.get(i).getString("worksiteName"), snaps.get(i).getString("accidentHistory"), snaps.get(i).getString("memo"));
-                                }
-                            }
-                            callback.onComplete(new Result.Success<User>(toReturn));
-                        } else {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        if(task.isSuccessful())
+                        {
+                            List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                            callback.onComplete(new Result.Success<User>(snaps.get(0).toObject(User.class)));
+                        }
+                        else
+                        {
                             callback.onComplete(new Result.Error(new Exception("error")));
                         }
                     }

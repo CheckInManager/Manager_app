@@ -15,7 +15,7 @@ public class WorkerInformationViewModel extends ViewModel {
     private User currUser;
 
     public void loadUserInformation(String phoneNumber){
-        userRepository.getUserInformation(phoneNumber, result->{
+        userRepository.getUserByPhoneNumber(phoneNumber, result->{
            if(result instanceof Result.Success){
                currUser = ((Result.Success<User>)result).getData();
                userInformationLoaded.setValue(true);

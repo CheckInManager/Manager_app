@@ -10,6 +10,10 @@ public class User {
     private String accidentHistory;
     private String memo;
 
+    public User()
+    {
+    }
+
     public User(String phoneNumber, String password, String userName, String userImage, String career, String worksiteName, String accidentHistory, String memo) {
         this.phoneNumber = phoneNumber;
         this.password = password;

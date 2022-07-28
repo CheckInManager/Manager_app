@@ -3,18 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/drawable/buttonstyle.xml" value="0.3995" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/activity_main.xml" value="0.5421195652173914" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_addnewworksiteform.xml" value="0.3104166666666667" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_checkinworkersbysite.xml" value="0.3104166666666667" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_checkinworkersbysite_list.xml" value="0.3104166666666667" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_qremail.xml" value="0.3104166666666667" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_todayworksite.xml" value="0.4" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_todayworksite_list.xml" value="0.5348958333333333" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_workerinformation.xml" value="0.3104166666666667" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/fragment_worksiteform.xml" value="0.5421195652173914" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/object_checkinworkersbysite.xml" value="0.309375" />
-        <entry key="..\:/Users/ADMIN/AndroidStudioProjects/ManagerApp/app/src/main/res/layout/object_todayworksite.xml" value="0.4" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/activity_main.xml" value="0.43072916666666666" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/fragment_addnewworksiteform.xml" value="0.43072916666666666" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/fragment_checkedinworkersbysite.xml" value="0.334375" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/fragment_checkedinworkersbysite_list.xml" value="0.43072916666666666" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/fragment_checkinworkersbysite.xml" value="0.328125" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/fragment_qremail.xml" value="0.5" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/fragment_todayworksite.xml" value="0.328125" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/fragment_todayworksite_list.xml" value="0.43072916666666666" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/fragment_workerinformation.xml" value="0.43072916666666666" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app/app/src/main/res/layout/object_checkedinworkersbysite.xml" value="0.43072916666666666" />
       </map>
     </option>
   </component>

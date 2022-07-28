@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".checkinworkerbysite.CheckInWorkersBySiteFragment">
+    tools:context=".checkinworkerbysite.CheckedInWorkersBySiteFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -14,23 +14,19 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.25" />
 
-    <FrameLayout
-        android:id="@+id/checkinworkersbysite_fl_list"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/checkedInWorkersBySite_rv_userList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-    </FrameLayout>
-
+        tools:listitem="@layout/object_checkedinworkersbysite" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="#F1FDFF"
@@ -42,7 +38,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <Button
-            android:id="@+id/checkinworkersbysite_bt_worksite"
+            android:id="@+id/checkedInWorkersBySite_bt_worksite"
             style="@style/navBar_button"
             android:layout_marginTop="20dp"
             android:text="Work Site"
@@ -51,31 +47,31 @@
             app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
         <Button
-            android:id="@+id/checkinworkersbysite_bt_addWorker"
+            android:id="@+id/checkedInWorkersBySite_bt_addWorker"
             style="@style/navBar_button"
             android:text="Add worker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkinworkersbysite_bt_worksite" />
+            app:layout_constraintTop_toBottomOf="@+id/checkedInWorkersBySite_bt_worksite" />
 
         <Button
-            android:id="@+id/checkinworkersbysite_bt_addNotice"
+            android:id="@+id/checkedInWorkersBySite_bt_addNotice"
             style="@style/navBar_button"
             android:text="Add Notice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkinworkersbysite_bt_addWorker" />
+            app:layout_constraintTop_toBottomOf="@+id/checkedInWorkersBySite_bt_addWorker" />
 
         <Button
-            android:id="@+id/checkinworkersbysite_map"
+            android:id="@+id/checkedInWorkersBySite_bt_map"
             style="@style/navBar_button"
             android:text="map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkinworkersbysite_bt_addNotice" />
+            app:layout_constraintTop_toBottomOf="@+id/checkedInWorkersBySite_bt_addNotice" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline4"

@@ -41,9 +41,9 @@
     </fragment>
     <fragment
         android:id="@+id/checkInWorkdersBySiteFragment"
-        android:name="com.gausslab.managerapp.checkinworkerbysite.CheckInWorkersBySiteFragment"
+        android:name="com.gausslab.managerapp.checkinworkerbysite.CheckedInWorkersBySiteFragment"
         android:label="fragment_checkinworkdersbysite"
-        tools:layout="@layout/fragment_checkinworkersbysite">
+        tools:layout="@layout/fragment_checkedinworkersbysite">
         <argument
             android:name="worksiteName"
             android:defaultValue="worksite"
