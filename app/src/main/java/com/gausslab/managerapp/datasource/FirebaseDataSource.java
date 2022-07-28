@@ -35,7 +35,7 @@ public class FirebaseDataSource implements DataSource {
     private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     @Override
-    public void getTodayWorksite(String todayCal, DataSourceCallback<Result<List<Worksite>>> callback) {
+    public void getTodayWorksiteList(String todayCal, DataSourceCallback<Result<List<Worksite>>> callback) {
         db.collection("worksite")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override

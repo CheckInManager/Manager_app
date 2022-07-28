@@ -7,7 +7,7 @@ import com.gausslab.managerapp.model.Worksite;
 import java.util.List;
 
 public interface DataSource {
-    void getTodayWorksite(String todayCal,DataSourceCallback<Result<List<Worksite>>> callback);
+    void getTodayWorksiteList(String todayCal, DataSourceCallback<Result<List<Worksite>>> callback);
 
     void addWorksite(Worksite worksite, DataSourceCallback<Result> callback);
 

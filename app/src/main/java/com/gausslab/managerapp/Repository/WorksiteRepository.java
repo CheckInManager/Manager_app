@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.datasource.DataSource;
@@ -39,7 +37,7 @@ public class WorksiteRepository {
     }
 
     public void getTodayWorksite(final String todayCal, final WorksiteRepositoryCallback callback) {
-        dataSource.getTodayWorksite(todayCal, callback::onComplete);
+        dataSource.getTodayWorksiteList(todayCal, callback::onComplete);
     }
 
     public void addWorksite(final Worksite worksite, WorksiteRepositoryCallback<Result> callback) {
