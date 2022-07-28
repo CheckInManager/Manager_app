@@ -37,7 +37,6 @@ public class QrEmailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         qrEmailViewModel = new ViewModelProvider(this).get(QrEmailViewModel.class);
-
     }
 
     @Override

@@ -23,8 +23,7 @@ import com.gausslab.managerapp.databinding.FragmentCheckedinworkersbysiteBinding
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
-public class CheckedInWorkersBySiteFragment extends Fragment
-{
+public class CheckedInWorkersBySiteFragment extends Fragment {
 
     private FragmentCheckedinworkersbysiteBinding binding;
     private CheckedInWorkersBySiteViewModel checkedInWorkersBySiteViewModel;
@@ -37,16 +36,14 @@ public class CheckedInWorkersBySiteFragment extends Fragment
     private CheckedInWorkersBySiteRecyclerViewAdapter adapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkedInWorkersBySiteViewModel = new ViewModelProvider(requireActivity()).get(CheckedInWorkersBySiteViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         binding = FragmentCheckedinworkersbysiteBinding.inflate(inflater, container, false);
         rv_userList = binding.checkedInWorkersBySiteRvUserList;
         bt_worksite = binding.checkedInWorkersBySiteBtWorksite;
@@ -63,49 +60,37 @@ public class CheckedInWorkersBySiteFragment extends Fragment
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        bt_worksite.setOnClickListener(new View.OnClickListener()
-        {
+        bt_worksite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(R.id.action_checkInWorkdersBySiteFragment_to_todayWorkSiteFragment);
             }
         });
 
-        checkedInWorkersBySiteViewModel.isUserListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>()
-        {
+        checkedInWorkersBySiteViewModel.isUserListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isLoaded)
-            {
-                if (isLoaded)
-                {
-                    Log.d("DEBUG", "userListUpdated");
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
                     adapter.setUserList(checkedInWorkersBySiteViewModel.getUserList());
                 }
             }
         });
     }
 
-    private void init()
-    {
-        Log.d("DEBUG", "CheckInWorkersBySiteFragment : init()");
+    private void init() {
         String worksiteName = CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName();
         checkedInWorkersBySiteViewModel.loadUserListByWorksite(worksiteName);
         setupAdapter();
     }
 
-    private void setupAdapter()
-    {
+    private void setupAdapter() {
         adapter = new CheckedInWorkersBySiteRecyclerViewAdapter(checkedInWorkersBySiteViewModel.getUserList(),
-                new OnTodayWorksiteContextMenuInteractionListener<User>()
-                {
+                new OnTodayWorksiteContextMenuInteractionListener<User>() {
                     @Override
-                    public void onItemClick(User obj)
-                    {
+                    public void onItemClick(User obj) {
                         String phoneNumber = obj.getPhoneNumber();
                         CheckedInWorkersBySiteFragmentDirections.ActionCheckInWorkdersBySiteFragmentToUserInformationFragment action = CheckedInWorkersBySiteFragmentDirections.actionCheckInWorkdersBySiteFragmentToUserInformationFragment();
                         action.setPhoneNumber(phoneNumber);
@@ -113,12 +98,10 @@ public class CheckedInWorkersBySiteFragment extends Fragment
                     }
 
                     @Override
-                    public void onContextReturnWorksite(User obj)
-                    {
+                    public void onContextReturnWorksite(User obj) {
 
                     }
                 });
-        Log.d("DEBUG", "Adapter Created");
         rv_userList.setAdapter(adapter);
     }
 }

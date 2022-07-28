@@ -7,15 +7,13 @@ import com.gausslab.managerapp.model.Worksite;
 import java.util.List;
 
 public interface DataSource {
-    void getTodayWorksiteList(String todayCal, DataSourceCallback<Result<List<Worksite>>> callback);
+    void getTodayWorksiteList(String todayCal, CompletedCallback<Result<List<Worksite>>> callback);
 
-    void addWorksite(Worksite worksite, DataSourceCallback<Result> callback);
+    void addWorksite(Worksite worksite, CompletedCallback<Result<String>> callback);
 
-    void getDocumentsFromCollection(String collectionName, DataSourceListenerCallback<Result> callback);
+    void getUsersByWorksite(String worksiteName, ListenerCallback<Result<List<User>>> callback);
 
-    void getUsersByWorksite(String worksiteName, DataSourceListenerCallback<Result<List<User>>> callback);
+    void getUserByPhoneNumber(String phoneNumber, CompletedCallback<Result<User>> callback);
 
-    void getUserByPhoneNumber(String phoneNumber, DataSourceCallback<Result<User>> callback);
-
-    void changeInformation(User changeInformation, DataSourceCallback<Result> callback);
+    void changeUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback);
 }

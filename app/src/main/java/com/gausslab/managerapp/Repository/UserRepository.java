@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gausslab.managerapp.FileService;
+import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.DataSource;
-import com.gausslab.managerapp.datasource.DataSourceCallback;
-import com.gausslab.managerapp.datasource.DataSourceListenerCallback;
+import com.gausslab.managerapp.datasource.ListenerCallback;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 
@@ -32,7 +32,7 @@ public class UserRepository
         return INSTANCE;
     }
 
-    public List<User> getUsersByWorksite(final String worksiteName)
+    public List<User> getUserListByWorksite(final String worksiteName)
     {
         return worksiteUsersMap.get(worksiteName);
     }
@@ -44,7 +44,7 @@ public class UserRepository
 
         worksiteUsersMap.put(worksiteName, new ArrayList<>());
         worksiteUsersLoaded.put(worksiteName, new MutableLiveData<>());
-        dataSource.getUsersByWorksite(worksiteName, new DataSourceListenerCallback<Result<List<User>>>()
+        dataSource.getUsersByWorksite(worksiteName, new ListenerCallback<Result<List<User>>>()
         {
             @Override
             public void onUpdate(Result<List<User>> result)
@@ -62,14 +62,15 @@ public class UserRepository
         });
     }
 
-    public void getUserByPhoneNumber(final String phoneNumber, final UserRepositoryCallback callback)
+    public void getUserByPhoneNumber(final String phoneNumber, final CompletedCallback<Result<User>> callback)
     {
-        dataSource.getUserByPhoneNumber(phoneNumber, callback::onComplete);
+        dataSource.getUserByPhoneNumber(phoneNumber, callback);
     }
 
-    public void changeInformation(final User changeInformation, final UserRepositoryCallback callback)
+    public void changeUserInformation(final User changeUserInformation, final CompletedCallback<Result<String>> callback)
     {
-        dataSource.changeInformation(changeInformation, callback::onComplete);
+
+        dataSource.changeUserInformation(changeUserInformation, callback);
     }
 
     public void setExecutor(Executor exec)
@@ -92,13 +93,4 @@ public class UserRepository
         return worksiteUsersLoaded.get(worksite);
     }
 
-    public interface UserRepositoryCallback<Result>
-    {
-        void onComplete(Result result);
-    }
-
-    public interface UserRepositoryListenerCallback<Result>
-    {
-
-    }
 }

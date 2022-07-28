@@ -28,14 +28,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class FirebaseDataSource implements DataSource {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     @Override
-    public void getTodayWorksiteList(String todayCal, DataSourceCallback<Result<List<Worksite>>> callback) {
+    public void getTodayWorksiteList(String todayCal, CompletedCallback<Result<List<Worksite>>> callback) {
         db.collection("worksite")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -67,7 +66,7 @@ public class FirebaseDataSource implements DataSource {
 
 
     @Override
-    public void addWorksite(Worksite toAdd, DataSourceCallback<Result> callback) {
+    public void addWorksite(Worksite toAdd, CompletedCallback<Result<String>> callback) {
         Map<String, Object> worksite = new HashMap<String, Object>();
         worksite.put("workName", toAdd.getWorkName());
         worksite.put("startDate", toAdd.getStartDate());
@@ -79,7 +78,7 @@ public class FirebaseDataSource implements DataSource {
     }
 
 
-    public void uploadFile(File toUpload, String destination, DataSourceCallback<Result<Uri>> callback) {
+    public void uploadFile(File toUpload, String destination, CompletedCallback<Result<Uri>> callback) {
         Log.d("DEBUG:DataSource", "uploadFile: " + toUpload.getName() + " to " + destination);
         Uri localFile = Uri.fromFile(toUpload);
         StorageReference storageReference = firebaseStorage.getReference().child(destination);
@@ -108,7 +107,7 @@ public class FirebaseDataSource implements DataSource {
         });
     }
 
-    public void downloadFile(String downloadPath, File localFile, DataSourceCallback<Result> callback) {
+    public void downloadFile(String downloadPath, File localFile, CompletedCallback<Result<File>> callback) {
         Log.d("DEBUG:DataSource", "downloadFile: " + downloadPath);
         StorageReference ref = firebaseStorage.getReference().child(downloadPath);
         ref.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
@@ -123,30 +122,8 @@ public class FirebaseDataSource implements DataSource {
         });
     }
 
-    public void getDocumentsFromCollection(String collectionName, DataSourceListenerCallback<Result> callback) {
-        Log.d("DEBUG:DataSource", "getDocumentsFromCollection");
-        db.collection(collectionName).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error == null) {
-                    Map<String, Worksite> newMap = new HashMap<>();
-                    List<Worksite> toReturn = new ArrayList<>();
-                    List<DocumentSnapshot> snaps = value.getDocuments();
-                    for (int i = 0; i < snaps.size(); i++) {
-                        Worksite toAdd = snaps.get(i).toObject(Worksite.class);
-                        toReturn.add(toAdd);
-                        newMap.put(toAdd.getWorkName(), toAdd);
-                    }
-                    callback.onUpdate(new Result.Success<Map<String, Worksite>>(newMap));
-                } else {
-                    callback.onUpdate(new Result.Error(new Exception("error")));
-                }
-            }
-        });
-    }
-
     @Override
-    public void getUsersByWorksite(String worksiteName, DataSourceListenerCallback<Result<List<User>>> callback) {
+    public void getUsersByWorksite(String worksiteName, ListenerCallback<Result<List<User>>> callback) {
         db.collection("user")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -169,7 +146,7 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void getUserByPhoneNumber(String phoneNumber, DataSourceCallback<Result<User>> callback) {
+    public void getUserByPhoneNumber(String phoneNumber, CompletedCallback<Result<User>> callback) {
         db.collection("user")
                 .whereEqualTo("phoneNumber", phoneNumber)
                 .get()
@@ -192,10 +169,10 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void changeInformation(User changeInformation, DataSourceCallback<Result> callback) {
+    public void changeUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback) {
         db.collection("user")
-                .document(changeInformation.getPhoneNumber())
-                .set(changeInformation);
+                .document(changeUserInformation.getPhoneNumber())
+                .set(changeUserInformation);
         callback.onComplete(new Result.Success<String>("Success"));
     }
 }

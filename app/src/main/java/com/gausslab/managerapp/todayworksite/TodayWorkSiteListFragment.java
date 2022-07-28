@@ -71,7 +71,7 @@ public class TodayWorkSiteListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter = new TodayWorkSiteRecyclerViewAdapter(worksiteList, new ViewModelProvider(requireActivity()).get(TodayWorkSiteViewModel.class), new OnTodayWorksiteContextMenuInteractionListener<Worksite>() {
+            adapter = new TodayWorkSiteRecyclerViewAdapter(worksiteList, new OnTodayWorksiteContextMenuInteractionListener<Worksite>() {
                 @Override
                 public void onItemClick(Worksite obj) {
                     String worksiteName = obj.getWorkName();

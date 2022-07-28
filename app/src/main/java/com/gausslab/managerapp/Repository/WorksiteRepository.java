@@ -7,8 +7,8 @@ import android.net.Uri;
 
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
+import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.DataSource;
-import com.gausslab.managerapp.datasource.DataSourceListenerCallback;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 import com.google.zxing.BarcodeFormat;
@@ -36,16 +36,16 @@ public class WorksiteRepository {
         return INSTANCE;
     }
 
-    public void getTodayWorksite(final String todayCal, final WorksiteRepositoryCallback callback) {
-        dataSource.getTodayWorksiteList(todayCal, callback::onComplete);
+    public void getTodayWorksite(final String todayCal, final CompletedCallback<Result<List<Worksite>>> callback) {
+        dataSource.getTodayWorksiteList(todayCal, callback);
     }
 
-    public void addWorksite(final Worksite worksite, WorksiteRepositoryCallback<Result> callback) {
-        dataSource.addWorksite(worksite, callback::onComplete);
+    public void addWorksite(final Worksite worksite, CompletedCallback<Result<String>> callback) {
+        dataSource.addWorksite(worksite, callback);
     }
 
-    public void createQrForWorksite(final Worksite toAdd, WorksiteRepositoryCallback<Result> callback) {
-        generateWorksiteQr(toAdd, new WorksiteRepositoryCallback<Result>() {
+    public void createQrForWorksite(final Worksite toAdd, CompletedCallback<Result<Uri>> callback) {
+        generateWorksiteQr(toAdd, new CompletedCallback<Result<Uri>>() {
             @Override
             public void onComplete(Result result) {
                 callback.onComplete(result);
@@ -53,12 +53,12 @@ public class WorksiteRepository {
         });
     }
 
-    private void generateWorksiteQr(Worksite worksite, WorksiteRepositoryCallback<Result> callback) {
+    private void generateWorksiteQr(Worksite worksite, CompletedCallback<Result<Uri>> callback) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorkName();
-                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorkName()), new WorksiteRepositoryCallback<Result>() {
+                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorkName()), new CompletedCallback<Result<Uri>>() {
                     @Override
                     public void onComplete(Result result) {
                         callback.onComplete(result);
@@ -68,7 +68,7 @@ public class WorksiteRepository {
         });
     }
 
-    private void generateWorksiteQr_helper(String toEncode, String localDestinationPath, WorksiteRepositoryCallback<Result> callback) {
+    private void generateWorksiteQr_helper(String toEncode, String localDestinationPath, CompletedCallback<Result<Uri>> callback) {
         QRCodeWriter writer = new QRCodeWriter();
         try {
             BitMatrix bitMatrix = writer.encode(toEncode, BarcodeFormat.QR_CODE, 512, 512);
@@ -115,7 +115,7 @@ public class WorksiteRepository {
         return worksiteQrDrawableMap.get(workName);
     }
 
-    public void loadQrDrawableForWorksite(String workName, WorksiteRepositoryCallback<Result<Drawable>> callback) {
+    public void loadQrDrawableForWorksite(String workName, CompletedCallback<Result<Drawable>> callback) {
         fileService.getImageDrawable(App.getWorksiteQrImagePath(workName), new FileService.FileServiceCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result result) {
@@ -127,19 +127,6 @@ public class WorksiteRepository {
             }
         });
     }
-
-    public void loadWorksiteList() {
-        dataSource.getDocumentsFromCollection("worksite", new DataSourceListenerCallback<Result>() {
-            @Override
-            public void onUpdate(Result result) {
-                if (result instanceof Result.Success) {
-                    Map<String, Worksite> newMap = ((Result.Success<Map<String, Worksite>>) result).getData();
-                    worksiteMap = newMap;
-                }
-            }
-        });
-    }
-
 
     public void setExecutor(Executor exec) {
         this.executor = exec;
@@ -153,8 +140,4 @@ public class WorksiteRepository {
         this.fileService = fs;
     }
 
-
-    public interface WorksiteRepositoryCallback<Result> {
-        void onComplete(Result result);
-    }
 }

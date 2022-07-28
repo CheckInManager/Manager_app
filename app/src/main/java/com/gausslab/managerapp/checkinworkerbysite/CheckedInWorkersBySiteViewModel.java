@@ -21,7 +21,7 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel
 
     public List<User> getUserList()
     {
-        return userRepository.getUsersByWorksite(myWorksiteName);
+        return userRepository.getUserListByWorksite(myWorksiteName);
     }
 
     public LiveData<Boolean> isUserListLoaded()

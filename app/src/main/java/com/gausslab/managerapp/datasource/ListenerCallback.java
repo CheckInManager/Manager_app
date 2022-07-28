@@ -1,5 +1,5 @@
 package com.gausslab.managerapp.datasource;
 
-public interface DataSourceListenerCallback<T> {
+public interface ListenerCallback<T> {
     void onUpdate(T result);
 }

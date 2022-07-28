@@ -10,7 +10,7 @@ import com.gausslab.managerapp.model.User;
 
 public class WorkerInformationViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
-    private MutableLiveData<Boolean> userInformationLoaded = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> userInformationLoaded = new MutableLiveData<>(false);
 
     private User currUser;
 
@@ -24,7 +24,7 @@ public class WorkerInformationViewModel extends ViewModel {
     }
 
     public void changeInformation(User changeInformation){
-        userRepository.changeInformation(changeInformation,result->{
+        userRepository.changeUserInformation(changeInformation, result->{
            if(result instanceof Result.Success){
 
            }

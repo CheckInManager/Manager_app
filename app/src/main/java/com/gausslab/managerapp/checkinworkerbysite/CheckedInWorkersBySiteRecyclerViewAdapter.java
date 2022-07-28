@@ -20,90 +20,62 @@ import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteracti
 
 import java.util.List;
 
-public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapter<CheckedInWorkersBySiteRecyclerViewAdapter.ViewHolder>
-{
+public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapter<CheckedInWorkersBySiteRecyclerViewAdapter.ViewHolder> {
     private List<User> userList;
     private OnItemInteractionListener<User> listener;
 
-    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> items)
-    {
+    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> items) {
         userList = items;
     }
 
-    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> items, OnItemInteractionListener<User> clickListener)
-    {
+    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> items, OnItemInteractionListener<User> clickListener) {
         userList = items;
         listener = clickListener;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(ObjectCheckedinworkersbysiteBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         User currUser = userList.get(position);
         holder.tv_userName.setText(currUser.getUserName());
         holder.tv_phoneNum.setText(currUser.getPhoneNumber());
 
-        if (currUser.getAccidentHistory().length() != 0)
+        if (currUser.getAccidentHistory().length() != 0) {
             holder.card.setBackgroundColor(Color.RED);
-        else
+        } else {
             holder.card.setBackgroundColor(Color.WHITE);
-        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener)
-        {
-            holder.card.setOnClickListener(new View.OnClickListener()
-            {
+        }
+
+        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
+            holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view)
-                {
+                public void onClick(View view) {
                     ((OnTodayWorksiteContextMenuInteractionListener<User>) listener).onItemClick(userList.get(holder.getAdapterPosition()));
-                }
-            });
-            holder.card.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener()
-            {
-                @Override
-                public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo)
-                {
-                    menu.setHeaderTitle("Select Action");
-                    MenuItem returnUser = menu.add(Menu.NONE, 1, 1, "Return User");
-                    returnUser.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
-                    {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem menuItem)
-                        {
-                            ((OnTodayWorksiteContextMenuInteractionListener<User>) listener).onContextReturnWorksite(userList.get(holder.getAdapterPosition()));
-                            return true;
-                        }
-                    });
                 }
             });
         }
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return userList.size();
     }
 
-    public void setUserList(List<User> newUserList)
-    {
+    public void setUserList(List<User> newUserList) {
         userList = newUserList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final CardView card;
         public final TextView tv_userName;
         public final TextView tv_phoneNum;
 
-        public ViewHolder(ObjectCheckedinworkersbysiteBinding binding)
-        {
+        public ViewHolder(ObjectCheckedinworkersbysiteBinding binding) {
             super(binding.getRoot());
             card = binding.objCheckinworkersbysiteCard;
             tv_userName = binding.objCheckinworkersbysiteTvUserName;
@@ -111,8 +83,7 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return super.toString() + "";
         }
     }

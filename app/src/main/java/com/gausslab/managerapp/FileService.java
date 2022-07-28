@@ -10,7 +10,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.gausslab.managerapp.datasource.DataSourceCallback;
+import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.FirebaseDataSource;
 import com.gausslab.managerapp.model.Result;
 
@@ -87,7 +87,7 @@ public class FileService extends Service {
                 try {
                     file.getParentFile().mkdirs();
                     file.createNewFile();
-                    firebaseDataSource.downloadFile(filePath, file, new DataSourceCallback<Result>() {
+                    firebaseDataSource.downloadFile(filePath, file, new CompletedCallback<Result<File>>() {
                         @Override
                         public void onComplete(Result result) {
                             if (result instanceof Result.Success) {
@@ -114,7 +114,7 @@ public class FileService extends Service {
     }
 
     public void uploadFileToDatabase(File toSave, String destination, FileServiceCallback<Result<Uri>> callback) {
-        firebaseDataSource.uploadFile(toSave, destination, new DataSourceCallback<Result<Uri>>() {
+        firebaseDataSource.uploadFile(toSave, destination, new CompletedCallback<Result<Uri>>() {
             @Override
             public void onComplete(Result result) {
                 callback.onComplete(result);

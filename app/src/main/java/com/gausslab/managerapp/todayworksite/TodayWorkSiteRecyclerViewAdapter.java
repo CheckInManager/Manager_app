@@ -27,9 +27,8 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
         todayWorkSiteViewModel = tvm;
     }
 
-    public TodayWorkSiteRecyclerViewAdapter(List<Worksite> items, TodayWorkSiteViewModel tvm, OnItemInteractionListener<Worksite> clickListener) {
+    public TodayWorkSiteRecyclerViewAdapter(List<Worksite> items, OnItemInteractionListener<Worksite> clickListener) {
         worksiteList = items;
-        todayWorkSiteViewModel = tvm;
         listener = clickListener;
     }
 
