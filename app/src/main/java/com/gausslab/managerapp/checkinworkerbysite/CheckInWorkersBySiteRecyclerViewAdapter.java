@@ -1,5 +1,6 @@
 package com.gausslab.managerapp.checkinworkerbysite;
 
+import android.graphics.Color;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,6 +48,10 @@ public class CheckInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapte
         User currUser = userList.get(position);
         holder.tv_userName.setText(currUser.getUserName());
         holder.tv_phoneNum.setText(currUser.getPhoneNumber());
+
+        if(currUser.getAccidentHistory()!=""){
+            holder.card.setBackgroundColor(Color.RED);
+        }
         if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,6 +85,7 @@ public class CheckInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapte
         userList = newUserList;
         notifyDataSetChanged();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final CardView card;

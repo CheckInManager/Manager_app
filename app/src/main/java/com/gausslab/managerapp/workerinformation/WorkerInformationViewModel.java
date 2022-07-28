@@ -27,8 +27,6 @@ public class WorkerInformationViewModel extends ViewModel {
         userRepository.changeInformation(changeInformation,result->{
            if(result instanceof Result.Success){
 
-           } else{
-
            }
         });
     }
@@ -36,4 +34,5 @@ public class WorkerInformationViewModel extends ViewModel {
     public User getUserInformation(){return currUser;}
 
     public LiveData<Boolean> userInformationLoaded(){return userInformationLoaded;}
+
 }

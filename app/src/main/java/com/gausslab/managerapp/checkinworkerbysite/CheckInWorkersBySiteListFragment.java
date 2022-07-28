@@ -101,6 +101,7 @@ public class CheckInWorkersBySiteListFragment extends Fragment {
             public void onChanged(Boolean isLoaded) {
                 if (isLoaded) {
                     adapter.setUserList(checkInWorkersBySiteViewModel.getUserByWorksite());
+                    adapter.notifyDataSetChanged();
                 }
             }
         });

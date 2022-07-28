@@ -86,7 +86,7 @@ public class WorkerInformationFragment extends Fragment {
             public void onClick(View view) {
                 currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getUserImage(), currUser.getCareer(), currUser.getWorksiteName(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
                 workerInformationViewModel.changeInformation(currUser);
-                NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
+                NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(R.id.action_userInformationFragment_to_checkInWorkdersBySiteFragment);
             }
         });
     }
