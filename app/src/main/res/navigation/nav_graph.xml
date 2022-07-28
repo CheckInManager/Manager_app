@@ -64,5 +64,8 @@
             android:name="phoneNumber"
             android:defaultValue="01000000000"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_userInformationFragment_to_checkInWorkdersBySiteFragment"
+            app:destination="@id/checkInWorkdersBySiteFragment" />
     </fragment>
 </navigation>

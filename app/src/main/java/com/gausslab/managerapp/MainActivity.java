@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         FirebaseDataSource ds = new FirebaseDataSource();
         worksiteRepository = WorksiteRepository.getInstance();
@@ -52,10 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-        Intent intent = new Intent(this,FileService.class);
+        Intent intent = new Intent(this, FileService.class);
         startService(intent);
-        bindService(intent,connection, Context.BIND_AUTO_CREATE);
-
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
 
         setContentView(R.layout.activity_main);
     }

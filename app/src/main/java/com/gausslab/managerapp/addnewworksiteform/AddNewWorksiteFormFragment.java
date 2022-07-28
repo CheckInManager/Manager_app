@@ -40,7 +40,6 @@ public class AddNewWorksiteFormFragment extends Fragment {
 
     private Worksite worksite;
 
-
     public AddNewWorksiteFormFragment() {
 
     }
@@ -66,7 +65,6 @@ public class AddNewWorksiteFormFragment extends Fragment {
         et_lastDate = view.findViewById(R.id.worksiteform_et_lastDate);
         et_location = view.findViewById(R.id.worksiteform_et_location);
         bt_add = view.findViewById(R.id.worksitrform_bt_add);
-
 
         //region observer
         addNewWorksiteFormViewModel.addWorksiteFormSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -235,10 +233,6 @@ public class AddNewWorksiteFormFragment extends Fragment {
             }
         });
         //endregion
-
-
-
-
     }
 
     private void showDatePicker(DatePickerDialog.OnDateSetListener listener) {

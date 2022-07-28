@@ -18,7 +18,7 @@ public class CheckInWorkersBySiteViewModel extends ViewModel {
     private List<User> userList = new ArrayList<>();
 
     public void loadUserByWorksite(String worksiteName) {
-        userRepository.getUserByWorksite(worksiteName,result -> {
+        userRepository.getUserByWorksite(worksiteName, result -> {
             if (result instanceof Result.Success) {
                 userList = ((Result.Success<List<User>>) result).getData();
                 userListLoaded.setValue(true);

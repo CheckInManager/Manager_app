@@ -37,7 +37,9 @@ public class CheckInWorkersBySiteListFragment extends Fragment {
     public CheckInWorkersBySiteListFragment() {
     }
 
-    public CheckInWorkersBySiteListFragment(List<User> userList){this.userList = userList;}
+    public CheckInWorkersBySiteListFragment(List<User> userList) {
+        this.userList = userList;
+    }
 
     public static CheckInWorkersBySiteListFragment newInstance(int columnCount, List<User> userList) {
         CheckInWorkersBySiteListFragment fragment = new CheckInWorkersBySiteListFragment(userList);
@@ -50,7 +52,7 @@ public class CheckInWorkersBySiteListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments()!=null){
+        if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
@@ -61,15 +63,15 @@ public class CheckInWorkersBySiteListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_checkinworkersbysite_list, container, false);
         checkInWorkersBySiteViewModel = new ViewModelProvider(requireActivity()).get(CheckInWorkersBySiteViewModel.class);
 
-        if(view instanceof RecyclerView){
+        if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if(mColumnCount<=1){
+            if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            }else{
-                recyclerView.setLayoutManager(new GridLayoutManager(context,mColumnCount));
+            } else {
+                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter = new CheckInWorkersBySiteRecyclerViewAdapter(userList, new ViewModelProvider(requireActivity()).get(CheckInWorkersBySiteViewModel.class),new OnTodayWorksiteContextMenuInteractionListener<User>(){
+            adapter = new CheckInWorkersBySiteRecyclerViewAdapter(userList, new ViewModelProvider(requireActivity()).get(CheckInWorkersBySiteViewModel.class), new OnTodayWorksiteContextMenuInteractionListener<User>() {
                 @Override
                 public void onItemClick(User obj) {
                     String phoneNumber = obj.getPhoneNumber();
@@ -97,7 +99,7 @@ public class CheckInWorkersBySiteListFragment extends Fragment {
         checkInWorkersBySiteViewModel.userListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
+                if (isLoaded) {
                     adapter.setUserList(checkInWorkersBySiteViewModel.getUserByWorksite());
                 }
             }

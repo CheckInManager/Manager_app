@@ -36,12 +36,14 @@ public class TodayWorkSiteListFragment extends Fragment {
 
     }
 
-    public TodayWorkSiteListFragment(List<Worksite> worksiteList){this.worksiteList = worksiteList;}
+    public TodayWorkSiteListFragment(List<Worksite> worksiteList) {
+        this.worksiteList = worksiteList;
+    }
 
     public static TodayWorkSiteListFragment newInstance(int columnCount, List<Worksite> worksiteList) {
         TodayWorkSiteListFragment fragment = new TodayWorkSiteListFragment(worksiteList);
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT,columnCount);
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,12 +63,12 @@ public class TodayWorkSiteListFragment extends Fragment {
 
         todayWorkSiteViewModel = new ViewModelProvider(requireActivity()).get(TodayWorkSiteViewModel.class);
 
-        if(view instanceof RecyclerView){
+        if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if(mColumnCount<=1){
+            if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            }else{
+            } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             adapter = new TodayWorkSiteRecyclerViewAdapter(worksiteList, new ViewModelProvider(requireActivity()).get(TodayWorkSiteViewModel.class), new OnTodayWorksiteContextMenuInteractionListener<Worksite>() {
@@ -96,7 +98,7 @@ public class TodayWorkSiteListFragment extends Fragment {
         todayWorkSiteViewModel.todayWorksiteListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
+                if (isLoaded) {
                     adapter.setWorksiteList(todayWorkSiteViewModel.getTodayWorksite());
                 }
             }

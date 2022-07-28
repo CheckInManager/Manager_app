@@ -27,7 +27,6 @@ import java.util.concurrent.Executor;
 
 public class WorksiteRepository {
     private static volatile WorksiteRepository INSTANCE = new WorksiteRepository();
-    private final MutableLiveData<Boolean> worksiteListUpdated = new MutableLiveData<>(false);
     private DataSource dataSource;
     private FileService fileService;
     protected Executor executor;
@@ -39,8 +38,8 @@ public class WorksiteRepository {
         return INSTANCE;
     }
 
-    public void getTodayWorksite(final String todayCal,final WorksiteRepositoryCallback callback) {
-        dataSource.getTodayWorksite(todayCal,callback::onComplete);
+    public void getTodayWorksite(final String todayCal, final WorksiteRepositoryCallback callback) {
+        dataSource.getTodayWorksite(todayCal, callback::onComplete);
     }
 
     public void addWorksite(final Worksite worksite, WorksiteRepositoryCallback<Result> callback) {

@@ -39,7 +39,7 @@ public class TodayWorkSiteFragment extends Fragment {
 
     private List<Worksite> todayWorksiteList;
 
-    private  long pressedTime = 0;
+    private long pressedTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,11 +48,11 @@ public class TodayWorkSiteFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if(System.currentTimeMillis()>pressedTime+2000){
+                if (System.currentTimeMillis() > pressedTime + 2000) {
                     pressedTime = System.currentTimeMillis();
                     Toast.makeText(requireContext(), "Press once more to exit", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(requireContext(),"Exit the app", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Exit the app", Toast.LENGTH_SHORT).show();
                     requireActivity().finish();
                 }
             }
@@ -89,11 +89,10 @@ public class TodayWorkSiteFragment extends Fragment {
                 NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_worksiteFormFragment);
             }
         });
-
     }
 
     Calendar cal = Calendar.getInstance();
-    String todayCal =((cal.get(Calendar.YEAR))+""+(cal.get(Calendar.MONTH)+1)+""+(cal.get(Calendar.DATE)));
+    String todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
 
     private void init() {
         todayWorkSiteViewModel.loadTodayWorksite(todayCal);

@@ -24,9 +24,11 @@
             android:id="@+id/workerinformation_tv_nameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="28dp"
             android:text="Name"
-            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintEnd_toStartOf="@+id/workerinformation_et_memo"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
@@ -34,10 +36,9 @@
             android:id="@+id/workerinformation_et_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:layout_marginTop="30dp"
             android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_phoneNumber"
             app:layout_constraintTop_toBottomOf="@+id/workinformation_iv_image" />
 
         <TextView
@@ -46,18 +47,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Phone Number"
-            app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_nameLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_nameLabel" />
 
         <TextView
             android:id="@+id/workerinformation_et_phoneNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="32dp"
             android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_career"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_name" />
 
         <TextView
@@ -66,18 +65,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Career"
-            app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_phoneNumberLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_phoneNumberLabel" />
 
         <TextView
             android:id="@+id/workerinformation_et_career"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="32dp"
             android:text="TextView"
-            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_accidentHistory"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_phoneNumber" />
 
         <TextView
@@ -85,21 +82,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Accident history"
-            app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="Accident History"
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_careerLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_careerLabel" />
 
         <EditText
             android:id="@+id/workerinformation_et_accidentHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="Accident History"
+            android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="@+id/workerinformation_tv_accidentHistoryLabel"
-            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_memo"
             app:layout_constraintTop_toTopOf="@+id/workerinformation_tv_accidentHistoryLabel" />
 
         <TextView
@@ -108,29 +103,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Memo"
-            app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_accidentHistoryLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_accidentHistoryLabel" />
 
         <EditText
             android:id="@+id/workerinformation_et_memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toBottomOf="@+id/workerinformation_tv_memoLabel"
-            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/workerinformation_tv_nameLabel"
             app:layout_constraintTop_toTopOf="@+id/workerinformation_tv_memoLabel" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.35
-" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline10"

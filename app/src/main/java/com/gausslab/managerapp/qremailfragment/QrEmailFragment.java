@@ -29,7 +29,6 @@ public class QrEmailFragment extends Fragment {
     private Button bt_sendEmail;
     private Button bt_home;
 
-
     public QrEmailFragment() {
     }
 
@@ -59,10 +58,10 @@ public class QrEmailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       qrEmailViewModel.isQrImageLoaded().observe(getViewLifecycleOwner(), isQrLoaded->{
-           if(isQrLoaded)
-               iv_qr.setImageDrawable(qrEmailViewModel.getQrImage());
-       });
+        qrEmailViewModel.isQrImageLoaded().observe(getViewLifecycleOwner(), isQrLoaded -> {
+            if (isQrLoaded)
+                iv_qr.setImageDrawable(qrEmailViewModel.getQrImage());
+        });
 
         bt_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +75,7 @@ public class QrEmailFragment extends Fragment {
             public void onClick(View view) {
                 Intent mail_intent = new Intent(Intent.ACTION_SEND);
                 mail_intent.setType("text/plain");
-                mail_intent.putExtra(Intent.EXTRA_EMAIL,et_emailAddress.getText().toString()); //받는 사람 이메일
+                mail_intent.putExtra(Intent.EXTRA_EMAIL, et_emailAddress.getText().toString()); //받는 사람 이메일
                 mail_intent.putExtra(Intent.EXTRA_SUBJECT, qrEmailViewModel.getCurrWorksite().getWorkName()); //이메일 제목
                 mail_intent.putExtra(Intent.EXTRA_TEXT, "test"); //메일 내용
                 startActivity(mail_intent);

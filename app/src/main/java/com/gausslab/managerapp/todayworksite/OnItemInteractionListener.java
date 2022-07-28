@@ -1,6 +1,5 @@
 package com.gausslab.managerapp.todayworksite;
 
-public interface OnItemInteractionListener<T>
-{
+public interface OnItemInteractionListener<T> {
 }
 

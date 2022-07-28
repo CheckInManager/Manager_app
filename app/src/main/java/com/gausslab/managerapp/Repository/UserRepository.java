@@ -2,6 +2,7 @@ package com.gausslab.managerapp.Repository;
 
 import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.datasource.DataSource;
+import com.gausslab.managerapp.model.User;
 
 import java.util.concurrent.Executor;
 
@@ -20,7 +21,13 @@ public class UserRepository {
         dataSource.getUserByWorksite(worksiteName,callback::onComplete);
     }
 
+    public void getUserInformation(final String phoneNumber, final UserRepositoryCallback callback){
+        dataSource.getUserInformation(phoneNumber, callback::onComplete);
+    }
 
+    public void changeInformation(final User changeInformation, final UserRepositoryCallback callback){
+        dataSource.changeInformation(changeInformation,callback::onComplete);
+    }
 
     public void setExecutor(Executor exec) {
         this.executor = exec;

@@ -27,7 +27,7 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
         todayWorkSiteViewModel = tvm;
     }
 
-    public TodayWorkSiteRecyclerViewAdapter(List<Worksite> items, TodayWorkSiteViewModel tvm, OnItemInteractionListener<Worksite> clickListener){
+    public TodayWorkSiteRecyclerViewAdapter(List<Worksite> items, TodayWorkSiteViewModel tvm, OnItemInteractionListener<Worksite> clickListener) {
         worksiteList = items;
         todayWorkSiteViewModel = tvm;
         listener = clickListener;
@@ -42,22 +42,22 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Worksite currWorksite = worksiteList.get(position);
         holder.workName.setText(currWorksite.getWorkName());
-        if(listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener){
+        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((OnTodayWorksiteContextMenuInteractionListener<Worksite>)listener).onItemClick(worksiteList.get(holder.getAdapterPosition()));
+                    ((OnTodayWorksiteContextMenuInteractionListener<Worksite>) listener).onItemClick(worksiteList.get(holder.getAdapterPosition()));
                 }
             });
             holder.card.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                     menu.setHeaderTitle("Select Action");
-                    MenuItem returnWorksite = menu.add(Menu.NONE,1,1,"Return Worksite");
+                    MenuItem returnWorksite = menu.add(Menu.NONE, 1, 1, "Return Worksite");
                     returnWorksite.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            ((OnTodayWorksiteContextMenuInteractionListener<Worksite>)listener).onContextReturnWorksite(worksiteList.get(holder.getAdapterPosition()));
+                            ((OnTodayWorksiteContextMenuInteractionListener<Worksite>) listener).onContextReturnWorksite(worksiteList.get(holder.getAdapterPosition()));
                             return true;
                         }
                     });

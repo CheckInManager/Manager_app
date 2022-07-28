@@ -38,54 +38,55 @@ public class CheckInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapte
 
 
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        return new ViewHolder(ObjectCheckinworkersbysiteBinding.inflate(LayoutInflater.from(parent.getContext()), parent,false));
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(ObjectCheckinworkersbysiteBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position){
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         User currUser = userList.get(position);
         holder.tv_userName.setText(currUser.getUserName());
         holder.tv_phoneNum.setText(currUser.getPhoneNumber());
-        if(listener !=null &&listener instanceof OnTodayWorksiteContextMenuInteractionListener){
+        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((OnTodayWorksiteContextMenuInteractionListener<User>)listener).onItemClick(userList.get(holder.getAdapterPosition()));
+                    ((OnTodayWorksiteContextMenuInteractionListener<User>) listener).onItemClick(userList.get(holder.getAdapterPosition()));
                 }
             });
             holder.card.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
                     menu.setHeaderTitle("Select Action");
-                    MenuItem returnUser = menu.add(Menu.NONE,1,1,"Return User");
+                    MenuItem returnUser = menu.add(Menu.NONE, 1, 1, "Return User");
                     returnUser.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            ((OnTodayWorksiteContextMenuInteractionListener<User>)listener).onContextReturnWorksite(userList.get(holder.getAdapterPosition()));
+                            ((OnTodayWorksiteContextMenuInteractionListener<User>) listener).onContextReturnWorksite(userList.get(holder.getAdapterPosition()));
                             return true;
                         }
                     });
                 }
             });
         }
-
     }
 
     @Override
-    public int getItemCount(){return userList.size();}
+    public int getItemCount() {
+        return userList.size();
+    }
 
-    public void setUserList(List<User> newUserList){
+    public void setUserList(List<User> newUserList) {
         userList = newUserList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final CardView card;
         public final TextView tv_userName;
         public final TextView tv_phoneNum;
 
-        public ViewHolder(ObjectCheckinworkersbysiteBinding binding){
+        public ViewHolder(ObjectCheckinworkersbysiteBinding binding) {
             super(binding.getRoot());
             card = binding.objCheckinworkersbysiteCard;
             tv_userName = binding.objCheckinworkersbysiteTvUserName;
@@ -93,6 +94,8 @@ public class CheckInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapte
         }
 
         @Override
-        public String toString(){return  super.toString()+"";}
+        public String toString() {
+            return super.toString() + "";
+        }
     }
 }

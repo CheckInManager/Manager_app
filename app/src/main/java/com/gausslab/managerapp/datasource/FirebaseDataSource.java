@@ -46,7 +46,7 @@ public class FirebaseDataSource implements DataSource {
                             for (int i = 0; i < snaps.size(); i++) {
                                 String parsingStringStartDate = parsingDate(snaps.get(i).getString("startDate"));
                                 String parsingStringLastDate = parsingDate(snaps.get(i).getString("lastDate"));
-                                if((Integer.parseInt(parsingStringStartDate)<=Integer.parseInt(todayCal))&&(Integer.parseInt(parsingStringLastDate)>=Integer.parseInt(todayCal))){
+                                if ((Integer.parseInt(parsingStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsingStringLastDate) >= Integer.parseInt(todayCal))) {
                                     Worksite toAdd = new Worksite((snaps.get(i).getString("workName")), snaps.get(i).getString("startDate"), snaps.get(i).getString("lastDate"), snaps.get(i).getString("location"));
                                     toReturn.add(toAdd);
                                 }
@@ -128,17 +128,17 @@ public class FirebaseDataSource implements DataSource {
         db.collection(collectionName).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error==null){
+                if (error == null) {
                     Map<String, Worksite> newMap = new HashMap<>();
                     List<Worksite> toReturn = new ArrayList<>();
                     List<DocumentSnapshot> snaps = value.getDocuments();
-                    for(int i=0;i<snaps.size();i++){
+                    for (int i = 0; i < snaps.size(); i++) {
                         Worksite toAdd = snaps.get(i).toObject(Worksite.class);
                         toReturn.add(toAdd);
-                        newMap.put(toAdd.getWorkName(),toAdd);
+                        newMap.put(toAdd.getWorkName(), toAdd);
                     }
                     callback.onUpdate(new Result.Success<Map<String, Worksite>>(newMap));
-                }else{
+                } else {
                     callback.onUpdate(new Result.Error(new Exception("error")));
                 }
             }
@@ -155,8 +155,8 @@ public class FirebaseDataSource implements DataSource {
                             List<User> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
                             for (int i = 0; i < snaps.size(); i++) {
-                                if(snaps.get(i).getString("worksiteName").equals(worksiteName)){
-                                    User toAdd = new User(snaps.get(i).getString("phoneNumber"), snaps.get(i).getString("password"),snaps.get(i).getString("userName"),snaps.get(i).getString("userImage"),snaps.get(i).getString("userName"),snaps.get(i).getString("worksiteName"));
+                                if (snaps.get(i).getString("worksiteName").equals(worksiteName)) {
+                                    User toAdd = new User(snaps.get(i).getString("phoneNumber"), snaps.get(i).getString("password"), snaps.get(i).getString("userName"), snaps.get(i).getString("userImage"), snaps.get(i).getString("career"), snaps.get(i).getString("worksiteName"), snaps.get(i).getString("accidentHistory"), snaps.get(i).getString("memo"));
                                     toReturn.add(toAdd);
                                 }
                             }
@@ -166,5 +166,35 @@ public class FirebaseDataSource implements DataSource {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void getUserInformation(String phoneNumber, DataSourceCallback<Result> callback) {
+        db.collection("user")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
+                            User toReturn = new User(null, null, null, null, null, null, null, null);
+                            List<DocumentSnapshot> snaps = value.getDocuments();
+                            for (int i = 0; i < snaps.size(); i++) {
+                                if (snaps.get(i).getString("phoneNumber").equals(phoneNumber)) {
+                                    toReturn = new User(snaps.get(i).getString("phoneNumber"), snaps.get(i).getString("password"), snaps.get(i).getString("userName"), snaps.get(i).getString("userImage"), snaps.get(i).getString("career"), snaps.get(i).getString("worksiteName"), snaps.get(i).getString("accidentHistory"), snaps.get(i).getString("memo"));
+                                }
+                            }
+                            callback.onComplete(new Result.Success<User>(toReturn));
+                        } else {
+                            callback.onComplete(new Result.Error(new Exception("error")));
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void changeInformation(User changeInformation, DataSourceCallback<Result> callback) {
+        db.collection("user")
+                .document(changeInformation.getPhoneNumber())
+                .set(changeInformation);
+        callback.onComplete(new Result.Success<String>("Success"));
     }
 }

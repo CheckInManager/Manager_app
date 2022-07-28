@@ -53,6 +53,7 @@ public class CheckInWorkersBySiteFragment extends Fragment {
         bt_worksite = binding.checkinworkersbysiteBtWorksite;
         bt_addWorker = binding.checkinworkersbysiteBtAddWorker;
         bt_addNotice = binding.checkinworkersbysiteBtAddNotice;
+        bt_map = binding.checkinworkersbysiteMap;
 
         init();
 
@@ -62,8 +63,6 @@ public class CheckInWorkersBySiteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
 
         bt_worksite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +76,7 @@ public class CheckInWorkersBySiteFragment extends Fragment {
         String worksiteName = CheckInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName();
         checkInWorkersBySiteViewModel.loadUserByWorksite(worksiteName);
         userList = checkInWorkersBySiteViewModel.getUserByWorksite();
-        //userlist 로드해서 가져오기
+
         FragmentManager fm = getChildFragmentManager();
         Fragment myFrag = CheckInWorkersBySiteListFragment.newInstance(1, userList);
         FragmentTransaction transaction = fm.beginTransaction();

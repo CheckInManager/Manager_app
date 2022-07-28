@@ -7,14 +7,18 @@ public class User {
     private String userImage;
     private String career;
     private String worksiteName;
+    private String accidentHistory;
+    private String memo;
 
-    public User(String phoneNumber, String password, String userName, String userImage, String career, String worksiteName) {
+    public User(String phoneNumber, String password, String userName, String userImage, String career, String worksiteName, String accidentHistory, String memo) {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.userName = userName;
         this.userImage = userImage;
         this.career = career;
         this.worksiteName = worksiteName;
+        this.accidentHistory = accidentHistory;
+        this.memo = memo;
     }
 
     public String getPhoneNumber() {
@@ -63,5 +67,21 @@ public class User {
 
     public void setWorksiteName(String worksiteName) {
         this.worksiteName = worksiteName;
+    }
+
+    public String getAccidentHistory() {
+        return accidentHistory;
+    }
+
+    public void setAccidentHistory(String accidentHistory) {
+        this.accidentHistory = accidentHistory;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }
