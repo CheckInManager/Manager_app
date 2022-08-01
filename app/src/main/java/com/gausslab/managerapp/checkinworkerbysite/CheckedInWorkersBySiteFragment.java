@@ -63,6 +63,15 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        checkedInWorkersBySiteViewModel.isUserListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
+                    adapter.setUserList(checkedInWorkersBySiteViewModel.getUserList());
+                }
+            }
+        });
+
         bt_worksite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,12 +79,10 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
             }
         });
 
-        checkedInWorkersBySiteViewModel.isUserListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        bt_addWorker.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(Boolean isLoaded) {
-                if (isLoaded) {
-                    adapter.setUserList(checkedInWorkersBySiteViewModel.getUserList());
-                }
+            public void onClick(View view) {
+                NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(R.id.action_checkInWorkdersBySiteFragment_to_addWorkerFragment2);
             }
         });
     }

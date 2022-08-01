@@ -175,4 +175,37 @@ public class FirebaseDataSource implements DataSource {
                 .set(changeUserInformation);
         callback.onComplete(new Result.Success<String>("Success"));
     }
+
+    @Override
+    public void addUser(User addNewUser, CompletedCallback<Result<String>> callback) {
+        Map<String, Object> newUser = new HashMap<String,Object>();
+        newUser.put("accidentHistory",addNewUser.getAccidentHistory());
+        newUser.put("memo",addNewUser.getMemo());
+        newUser.put("password",addNewUser.getPassword());
+        newUser.put("phoneNumber",addNewUser.getPhoneNumber());
+        newUser.put("userImage",addNewUser.getUserImage());
+        newUser.put("userName",addNewUser.getUserName());
+        newUser.put("worksiteName",addNewUser.getWorksiteName());
+        db.collection("user")
+                .document(addNewUser.getPhoneNumber())
+                .set(newUser);
+        callback.onComplete(new Result.Success<String>("Success"));
+    }
+
+    @Override
+    public void getPhoneNumberList(CompletedCallback<Result<List<String>>> callback) {
+        db.collection("user")
+                .get()
+                .addOnCompleteListener(task -> {
+                   if(task.isSuccessful()){
+                       List<String> toReturn = new ArrayList<>();
+                       List<DocumentSnapshot> snaps= task.getResult().getDocuments();
+                       for(int i=0;i<snaps.size();i++){
+                           toReturn.add(snaps.get(i).getString("phoneNumber"));
+                       }
+                       callback.onComplete(new Result.Success<List<String>>(toReturn));
+                   }
+                   callback.onComplete(new Result.Error(new Exception("error")));
+                });
+    }
 }

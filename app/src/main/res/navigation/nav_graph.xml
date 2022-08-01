@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_todayWorkSiteFragment_to_checkInWorkdersBySiteFragment"
             app:destination="@id/checkInWorkdersBySiteFragment" />
+        <action
+            android:id="@+id/action_todayWorkSiteFragment_to_addWorkerFragment2"
+            app:destination="@id/addWorkerFragment2" />
     </fragment>
     <fragment
         android:id="@+id/worksiteFormFragment"
@@ -54,6 +57,9 @@
         <action
             android:id="@+id/action_checkInWorkdersBySiteFragment_to_todayWorkSiteFragment"
             app:destination="@id/todayWorkSiteFragment" />
+        <action
+            android:id="@+id/action_checkInWorkdersBySiteFragment_to_addWorkerFragment2"
+            app:destination="@id/addWorkerFragment2" />
     </fragment>
     <fragment
         android:id="@+id/userInformationFragment"
@@ -68,4 +74,8 @@
             android:id="@+id/action_userInformationFragment_to_checkInWorkdersBySiteFragment"
             app:destination="@id/checkInWorkdersBySiteFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addWorkerFragment2"
+        android:name="com.gausslab.managerapp.addworker.AddWorkerFragment"
+        android:label="AddWorkerFragment" />
 </navigation>

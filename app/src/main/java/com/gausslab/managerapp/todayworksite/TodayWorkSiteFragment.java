@@ -32,7 +32,7 @@ public class TodayWorkSiteFragment extends Fragment {
 
     private FrameLayout fl_list;
     private Button bt_worksite;
-    private Button bt_addWork;
+    private Button bt_addWorker;
     private Button bt_addNotice;
     private Button bt_map;
     private Button bt_addWorksite;
@@ -68,7 +68,7 @@ public class TodayWorkSiteFragment extends Fragment {
 
         fl_list = binding.todayworksiteFlList;
         bt_worksite = binding.todayworksiteBtWorksite;
-        bt_addWork = binding.todayworksiteBtAddWorker;
+        bt_addWorker = binding.todayworksiteBtAddWorker;
         bt_addNotice = binding.todayworksiteBtAddNotice;
         bt_map = binding.todayworksiteMap;
         bt_addWorksite = binding.todayworksiteBtAddWorksite;
@@ -87,6 +87,13 @@ public class TodayWorkSiteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_worksiteFormFragment);
+            }
+        });
+
+        bt_addWorker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_addWorkerFragment2);
             }
         });
     }
