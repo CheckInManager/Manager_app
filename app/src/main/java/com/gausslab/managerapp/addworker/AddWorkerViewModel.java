@@ -56,9 +56,12 @@ public class AddWorkerViewModel extends ViewModel {
             }
         });
     }
-    public List<String> getWorksiteNameList(){
+
+    public List<String> getWorksiteNameList() {
         return worksiteNameList;
     }
 
-    public LiveData<Boolean> isWorksiteNameList(){return isWorksiteNameList;}
+    public LiveData<Boolean> isWorksiteNameList() {
+        return isWorksiteNameList;
+    }
 }

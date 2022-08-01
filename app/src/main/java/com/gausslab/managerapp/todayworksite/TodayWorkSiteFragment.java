@@ -98,10 +98,21 @@ public class TodayWorkSiteFragment extends Fragment {
         });
     }
 
-    Calendar cal = Calendar.getInstance();
-    String todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+
 
     private void init() {
+        Calendar cal = Calendar.getInstance();
+        String todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+        String todayMonthCal = ((cal.get(Calendar.MONTH)+1)+"");
+        String todayDayCal = ((cal.get(Calendar.DATE))+"");
+        if(todayMonthCal.length()<2&&todayDayCal.length()<2){
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        } else if(todayMonthCal.length()<2){
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+        } else if(todayDayCal.length()<2){
+            todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        }
+
         todayWorkSiteViewModel.loadTodayWorksite(todayCal);
         todayWorksiteList = todayWorkSiteViewModel.getTodayWorksite();
 

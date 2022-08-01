@@ -60,6 +60,12 @@ public class FirebaseDataSource implements DataSource {
 
     public String parsingDate(String date) {
         String[] splitDate = date.split("/");
+        if(splitDate[1].length()<2){
+            splitDate[1] = "0"+splitDate[1];
+        }
+        if(splitDate[2].length()<2){
+            splitDate[2]="0"+splitDate[2];
+        }
         String strDate = String.join("", splitDate);
         return strDate;
     }
