@@ -128,6 +128,10 @@ public class WorksiteRepository {
         });
     }
 
+    public void loadWorksiteNameList(CompletedCallback<Result<List<String>>> callback){
+        dataSource.loadWorksiteNameList(callback);
+    }
+
     public void setExecutor(Executor exec) {
         this.executor = exec;
     }

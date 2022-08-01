@@ -5,12 +5,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +22,9 @@ import android.widget.Toast;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddworkerBinding;
 import com.gausslab.managerapp.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddWorkerFragment extends Fragment {
     private FragmentAddworkerBinding binding;
@@ -56,6 +61,7 @@ public class AddWorkerFragment extends Fragment {
         et_memo = binding.addworkerEtMemo;
         sp_worksiteSpinner = binding.addworkerSpWorksiteSpinner;
         bt_add = binding.addworkerBtAdd;
+
         return binding.getRoot();
     }
 
@@ -64,13 +70,24 @@ public class AddWorkerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         addWorkerViewModel.loadPhoneNumberList();
+        addWorkerViewModel.loadWorksiteNameList();
+
+        addWorkerViewModel.isWorksiteNameList().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if(isLoaded){
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,addWorkerViewModel.getWorksiteNameList());
+                    sp_worksiteSpinner.setAdapter(arrayAdapter);
+                }
+            }
+        });
 
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 User addNewUser = new User(et_phoneNumber.getText().toString(),
                         et_password.getText().toString(),et_name.getText().toString(), iv_image.toString(),
-                        null,sp_worksiteSpinner.toString(),et_accidentHistory.getText().toString(), et_memo.getText().toString());
+                        null,sp_worksiteSpinner.getSelectedItem().toString(),et_accidentHistory.getText().toString(), et_memo.getText().toString());
                 if(addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())){
                     addWorkerViewModel.addUser(addNewUser);
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();

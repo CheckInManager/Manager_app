@@ -208,4 +208,21 @@ public class FirebaseDataSource implements DataSource {
                    callback.onComplete(new Result.Error(new Exception("error")));
                 });
     }
+
+    @Override
+    public void loadWorksiteNameList(CompletedCallback<Result<List<String>>> callback) {
+        db.collection("worksite")
+                .get()
+                .addOnCompleteListener(task -> {
+                   if(task.isSuccessful()){
+                       List<String> toReturn = new ArrayList<>();
+                       List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                       for(int i=0;i<snaps.size();i++){
+                           toReturn.add(snaps.get(i).getString("workName"));
+                       }
+                       callback.onComplete(new Result.Success<List<String>>(toReturn));
+                   }
+                   callback.onComplete(new Result.Error(new Exception("error")));
+                });
+    }
 }
