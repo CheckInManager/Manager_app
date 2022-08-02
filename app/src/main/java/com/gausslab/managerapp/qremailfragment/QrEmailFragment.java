@@ -48,7 +48,8 @@ public class QrEmailFragment extends Fragment {
         bt_sendEmail = binding.qreamilBtSendEmail;
         bt_home = binding.qremailBtHome;
 
-        qrEmailViewModel.setWorksite(QrEmailFragmentArgs.fromBundle(getArguments()).getWorksiteName());
+        qrEmailViewModel.setWorksite(QrEmailFragmentArgs.fromBundle(getArguments()).getWorksiteName(),
+                QrEmailFragmentArgs.fromBundle(getArguments()).getWorksiteName()+QrEmailFragmentArgs.fromBundle(getArguments()).getWorksiteLocation()+QrEmailFragmentArgs.fromBundle(getArguments()).getWorksiteStartDate());
 
         return binding.getRoot();
     }

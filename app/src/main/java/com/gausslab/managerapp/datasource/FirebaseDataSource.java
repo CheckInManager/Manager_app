@@ -73,13 +73,8 @@ public class FirebaseDataSource implements DataSource {
 
     @Override
     public void addWorksite(Worksite toAdd, CompletedCallback<Result<String>> callback) {
-        Map<String, Object> worksite = new HashMap<String, Object>();
-        worksite.put("workName", toAdd.getWorksiteName());
-        worksite.put("startDate", toAdd.getStartDate());
-        worksite.put("lastDate", toAdd.getLastDate());
-        worksite.put("location", toAdd.getLocation());
         db.collection("worksite")
-                .add(worksite);
+                .add(toAdd);
         callback.onComplete(new Result.Success<String>("Success"));
     }
 

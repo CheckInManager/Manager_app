@@ -83,6 +83,8 @@ public class AddNewWorksiteFormFragment extends Fragment {
                 if (isAdditionSuccessful) {
                     AddNewWorksiteFormFragmentDirections.ActionWorksiteFormFragmentToQrEmailFragment action = AddNewWorksiteFormFragmentDirections.actionWorksiteFormFragmentToQrEmailFragment();
                     action.setWorksiteName(et_worksiteName.getText().toString());
+                    action.setWorksiteLocation(et_location.getText().toString());
+                    action.setWorksiteStartDate(et_startDate.getText().toString());
                     NavHostFragment.findNavController(AddNewWorksiteFormFragment.this).navigate(action);
                 }
             }

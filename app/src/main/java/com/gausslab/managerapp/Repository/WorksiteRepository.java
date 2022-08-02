@@ -57,8 +57,8 @@ public class WorksiteRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorksiteName();
-                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorksiteName()), new CompletedCallback<Result<Uri>>() {
+                String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorksiteName()+worksite.getLocation()+worksite.getStartDate();
+                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorksiteName()+worksite.getLocation()+worksite.getStartDate()), new CompletedCallback<Result<Uri>>() {
                     @Override
                     public void onComplete(Result result) {
                         callback.onComplete(result);
@@ -115,13 +115,13 @@ public class WorksiteRepository {
         return worksiteQrDrawableMap.get(workName);
     }
 
-    public void loadQrDrawableForWorksite(String workName, CompletedCallback<Result<Drawable>> callback) {
-        fileService.getImageDrawable(App.getWorksiteQrImagePath(workName), new FileService.FileServiceCallback<Result<Drawable>>() {
+    public void loadQrDrawableForWorksite(String workPath, CompletedCallback<Result<Drawable>> callback) {
+        fileService.getImageDrawable(App.getWorksiteQrImagePath(workPath), new FileService.FileServiceCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result result) {
                 if (result instanceof Result.Success) {
                     Drawable drawable = ((Result.Success<Drawable>) result).getData();
-                    worksiteQrDrawableMap.put(workName, drawable);
+                    worksiteQrDrawableMap.put(workPath, drawable);
                 }
                 callback.onComplete(result);
             }

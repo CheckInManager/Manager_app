@@ -38,6 +38,14 @@
             android:name="worksiteName"
             android:defaultValue="worksite"
             app:argType="string"/>
+        <argument
+            android:name="worksiteLocation"
+            android:defaultValue="worksiteLocation"
+            app:argType="string"/>
+        <argument
+            android:name="worksiteStartDate"
+            android:defaultValue="worksiteStartDate"
+            app:argType="string"/>
         <action
             android:id="@+id/action_qrEmailFragment_to_todayWorkSiteFragment"
             app:destination="@id/todayWorkSiteFragment" />
