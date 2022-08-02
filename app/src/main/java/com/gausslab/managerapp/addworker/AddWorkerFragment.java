@@ -61,7 +61,6 @@ public class AddWorkerFragment extends Fragment {
         et_memo = binding.addworkerEtMemo;
         sp_worksiteSpinner = binding.addworkerSpWorksiteSpinner;
         bt_add = binding.addworkerBtAdd;
-
         return binding.getRoot();
     }
 
@@ -72,30 +71,34 @@ public class AddWorkerFragment extends Fragment {
         addWorkerViewModel.loadPhoneNumberList();
         addWorkerViewModel.loadWorksiteNameList();
 
+        //region Observer
         addWorkerViewModel.isWorksiteNameList().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
-                    ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,addWorkerViewModel.getWorksiteNameList());
+                if (isLoaded) {
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, addWorkerViewModel.getWorksiteNameList());
                     sp_worksiteSpinner.setAdapter(arrayAdapter);
                 }
             }
         });
+        //endregion
 
+        //region Listener
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User addNewUser = new User(et_phoneNumber.getText().toString(),
-                        et_password.getText().toString(),et_name.getText().toString(), iv_image.toString(),
-                        null,sp_worksiteSpinner.getSelectedItem().toString(),et_accidentHistory.getText().toString(), et_memo.getText().toString());
-                if(addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())){
-                    addWorkerViewModel.addUser(addNewUser);
+                User userToAdd = new User(et_phoneNumber.getText().toString(),
+                        et_password.getText().toString(), et_name.getText().toString(), iv_image.toString(),
+                        null, sp_worksiteSpinner.getSelectedItem().toString(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
+                if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
+                    addWorkerViewModel.addUser(userToAdd);
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
                     NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
-                }else{
+                } else {
                     Toast.makeText(requireContext(), "Please change phone number", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        //endregion
     }
 }

@@ -11,7 +11,7 @@ public interface DataSource {
 
     void addWorksite(Worksite worksite, CompletedCallback<Result<String>> callback);
 
-    void getUsersByWorksite(String worksiteName, ListenerCallback<Result<List<User>>> callback);
+    void getUserListByWorksite(String worksiteName, ListenerCallback<Result<List<User>>> callback);
 
     void getUserByPhoneNumber(String phoneNumber, CompletedCallback<Result<User>> callback);
 

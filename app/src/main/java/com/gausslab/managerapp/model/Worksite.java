@@ -1,24 +1,24 @@
 package com.gausslab.managerapp.model;
 
 public class Worksite {
-    private String workName;
+    private String worksiteName;
     private String startDate;
     private String lastDate;
     private String location;
 
-    public Worksite(String workName, String startDate, String lastDate, String location) {
-        this.workName = workName;
+    public Worksite(String worksiteName, String startDate, String lastDate, String location) {
+        this.worksiteName = worksiteName;
         this.startDate = startDate;
         this.lastDate = lastDate;
         this.location = location;
     }
 
-    public String getWorkName() {
-        return workName;
+    public String getWorksiteName() {
+        return worksiteName;
     }
 
-    public void setWorkName(String workName) {
-        this.workName = workName;
+    public void setWorksiteName(String worksiteName) {
+        this.worksiteName = worksiteName;
     }
 
     public String getStartDate() {

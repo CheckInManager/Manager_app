@@ -8,24 +8,20 @@ import com.gausslab.managerapp.model.User;
 
 import java.util.List;
 
-public class CheckedInWorkersBySiteViewModel extends ViewModel
-{
+public class CheckedInWorkersBySiteViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
     private String myWorksiteName;
 
-    public void loadUserListByWorksite(String worksiteName)
-    {
+    public void loadUserListByWorksite(String worksiteName) {
         myWorksiteName = worksiteName;
         userRepository.registerWorksiteUserListListener(worksiteName);
     }
 
-    public List<User> getUserList()
-    {
+    public List<User> getUserList() {
         return userRepository.getUserListByWorksite(myWorksiteName);
     }
 
-    public LiveData<Boolean> isUserListLoaded()
-    {
+    public LiveData<Boolean> isUserListLoaded() {
         return userRepository.isUserListLoadedForWorksite(myWorksiteName);
     }
 }

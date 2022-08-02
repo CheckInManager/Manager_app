@@ -39,7 +39,7 @@ public class UserRepository {
 
         worksiteUsersMap.put(worksiteName, new ArrayList<>());
         worksiteUsersLoaded.put(worksiteName, new MutableLiveData<>());
-        dataSource.getUsersByWorksite(worksiteName, new ListenerCallback<Result<List<User>>>() {
+        dataSource.getUserListByWorksite(worksiteName, new ListenerCallback<Result<List<User>>>() {
             @Override
             public void onUpdate(Result<List<User>> result) {
                 if (result instanceof Result.Success) {
@@ -60,8 +60,8 @@ public class UserRepository {
         dataSource.changeUserInformation(changeUserInformation, callback);
     }
 
-    public void addUser(final User addNewUser, final CompletedCallback<Result<String>> callback) {
-        dataSource.addUser(addNewUser, callback);
+    public void addUser(final User userToAdd, final CompletedCallback<Result<String>> callback) {
+        dataSource.addUser(userToAdd, callback);
     }
 
     public void loadPhoneNumberList(final CompletedCallback<Result<List<String>>> callback) {

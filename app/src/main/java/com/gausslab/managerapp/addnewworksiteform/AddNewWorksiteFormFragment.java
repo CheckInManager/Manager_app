@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +22,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gausslab.managerapp.R;
+import com.gausslab.managerapp.databinding.FragmentAddnewworksiteformBinding;
 import com.gausslab.managerapp.model.Worksite;
-import com.google.android.gms.tasks.Task;
 
 import java.util.Calendar;
 
 public class AddNewWorksiteFormFragment extends Fragment {
+    private FragmentAddnewworksiteformBinding binding;
     private AddNewWorksiteFormViewModel addNewWorksiteFormViewModel;
     private DialogInterface.OnCancelListener dateCancelListener;
 
-    private EditText et_workName;
+    private EditText et_worksiteName;
     private EditText et_startDate;
     private EditText et_lastDate;
     private EditText et_location;
@@ -54,17 +54,18 @@ public class AddNewWorksiteFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_addnewworksiteform, container, false);
+        binding = FragmentAddnewworksiteformBinding.inflate(inflater, container, false);
+        et_worksiteName = binding.worksiteformEtWorksiteName;
+        et_startDate = binding.worksiteformEtStartDate;
+        et_lastDate = binding.worksiteformEtLastDate;
+        et_location = binding.worksiteformEtLocation;
+        bt_add = binding.worksitrformBtAdd;
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        et_workName = view.findViewById(R.id.worksiteform_et_workName);
-        et_startDate = view.findViewById(R.id.worksiteform_et_startDate);
-        et_lastDate = view.findViewById(R.id.worksiteform_et_lastDate);
-        et_location = view.findViewById(R.id.worksiteform_et_location);
-        bt_add = view.findViewById(R.id.worksitrform_bt_add);
 
         //region observer
         addNewWorksiteFormViewModel.addWorksiteFormSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -81,7 +82,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
             public void onChanged(Boolean isAdditionSuccessful) {
                 if (isAdditionSuccessful) {
                     AddNewWorksiteFormFragmentDirections.ActionWorksiteFormFragmentToQrEmailFragment action = AddNewWorksiteFormFragmentDirections.actionWorksiteFormFragmentToQrEmailFragment();
-                    action.setWorksiteName(et_workName.getText().toString());
+                    action.setWorksiteName(et_worksiteName.getText().toString());
                     NavHostFragment.findNavController(AddNewWorksiteFormFragment.this).navigate(action);
                 }
             }
@@ -91,7 +92,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
             @Override
             public void onChanged(AddNewWorksiteFormState addNewWorksiteFormState) {
                 if (addNewWorksiteFormState.getWorksiteNameErrorMessage() != null) {
-                    et_workName.setError(addNewWorksiteFormState.getLastDateErrorMessage());
+                    et_worksiteName.setError(addNewWorksiteFormState.getLastDateErrorMessage());
                 }
                 if (addNewWorksiteFormState.getStartDateErrorMessage() != null) {
                     et_startDate.setError(addNewWorksiteFormState.getStartDateErrorMessage());
@@ -154,7 +155,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(), et_lastDate.getText().toString())) {
-                    worksite = new Worksite(et_workName.getText().toString(), et_startDate.getText().toString(), et_lastDate.getText().toString(), et_location.getText().toString());
+                    worksite = new Worksite(et_worksiteName.getText().toString(), et_startDate.getText().toString(), et_lastDate.getText().toString(), et_location.getText().toString());
                     addNewWorksiteFormViewModel.addWorksite(worksite);
                     bt_add.setEnabled(false);
                 } else {
@@ -165,7 +166,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
             }
         });
 
-        et_workName.addTextChangedListener(new TextWatcher() {
+        et_worksiteName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 

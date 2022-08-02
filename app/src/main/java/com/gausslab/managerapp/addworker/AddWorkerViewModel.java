@@ -25,6 +25,7 @@ public class AddWorkerViewModel extends ViewModel {
             if (result instanceof Result.Success) {
                 phoneNumberList = ((Result.Success<List<String>>) result).getData();
             } else {
+
             }
         });
     }
@@ -37,8 +38,8 @@ public class AddWorkerViewModel extends ViewModel {
         }
     }
 
-    public void addUser(User addNewUser) {
-        userRepository.addUser(addNewUser, result -> {
+    public void addUser(User userToAdd) {
+        userRepository.addUser(userToAdd, result -> {
             if (result instanceof Result.Success) {
 
             } else {
@@ -53,6 +54,7 @@ public class AddWorkerViewModel extends ViewModel {
                 worksiteNameList = ((Result.Success<List<String>>) result).getData();
                 isWorksiteNameList.postValue(true);
             } else {
+
             }
         });
     }

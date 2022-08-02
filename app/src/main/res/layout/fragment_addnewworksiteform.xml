@@ -12,21 +12,21 @@
         tools:context=".addnewworksiteform.AddNewWorksiteFormFragment">
 
         <TextView
-            android:id="@+id/worksiteform_tv_workNameLabel"
+            android:id="@+id/worksiteform_tv_worksiteNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WorkName"
+            android:text="Worksite Name"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_workName"
-            app:layout_constraintStart_toStartOf="@+id/worksiteform_et_workName" />
+            app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_worksiteName"
+            app:layout_constraintStart_toStartOf="@+id/worksiteform_et_worksiteName" />
 
         <EditText
-            android:id="@+id/worksiteform_et_workName"
+            android:id="@+id/worksiteform_et_worksiteName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="88dp"
             android:ems="15"
-            android:hint="WorkName"
+            android:hint="Worksite Name"
             android:inputType="textEmailAddress"
             android:minHeight="50dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
             android:minHeight="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/worksiteform_et_workName" />
+            app:layout_constraintTop_toBottomOf="@id/worksiteform_et_worksiteName" />
 
         <TextView
             android:id="@+id/worksiteform_tv_lastDateLabel"

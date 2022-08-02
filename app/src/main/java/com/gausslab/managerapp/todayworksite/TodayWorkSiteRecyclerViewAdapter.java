@@ -40,7 +40,7 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Worksite currWorksite = worksiteList.get(position);
-        holder.workName.setText(currWorksite.getWorkName());
+        holder.workName.setText(currWorksite.getWorksiteName());
         if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override

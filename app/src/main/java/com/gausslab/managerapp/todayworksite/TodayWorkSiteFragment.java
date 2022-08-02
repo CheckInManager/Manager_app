@@ -40,6 +40,7 @@ public class TodayWorkSiteFragment extends Fragment {
     private List<Worksite> todayWorksiteList;
 
     private long pressedTime = 0;
+    private String todayCal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class TodayWorkSiteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //region Listener
         bt_addWorksite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,23 +98,11 @@ public class TodayWorkSiteFragment extends Fragment {
                 NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_addWorkerFragment2);
             }
         });
+        //endregion
     }
 
-
-
     private void init() {
-        Calendar cal = Calendar.getInstance();
-        String todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
-        String todayMonthCal = ((cal.get(Calendar.MONTH)+1)+"");
-        String todayDayCal = ((cal.get(Calendar.DATE))+"");
-        if(todayMonthCal.length()<2&&todayDayCal.length()<2){
-            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
-        } else if(todayMonthCal.length()<2){
-            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
-        } else if(todayDayCal.length()<2){
-            todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
-        }
-
+        todayInCalendar();
         todayWorkSiteViewModel.loadTodayWorksite(todayCal);
         todayWorksiteList = todayWorkSiteViewModel.getTodayWorksite();
 
@@ -121,5 +111,21 @@ public class TodayWorkSiteFragment extends Fragment {
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(fl_list.getId(), myFrag);
         transaction.commit();
+    }
+
+    private void todayInCalendar() {
+        Calendar cal = Calendar.getInstance();
+        todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+
+        String todayMonthCal = ((cal.get(Calendar.MONTH) + 1) + "");
+        String todayDayCal = ((cal.get(Calendar.DATE)) + "");
+
+        if (todayMonthCal.length() < 2 && todayDayCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        } else if (todayMonthCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+        } else if (todayDayCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        }
     }
 }

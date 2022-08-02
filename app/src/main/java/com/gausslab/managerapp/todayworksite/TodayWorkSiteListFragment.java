@@ -74,7 +74,7 @@ public class TodayWorkSiteListFragment extends Fragment {
             adapter = new TodayWorkSiteRecyclerViewAdapter(worksiteList, new OnTodayWorksiteContextMenuInteractionListener<Worksite>() {
                 @Override
                 public void onItemClick(Worksite obj) {
-                    String worksiteName = obj.getWorkName();
+                    String worksiteName = obj.getWorksiteName();
                     TodayWorkSiteFragmentDirections.ActionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment action = TodayWorkSiteFragmentDirections.actionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment();
                     action.setWorksiteName(worksiteName);
                     NavHostFragment.findNavController(TodayWorkSiteListFragment.this).navigate(action);

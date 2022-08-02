@@ -43,8 +43,8 @@ public class FirebaseDataSource implements DataSource {
                             List<Worksite> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
                             for (int i = 0; i < snaps.size(); i++) {
-                                String parsingStringStartDate = parsingDate(snaps.get(i).getString("startDate"));
-                                String parsingStringLastDate = parsingDate(snaps.get(i).getString("lastDate"));
+                                String parsingStringStartDate = parseDate(snaps.get(i).getString("startDate"));
+                                String parsingStringLastDate = parseDate(snaps.get(i).getString("lastDate"));
                                 if ((Integer.parseInt(parsingStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsingStringLastDate) >= Integer.parseInt(todayCal))) {
                                     Worksite toAdd = new Worksite((snaps.get(i).getString("workName")), snaps.get(i).getString("startDate"), snaps.get(i).getString("lastDate"), snaps.get(i).getString("location"));
                                     toReturn.add(toAdd);
@@ -58,13 +58,13 @@ public class FirebaseDataSource implements DataSource {
                 });
     }
 
-    public String parsingDate(String date) {
+    public String parseDate(String date) {
         String[] splitDate = date.split("/");
-        if(splitDate[1].length()<2){
-            splitDate[1] = "0"+splitDate[1];
+        if (splitDate[1].length() < 2) {
+            splitDate[1] = "0" + splitDate[1];
         }
-        if(splitDate[2].length()<2){
-            splitDate[2]="0"+splitDate[2];
+        if (splitDate[2].length() < 2) {
+            splitDate[2] = "0" + splitDate[2];
         }
         String strDate = String.join("", splitDate);
         return strDate;
@@ -74,7 +74,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void addWorksite(Worksite toAdd, CompletedCallback<Result<String>> callback) {
         Map<String, Object> worksite = new HashMap<String, Object>();
-        worksite.put("workName", toAdd.getWorkName());
+        worksite.put("workName", toAdd.getWorksiteName());
         worksite.put("startDate", toAdd.getStartDate());
         worksite.put("lastDate", toAdd.getLastDate());
         worksite.put("location", toAdd.getLocation());
@@ -129,7 +129,7 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void getUsersByWorksite(String worksiteName, ListenerCallback<Result<List<User>>> callback) {
+    public void getUserListByWorksite(String worksiteName, ListenerCallback<Result<List<User>>> callback) {
         db.collection("user")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -156,18 +156,13 @@ public class FirebaseDataSource implements DataSource {
         db.collection("user")
                 .whereEqualTo("phoneNumber", phoneNumber)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if(task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
                             List<DocumentSnapshot> snaps = task.getResult().getDocuments();
                             callback.onComplete(new Result.Success<User>(snaps.get(0).toObject(User.class)));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onComplete(new Result.Error(new Exception("error")));
                         }
                     }
@@ -183,18 +178,10 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void addUser(User addNewUser, CompletedCallback<Result<String>> callback) {
-        Map<String, Object> newUser = new HashMap<String,Object>();
-        newUser.put("accidentHistory",addNewUser.getAccidentHistory());
-        newUser.put("memo",addNewUser.getMemo());
-        newUser.put("password",addNewUser.getPassword());
-        newUser.put("phoneNumber",addNewUser.getPhoneNumber());
-        newUser.put("userImage",addNewUser.getUserImage());
-        newUser.put("userName",addNewUser.getUserName());
-        newUser.put("worksiteName",addNewUser.getWorksiteName());
+    public void addUser(User userToAdd, CompletedCallback<Result<String>> callback) {
         db.collection("user")
-                .document(addNewUser.getPhoneNumber())
-                .set(newUser);
+                .document(userToAdd.getPhoneNumber())
+                .set(userToAdd);
         callback.onComplete(new Result.Success<String>("Success"));
     }
 
@@ -203,15 +190,15 @@ public class FirebaseDataSource implements DataSource {
         db.collection("user")
                 .get()
                 .addOnCompleteListener(task -> {
-                   if(task.isSuccessful()){
-                       List<String> toReturn = new ArrayList<>();
-                       List<DocumentSnapshot> snaps= task.getResult().getDocuments();
-                       for(int i=0;i<snaps.size();i++){
-                           toReturn.add(snaps.get(i).getString("phoneNumber"));
-                       }
-                       callback.onComplete(new Result.Success<List<String>>(toReturn));
-                   }
-                   callback.onComplete(new Result.Error(new Exception("error")));
+                    if (task.isSuccessful()) {
+                        List<String> toReturn = new ArrayList<>();
+                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                        for (int i = 0; i < snaps.size(); i++) {
+                            toReturn.add(snaps.get(i).getString("phoneNumber"));
+                        }
+                        callback.onComplete(new Result.Success<List<String>>(toReturn));
+                    }
+                    callback.onComplete(new Result.Error(new Exception("error")));
                 });
     }
 
@@ -220,15 +207,15 @@ public class FirebaseDataSource implements DataSource {
         db.collection("worksite")
                 .get()
                 .addOnCompleteListener(task -> {
-                   if(task.isSuccessful()){
-                       List<String> toReturn = new ArrayList<>();
-                       List<DocumentSnapshot> snaps = task.getResult().getDocuments();
-                       for(int i=0;i<snaps.size();i++){
-                           toReturn.add(snaps.get(i).getString("workName"));
-                       }
-                       callback.onComplete(new Result.Success<List<String>>(toReturn));
-                   }
-                   callback.onComplete(new Result.Error(new Exception("error")));
+                    if (task.isSuccessful()) {
+                        List<String> toReturn = new ArrayList<>();
+                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                        for (int i = 0; i < snaps.size(); i++) {
+                            toReturn.add(snaps.get(i).getString("workName"));
+                        }
+                        callback.onComplete(new Result.Success<List<String>>(toReturn));
+                    }
+                    callback.onComplete(new Result.Error(new Exception("error")));
                 });
     }
 }
