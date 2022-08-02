@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="28dp"
-            android:text="Name"
+            android:text="@string/tv_nameLabel"
             app:layout_constraintEnd_toStartOf="@+id/addworker_sp_worksiteSpinner"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Name"
+            android:hint="@string/hint_name"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_nameLabel"
             app:layout_constraintStart_toStartOf="@+id/addworker_et_phoneNumber"
             app:layout_constraintTop_toTopOf="@+id/addworker_tv_nameLabel" />
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Phone Number"
+            android:text="@string/tv_phoneNumberLabel"
             app:layout_constraintEnd_toEndOf="@+id/addworker_tv_nameLabel"
             app:layout_constraintTop_toBottomOf="@+id/addworker_tv_nameLabel" />
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="phone"
-            android:hint="01012345678"
+            android:hint="@string/hint_phoneNumber"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_phoneNumberLabel"
             app:layout_constraintStart_toStartOf="@+id/addworker_et_password"
             app:layout_constraintTop_toTopOf="@+id/addworker_tv_phoneNumberLabel" />
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Password"
+            android:text="@string/tv_passwordLabel"
             app:layout_constraintEnd_toEndOf="@+id/addworker_tv_phoneNumberLabel"
             app:layout_constraintTop_toBottomOf="@+id/addworker_tv_phoneNumberLabel" />
 
@@ -77,8 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="password"
-            android:inputType="textPersonName"
+            android:hint="@string/hint_password"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_passwordLabel"
             app:layout_constraintStart_toStartOf="@+id/addworker_et_accidentHistory"
             app:layout_constraintTop_toTopOf="@+id/addworker_tv_passwordLabel" />
@@ -88,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Accident History"
+            android:text="@string/tv_accidentHistoryLabel"
             app:layout_constraintEnd_toEndOf="@+id/addworker_tv_passwordLabel"
             app:layout_constraintTop_toBottomOf="@+id/addworker_tv_passwordLabel" />
 
@@ -98,7 +97,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="accident History"
+            android:hint="@string/hint_accidentHistory"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_accidentHistoryLabel"
             app:layout_constraintStart_toStartOf="@+id/addworker_et_memo"
             app:layout_constraintTop_toTopOf="@+id/addworker_tv_accidentHistoryLabel" />
@@ -108,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Memo"
+            android:text="@string/tv_memoLabel"
             app:layout_constraintEnd_toEndOf="@+id/addworker_tv_accidentHistoryLabel"
             app:layout_constraintTop_toBottomOf="@+id/addworker_tv_accidentHistoryLabel" />
 
@@ -119,17 +118,17 @@
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            android:hint="memo"
+            android:hint="@string/hint_memo"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_memoLabel"
             app:layout_constraintStart_toStartOf="@+id/addworker_sp_worksiteSpinner"
             app:layout_constraintTop_toTopOf="@+id/addworker_tv_memoLabel" />
 
         <TextView
-            android:id="@+id/addworker_tv_worksiteName"
+            android:id="@+id/addworker_tv_worksiteNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="WorksiteName"
+            android:text="@string/tv_worksiteNameLabel"
             app:layout_constraintEnd_toEndOf="@+id/addworker_tv_memoLabel"
             app:layout_constraintTop_toBottomOf="@+id/addworker_tv_memoLabel" />
 
@@ -137,11 +136,11 @@
             android:id="@+id/addworker_sp_worksiteSpinner"
             android:layout_width="210dp"
             android:layout_height="25dp"
-            app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_worksiteName"
+            app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_worksiteNameLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/addworker_tv_nameLabel"
-            app:layout_constraintTop_toTopOf="@+id/addworker_tv_worksiteName" />
+            app:layout_constraintTop_toTopOf="@+id/addworker_tv_worksiteNameLabel" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline8"
@@ -155,7 +154,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Add"
+            android:text="@string/bt_formAdd"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addworker_sp_worksiteSpinner" />

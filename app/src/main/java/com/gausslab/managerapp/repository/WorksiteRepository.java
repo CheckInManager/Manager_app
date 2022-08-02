@@ -1,4 +1,4 @@
-package com.gausslab.managerapp.Repository;
+package com.gausslab.managerapp.repository;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

@@ -1,5 +1,33 @@
 <resources>
     <string name="app_name">ManagerApp</string>
+    <string name="tv_worksiteNameLabel">Worksite Name</string>
+    <string name="hint_worksiteName">Worksite Name</string>
+    <string name="tv_startDateLabel">Start Date</string>
+    <string name="hint_startDate">StartDate</string>
+    <string name="tv_lastDateLabel">Last Date</string>
+    <string name="hint_lastDate">Last Date</string>
+    <string name="tv_locationLabel">Location</string>
+    <string name="hint_location">Location</string>
+    <string name="bt_formAdd">Add</string>
+    <string name="tv_nameLabel">Name</string>
+    <string name="hint_name">Name</string>
+    <string name="tv_phoneNumberLabel">Phone Number</string>
+    <string name="hint_phoneNumber">01012345678</string>
+    <string name="tv_passwordLabel">Password</string>
+    <string name="hint_password">password</string>
+    <string name="tv_accidentHistoryLabel">Accident History</string>
+    <string name="hint_accidentHistory">accident History</string>
+    <string name="tv_memoLabel">Memo</string>
+    <string name="hint_memo">memo</string>
+    <string name="bt_worksite">Work Site</string>
+    <string name="bt_addWorker">Add worker</string>
+    <string name="bt_addNotice">Add Notice</string>
+    <string name="bt_map">map</string>
+    <string name="bt_share">share</string>
+    <string name="et_inputYourEmail">Input your Email</string>
+    <string name="bt_home">home</string>
+    <string name="bt_addWorksite">+ Add WorkSite</string>
+    <string name="tv_careerLabel">Career</string>
+    <string name="et_career">career</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

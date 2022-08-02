@@ -9,8 +9,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 
-import com.gausslab.managerapp.Repository.UserRepository;
-import com.gausslab.managerapp.Repository.WorksiteRepository;
+import com.gausslab.managerapp.repository.UserRepository;
+import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.datasource.FirebaseDataSource;
 
 import java.util.concurrent.ExecutorService;

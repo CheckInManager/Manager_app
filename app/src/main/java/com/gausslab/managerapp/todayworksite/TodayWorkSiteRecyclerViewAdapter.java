@@ -1,9 +1,6 @@
 package com.gausslab.managerapp.todayworksite;
 
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -40,26 +37,12 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Worksite currWorksite = worksiteList.get(position);
-        holder.workName.setText(currWorksite.getWorksiteName());
+        holder.worksiteName.setText(currWorksite.getWorksiteName());
         if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ((OnTodayWorksiteContextMenuInteractionListener<Worksite>) listener).onItemClick(worksiteList.get(holder.getAdapterPosition()));
-                }
-            });
-            holder.card.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-                @Override
-                public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                    menu.setHeaderTitle("Select Action");
-                    MenuItem returnWorksite = menu.add(Menu.NONE, 1, 1, "Return Worksite");
-                    returnWorksite.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            ((OnTodayWorksiteContextMenuInteractionListener<Worksite>) listener).onContextReturnWorksite(worksiteList.get(holder.getAdapterPosition()));
-                            return true;
-                        }
-                    });
                 }
             });
         }
@@ -77,12 +60,12 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final CardView card;
-        public final TextView workName;
+        public final TextView worksiteName;
 
         public ViewHolder(ObjectTodayworksiteBinding binding) {
             super(binding.getRoot());
             card = binding.objTodayworksiteCard;
-            workName = binding.objTodayworksiteTvWorkName;
+            worksiteName = binding.objTodayworksiteTvWorkName;
         }
 
         @Override

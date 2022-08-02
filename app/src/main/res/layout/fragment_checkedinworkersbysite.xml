@@ -42,7 +42,7 @@
             android:id="@+id/checkedInWorkersBySite_bt_worksite"
             style="@style/navBar_button"
             android:layout_marginTop="20dp"
-            android:text="Work Site"
+            android:text="@string/bt_worksite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline4" />
@@ -50,7 +50,7 @@
         <Button
             android:id="@+id/checkedInWorkersBySite_bt_addWorker"
             style="@style/navBar_button"
-            android:text="Add worker"
+            android:text="@string/bt_addWorker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
         <Button
             android:id="@+id/checkedInWorkersBySite_bt_addNotice"
             style="@style/navBar_button"
-            android:text="Add Notice"
+            android:text="@string/bt_addNotice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
         <Button
             android:id="@+id/checkedInWorkersBySite_bt_map"
             style="@style/navBar_button"
-            android:text="map"
+            android:text="@string/bt_map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

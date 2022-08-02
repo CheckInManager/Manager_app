@@ -85,7 +85,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
         bt_addWorker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(R.id.action_checkInWorkdersBySiteFragment_to_addWorkerFragment2);
+                NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(R.id.action_checkInWorkdersBySiteFragment_to_addWorkerFragment);
             }
         });
         //endregion

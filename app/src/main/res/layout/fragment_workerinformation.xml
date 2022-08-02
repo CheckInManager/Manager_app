@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="28dp"
-            android:text="Name"
+            android:text="@string/tv_nameLabel"
             app:layout_constraintEnd_toStartOf="@+id/workerinformation_et_memo"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="TextView"
+            android:text="@string/hint_name"
             app:layout_constraintStart_toStartOf="@+id/workerinformation_et_phoneNumber"
             app:layout_constraintTop_toBottomOf="@+id/workinformation_iv_image" />
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Phone Number"
+            android:text="@string/tv_phoneNumberLabel"
             app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_nameLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_nameLabel" />
 
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="TextView"
+            android:text="@string/hint_phoneNumber"
             app:layout_constraintStart_toStartOf="@+id/workerinformation_et_career"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_name" />
 
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Career"
+            android:text="@string/tv_careerLabel"
             app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_phoneNumberLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_phoneNumberLabel" />
 
@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="TextView"
+            android:text="@string/et_career"
             app:layout_constraintStart_toStartOf="@+id/workerinformation_et_accidentHistory"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_phoneNumber" />
 
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Accident History"
+            android:text="@string/tv_accidentHistoryLabel"
             app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_careerLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_careerLabel" />
 
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Accident History"
+            android:hint="@string/hint_accidentHistory"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="@+id/workerinformation_tv_accidentHistoryLabel"
             app:layout_constraintStart_toStartOf="@+id/workerinformation_et_memo"
@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Memo"
+            android:text="@string/tv_memoLabel"
             app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_accidentHistoryLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_accidentHistoryLabel" />
 
@@ -134,7 +134,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="32dp"
             android:backgroundTint="#F1FDFF"
-            android:text="complete"
+            android:text="@string/bt_formAdd"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

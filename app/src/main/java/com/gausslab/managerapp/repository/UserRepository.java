@@ -1,4 +1,4 @@
-package com.gausslab.managerapp.Repository;
+package com.gausslab.managerapp.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

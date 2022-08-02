@@ -46,7 +46,7 @@ public class FirebaseDataSource implements DataSource {
                                 String parsingStringStartDate = parseDate(snaps.get(i).getString("startDate"));
                                 String parsingStringLastDate = parseDate(snaps.get(i).getString("lastDate"));
                                 if ((Integer.parseInt(parsingStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsingStringLastDate) >= Integer.parseInt(todayCal))) {
-                                    Worksite toAdd = new Worksite((snaps.get(i).getString("workName")), snaps.get(i).getString("startDate"), snaps.get(i).getString("lastDate"), snaps.get(i).getString("location"));
+                                    Worksite toAdd = new Worksite((snaps.get(i).getString("worksiteName")), snaps.get(i).getString("startDate"), snaps.get(i).getString("lastDate"), snaps.get(i).getString("location"));
                                     toReturn.add(toAdd);
                                 }
                             }
@@ -206,7 +206,7 @@ public class FirebaseDataSource implements DataSource {
                         List<String> toReturn = new ArrayList<>();
                         List<DocumentSnapshot> snaps = task.getResult().getDocuments();
                         for (int i = 0; i < snaps.size(); i++) {
-                            toReturn.add(snaps.get(i).getString("workName"));
+                            toReturn.add(snaps.get(i).getString("worksiteName"));
                         }
                         callback.onComplete(new Result.Success<List<String>>(toReturn));
                     }

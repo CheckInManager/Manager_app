@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gausslab.managerapp.Repository.UserRepository;
-import com.gausslab.managerapp.Repository.WorksiteRepository;
+import com.gausslab.managerapp.repository.UserRepository;
+import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class AddWorkerViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();

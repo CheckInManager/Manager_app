@@ -52,7 +52,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="#C5E1F8"
             android:enabled="false"
-            android:text="Work Site"
+            android:text="@string/bt_worksite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline4" />
@@ -60,7 +60,7 @@
         <Button
             android:id="@+id/todayworksite_bt_addWorker"
             style="@style/navBar_button"
-            android:text="Add worker"
+            android:text="@string/bt_addWorker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,7 @@
         <Button
             android:id="@+id/todayworksite_bt_addNotice"
             style="@style/navBar_button"
-            android:text="Add Notice"
+            android:text="@string/bt_addNotice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
         <Button
             android:id="@+id/todayworksite_map"
             style="@style/navBar_button"
-            android:text="map"
+            android:text="@string/bt_map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
-        android:text="+ Add WorkSite"
+        android:text="@string/bt_addWorksite"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"

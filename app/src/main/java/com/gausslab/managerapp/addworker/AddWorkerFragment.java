@@ -61,6 +61,7 @@ public class AddWorkerFragment extends Fragment {
         et_memo = binding.addworkerEtMemo;
         sp_worksiteSpinner = binding.addworkerSpWorksiteSpinner;
         bt_add = binding.addworkerBtAdd;
+
         return binding.getRoot();
     }
 

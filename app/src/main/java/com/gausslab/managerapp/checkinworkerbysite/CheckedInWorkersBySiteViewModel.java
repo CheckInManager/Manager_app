@@ -3,7 +3,7 @@ package com.gausslab.managerapp.checkinworkerbysite;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gausslab.managerapp.Repository.UserRepository;
+import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.model.User;
 
 import java.util.List;

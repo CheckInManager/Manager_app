@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gausslab.managerapp.Repository.UserRepository;
+import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 
