@@ -20,8 +20,7 @@ import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentWorkerinformationBinding;
 import com.gausslab.managerapp.model.User;
 
-public class WorkerInformationFragment extends Fragment
-{
+public class WorkerInformationFragment extends Fragment {
     private FragmentWorkerinformationBinding binding;
     private WorkerInformationViewModel workerInformationViewModel;
 
@@ -35,22 +34,19 @@ public class WorkerInformationFragment extends Fragment
 
     private User currUser;
 
-    public WorkerInformationFragment()
-    {
+    public WorkerInformationFragment() {
 
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         binding = FragmentWorkerinformationBinding.inflate(inflater, container, false);
         iv_image = binding.workinformationIvImage;
         tv_name = binding.workerinformationEtName;
@@ -66,35 +62,29 @@ public class WorkerInformationFragment extends Fragment
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        bt_complete.setOnClickListener(new View.OnClickListener()
-        {
+        //region Listener
+        bt_complete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getUserImage(), currUser.getCareer(), currUser.getWorksiteName(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
                 workerInformationViewModel.changeInformation(currUser);
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
             }
         });
+        //endregion
     }
 
-    private void init()
-    {
+    private void init() {
         String phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         workerInformationViewModel.loadUserInformation(phoneNumber);
-        workerInformationViewModel.userInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>()
-        {
+        workerInformationViewModel.userInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isLoaded)
-            {
-                if (isLoaded)
-                {
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
                     currUser = workerInformationViewModel.getUserInformation();
-
                     tv_name.setText(currUser.getUserName());
                     tv_phoneNumber.setText(currUser.getPhoneNumber());
                     tv_career.setText(currUser.getCareer());
