@@ -51,9 +51,9 @@ public class TodayWorkSiteFragment extends Fragment {
             public void handleOnBackPressed() {
                 if (System.currentTimeMillis() > pressedTime + 2000) {
                     pressedTime = System.currentTimeMillis();
-                    Toast.makeText(requireContext(), "Press once more to exit", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.toast_beforeExit, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(requireContext(), "Exit the app", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.toast_exit, Toast.LENGTH_SHORT).show();
                     requireActivity().finish();
                 }
             }

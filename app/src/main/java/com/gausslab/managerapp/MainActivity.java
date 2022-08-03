@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 worksiteRepository.setFileService(fileService);
                 userRepository.setFileService(fileService);
                 fileService.setExecutor(executorService);
+                App.setFileService(fileService);
             }
 
             @Override

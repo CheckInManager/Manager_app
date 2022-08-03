@@ -12,4 +12,18 @@ public class App extends Application {
     public static String getWorksiteQrImagePath(String workName) {
         return "worksiteQrImages/worksite_" + workName + ".jpg";
     }
+
+
+    public static String getFileProvider()
+    {
+        return "com.gausslab.managerapp.fileprovider";
+    }
+    public static FileService getFileService()
+    {
+        return fileService;
+    }
+    public static void setFileService(FileService fs)
+    {
+        fileService = fs;
+    }
 }

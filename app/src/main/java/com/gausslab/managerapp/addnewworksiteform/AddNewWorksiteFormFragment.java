@@ -161,7 +161,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
                     addNewWorksiteFormViewModel.addWorksite(worksite);
                     bt_add.setEnabled(false);
                 } else {
-                    Toast.makeText(requireContext(), "Change the date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.toast_changeDate, Toast.LENGTH_SHORT).show();
                     et_startDate.setText(null);
                     et_lastDate.setText(null);
                 }

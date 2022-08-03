@@ -29,5 +29,12 @@
     <string name="bt_addWorksite">+ Add WorkSite</string>
     <string name="tv_careerLabel">Career</string>
     <string name="et_career">career</string>
+    <string name="toast_changeDate">Change the date</string>
+    <string name="toast_success">Success</string>
+    <string name="toast_changePhoneNumber">Please change phone number</string>
+    <string name="toast_beforeExit">Press once more to exit</string>
+    <string name="toast_exit">Exit the app</string>
+    <string name="bt_takePicture">Take Picture</string>
+    <string name="bt_importPicture">Import Picture</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

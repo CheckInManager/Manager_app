@@ -1,6 +1,8 @@
 package com.gausslab.managerapp;
 
 import android.app.Service;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -8,6 +10,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.gausslab.managerapp.datasource.CompletedCallback;
@@ -17,6 +20,7 @@ import com.gausslab.managerapp.model.Result;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.concurrent.Executor;
 
 public class FileService extends Service {
@@ -46,10 +50,14 @@ public class FileService extends Service {
         return binder;
     }
 
-    private File createFile(File parent, String fileName) {
-        File file = new File(parent, fileName);
+    public File createFile(String subPath, String fileName) {
+        return createFile(subPath + fileName);
+    }
+
+    private File createFile(String destination) {
+        File file = new File(imageStorageDir, destination);
         try {
-            boolean b = file.getParentFile().mkdirs();
+            file.getParentFile().mkdirs();
             file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,7 +69,7 @@ public class FileService extends Service {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                File localFile = createImageFile(destination);
+                File localFile = createFile(destination);
                 try {
                     FileOutputStream outStream = new FileOutputStream(localFile);
                     toSave.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
@@ -109,15 +117,36 @@ public class FileService extends Service {
         });
     }
 
-    public File createImageFile(String destination) {
-        return createFile(imageStorageDir, destination);
-    }
 
     public void uploadFileToDatabase(File toSave, String destination, FileServiceCallback<Result<Uri>> callback) {
         firebaseDataSource.uploadFile(toSave, destination, new CompletedCallback<Result<Uri>>() {
             @Override
             public void onComplete(Result result) {
                 callback.onComplete(result);
+            }
+        });
+    }
+
+    public void saveBitmapToMediaStore(String displayName, Bitmap toSave, FileServiceCallback<Result<String>> callback) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DISPLAY_NAME, displayName);
+                values.put(MediaStore.Images.Media.TITLE, displayName + " image");
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+                try {
+                    ContentResolver cr = getContentResolver();
+                    Uri uri = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                    OutputStream outputStream = cr.openOutputStream(uri);
+                    toSave.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
+                    callback.onComplete(new Result.Success<String>("Successfully Added Image"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    callback.onComplete(new Result.Error(e));
+                }
             }
         });
     }
@@ -129,6 +158,9 @@ public class FileService extends Service {
     public void setExecutor(Executor e) {
         executor = e;
     }
+
+
+
 
     public interface FileServiceCallback<T> {
         void onComplete(T result);

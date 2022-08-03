@@ -30,4 +30,11 @@
     <string name="bt_addWorksite">+ 작업장 추가</string>
     <string name="tv_careerLabel">경력</string>
     <string name="et_career">경력을 입력하세요</string>
+    <string name="toast_changeDate">날짜를 변경하세요</string>
+    <string name="toast_success">성공</string>
+    <string name="toast_changePhoneNumber">핸드폰 번호 바꾸세요</string>
+    <string name="toast_beforeExit">한 번 더 누르면 종료</string>
+    <string name="toast_exit">앱을 종료합니다</string>
+    <string name="bt_takePicture">Take Picture</string>
+    <string name="bt_importPicture">Import Picture</string>
 </resources>

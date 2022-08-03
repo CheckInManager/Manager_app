@@ -1,13 +1,18 @@
 package com.gausslab.managerapp.addworker;
 
+import android.graphics.Bitmap;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.gausslab.managerapp.App;
+import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
+import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +59,18 @@ public class AddWorkerViewModel extends ViewModel {
                 isWorksiteNameList.postValue(true);
             } else {
 
+            }
+        });
+    }
+
+    public void saveBitmapToMediaStore(Bitmap bm)
+    {
+        FileService fileService = App.getFileService();
+        fileService.saveBitmapToMediaStore("taskStepImage_" + Timestamp.now().getSeconds(), bm, new FileService.FileServiceCallback<Result<String>>()
+        {
+            @Override
+            public void onComplete(Result result)
+            {
             }
         });
     }
