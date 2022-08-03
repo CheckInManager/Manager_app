@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/todayWorkSiteFragment">
+
+    <fragment
+        android:id="@+id/todayWorkSiteFragment"
+        android:name="com.gausslab.managerapp.todayworksite.TodayWorkSiteFragment"
+        android:label="fragment_todayworksite"
+        tools:layout="@layout/fragment_todayworksite" >
+        <action
+            android:id="@+id/action_todayWorkSiteFragment_to_worksiteFormFragment"
+            app:destination="@id/worksiteFormFragment" />
+        <action
+            android:id="@+id/action_todayWorkSiteFragment_to_checkInWorkdersBySiteFragment"
+            app:destination="@id/checkInWorkdersBySiteFragment" />
+        <action
+            android:id="@+id/action_todayWorkSiteFragment_to_addWorkerFragment"
+            app:destination="@id/addWorkerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/worksiteFormFragment"
+        android:name="com.gausslab.managerapp.addnewworksiteform.AddNewWorksiteFormFragment"
+        android:label="fragment_worksiteform"
+        tools:layout="@layout/fragment_addnewworksiteform" >
+        <action
+            android:id="@+id/action_worksiteFormFragment_to_qrEmailFragment"
+            app:destination="@id/qrEmailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/qrEmailFragment"
+        android:name="com.gausslab.managerapp.qremailfragment.QrEmailFragment"
+        android:label="fragment_qremail"
+        tools:layout="@layout/fragment_qremail" >
+        <argument
+            android:name="worksiteName"
+            android:defaultValue="worksite"
+            app:argType="string"/>
+        <argument
+            android:name="worksiteLocation"
+            android:defaultValue="worksiteLocation"
+            app:argType="string"/>
+        <argument
+            android:name="worksiteStartDate"
+            android:defaultValue="worksiteStartDate"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_qrEmailFragment_to_todayWorkSiteFragment"
+            app:destination="@id/todayWorkSiteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkInWorkdersBySiteFragment"
+        android:name="com.gausslab.managerapp.checkinworkerbysite.CheckedInWorkersBySiteFragment"
+        android:label="fragment_checkinworkdersbysite"
+        tools:layout="@layout/fragment_checkedinworkersbysite">
+        <argument
+            android:name="worksiteName"
+            android:defaultValue="worksite"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_checkInWorkdersBySiteFragment_to_userInformationFragment"
+            app:destination="@id/userInformationFragment" />
+        <action
+            android:id="@+id/action_checkInWorkdersBySiteFragment_to_todayWorkSiteFragment"
+            app:destination="@id/todayWorkSiteFragment" />
+        <action
+            android:id="@+id/action_checkInWorkdersBySiteFragment_to_addWorkerFragment"
+            app:destination="@id/addWorkerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userInformationFragment"
+        android:name="com.gausslab.managerapp.workerinformation.WorkerInformationFragment"
+        android:label="fragment_userinformation"
+        tools:layout="@layout/fragment_workerinformation">
+        <argument
+            android:name="phoneNumber"
+            android:defaultValue="01000000000"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_userInformationFragment_to_checkInWorkdersBySiteFragment"
+            app:destination="@id/checkInWorkdersBySiteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addWorkerFragment"
+        android:name="com.gausslab.managerapp.addworker.AddWorkerFragment"
+        android:label="AddWorkerFragment"
+        tools:layout="@layout/fragment_addworker"/>
+</navigation>

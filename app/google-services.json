@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "177719631278",
+    "project_id": "checkinmanager-b0690",
+    "storage_bucket": "checkinmanager-b0690.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177719631278:android:5eb5db8f48a6470c7fbc3f",
+        "android_client_info": {
+          "package_name": "com.gausslab.managerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177719631278-55e975a9itlhr094gv7ol870vcphj3v1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg0CxMVSwHFm6XqBM1Y5nXITfRzRP05bI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177719631278-55e975a9itlhr094gv7ol870vcphj3v1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

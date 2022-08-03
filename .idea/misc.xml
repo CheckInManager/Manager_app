@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../.gradle/caches/transforms-3/6967ad6a4863567a1cbd01c72e47ca73/transformed/appcompat-1.4.2/res/layout/support_simple_spinner_dropdown_item.xml" value="0.3151041666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.26875" />
+        <entry key="app/src/main/res/layout/fragment_addnewworksiteform.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/fragment_addworker.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/fragment_checkedinworkersbysite.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/fragment_qremail.xml" value="0.48854166666666665" />
+        <entry key="app/src/main/res/layout/fragment_todayworksite.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/fragment_todayworksite_list.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/fragment_workerinformation.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/object_checkedinworkersbysite.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/object_todayworksite.xml" value="0.48854166666666665" />
+        <entry key="app/src/main/res/layout/object_workeraccidenthistorys.xml" value="0.4875" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

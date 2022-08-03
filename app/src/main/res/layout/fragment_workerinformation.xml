@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".workerinformation.WorkerInformationFragment">
+
+        <ImageView
+            android:id="@+id/workinformation_iv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guideline10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/workerinformation_tv_nameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/tv_nameLabel"
+            app:layout_constraintEnd_toStartOf="@+id/workerinformation_et_memo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+        <TextView
+            android:id="@+id/workerinformation_et_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/hint_name"
+            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_phoneNumber"
+            app:layout_constraintTop_toBottomOf="@+id/workinformation_iv_image" />
+
+        <TextView
+            android:id="@+id/workerinformation_tv_phoneNumberLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/tv_phoneNumberLabel"
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_nameLabel"
+            app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_nameLabel" />
+
+        <TextView
+            android:id="@+id/workerinformation_et_phoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/hint_phoneNumber"
+            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_career"
+            app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_name" />
+
+        <TextView
+            android:id="@+id/workerinformation_tv_careerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/tv_careerLabel"
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_phoneNumberLabel"
+            app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_phoneNumberLabel" />
+
+        <TextView
+            android:id="@+id/workerinformation_et_career"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/et_career"
+            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_accidentHistory"
+            app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_phoneNumber" />
+
+        <TextView
+            android:id="@+id/workerinformation_tv_accidentHistoryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/tv_accidentHistoryLabel"
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_careerLabel"
+            app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_careerLabel" />
+
+        <EditText
+            android:id="@+id/workerinformation_et_accidentHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_accidentHistory"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/workerinformation_tv_accidentHistoryLabel"
+            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_memo"
+            app:layout_constraintTop_toTopOf="@+id/workerinformation_tv_accidentHistoryLabel" />
+
+        <TextView
+            android:id="@+id/workerinformation_tv_memoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/tv_memoLabel"
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_accidentHistoryLabel"
+            app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_accidentHistoryLabel" />
+
+        <EditText
+            android:id="@+id/workerinformation_et_memo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintBottom_toBottomOf="@+id/workerinformation_tv_memoLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/workerinformation_tv_nameLabel"
+            app:layout_constraintTop_toTopOf="@+id/workerinformation_tv_memoLabel" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <Button
+            android:id="@+id/workerinformation_bt_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="#F1FDFF"
+            android:text="@string/bt_formAdd"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_memo" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
