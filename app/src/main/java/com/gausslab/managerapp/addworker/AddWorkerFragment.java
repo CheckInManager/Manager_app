@@ -179,7 +179,7 @@ public class AddWorkerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 User userToAdd = new User(et_phoneNumber.getText().toString(),
-                        et_password.getText().toString(), et_name.getText().toString(), iv_image.getDrawable().toString(),
+                        et_password.getText().toString(), et_name.getText().toString(),
                         null, sp_worksiteSpinner.getSelectedItem().toString(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
                 if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
                     addWorkerViewModel.addUser(userToAdd);

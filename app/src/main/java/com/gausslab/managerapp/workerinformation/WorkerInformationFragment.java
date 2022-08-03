@@ -69,7 +69,7 @@ public class WorkerInformationFragment extends Fragment {
         bt_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getUserImage(), currUser.getCareer(), currUser.getWorksiteName(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
+                currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getCareer(), currUser.getWorksiteName(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
                 workerInformationViewModel.changeInformation(currUser);
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
             }

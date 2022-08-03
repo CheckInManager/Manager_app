@@ -4,7 +4,6 @@ public class User {
     private String phoneNumber;
     private String password;
     private String userName;
-    private String userImage;
     private String career;
     private String worksiteName;
     private String accidentHistory;
@@ -13,11 +12,10 @@ public class User {
     public User() {
     }
 
-    public User(String phoneNumber, String password, String userName, String userImage, String career, String worksiteName, String accidentHistory, String memo) {
+    public User(String phoneNumber, String password, String userName, String career, String worksiteName, String accidentHistory, String memo) {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.userName = userName;
-        this.userImage = userImage;
         this.career = career;
         this.worksiteName = worksiteName;
         this.accidentHistory = accidentHistory;
@@ -48,13 +46,6 @@ public class User {
         this.userName = userName;
     }
 
-    public String getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
-    }
 
     public String getCareer() {
         return career;
