@@ -1,6 +1,7 @@
 package com.gausslab.managerapp.addworker;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -66,11 +67,21 @@ public class AddWorkerViewModel extends ViewModel {
     public void saveBitmapToMediaStore(Bitmap bm)
     {
         FileService fileService = App.getFileService();
-        fileService.saveBitmapToMediaStore("taskStepImage_" + Timestamp.now().getSeconds(), bm, new FileService.FileServiceCallback<Result<String>>()
+        fileService.saveBitmapToMediaStore("userImage_" + Timestamp.now().getSeconds(), bm, new FileService.FileServiceCallback<Result<String>>()
         {
             @Override
             public void onComplete(Result result)
             {
+            }
+        });
+    }
+
+    public void saveUserImage(User user,Bitmap userImage){
+        userRepository.saveUserImage(user,userImage, result->{
+            if(result instanceof Result.Success){
+
+            }else{
+
             }
         });
     }

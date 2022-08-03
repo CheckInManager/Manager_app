@@ -1,8 +1,13 @@
 package com.gausslab.managerapp.repository;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.DataSource;
@@ -10,6 +15,7 @@ import com.gausslab.managerapp.datasource.ListenerCallback;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +72,26 @@ public class UserRepository {
 
     public void loadPhoneNumberList(final CompletedCallback<Result<List<String>>> callback) {
         dataSource.getPhoneNumberList(callback);
+    }
+
+    public void saveUserImage(final User user, final Bitmap userImage, CompletedCallback<Result>callback){
+        String localDestinationPath = App.getUserImagePath(user.getPhoneNumber());
+        fileService.saveBitmapToDisk(localDestinationPath, userImage, new FileService.FileServiceCallback<Result<File>>() {
+            @Override
+            public void onComplete(Result<File> result) {
+                if(result instanceof Result.Success){
+                    File localFile = ((Result.Success<File>)result).getData();
+                    fileService.uploadFileToDatabase(localFile, localDestinationPath, new FileService.FileServiceCallback<Result<Uri>>() {
+                        @Override
+                        public void onComplete(Result<Uri> result) {
+                            callback.onComplete(result);
+                        }
+                    });
+                }else{
+                    callback.onComplete(new Result.Error(new Exception("UserRepository : saveUserImage() : Problem saving image bitmap to disk")));
+                }
+            }
+        });
     }
 
 

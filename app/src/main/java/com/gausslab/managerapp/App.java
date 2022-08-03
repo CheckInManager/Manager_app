@@ -13,17 +13,20 @@ public class App extends Application {
         return "worksiteQrImages/worksite_" + workName + ".jpg";
     }
 
+    public static String getUserImagePath(String userPhoneNumber) {
+        return "userImages/user_" + userPhoneNumber + ".jpg";
+    }
 
-    public static String getFileProvider()
-    {
+
+    public static String getFileProvider() {
         return "com.gausslab.managerapp.fileprovider";
     }
-    public static FileService getFileService()
-    {
+
+    public static FileService getFileService() {
         return fileService;
     }
-    public static void setFileService(FileService fs)
-    {
+
+    public static void setFileService(FileService fs) {
         fileService = fs;
     }
 }

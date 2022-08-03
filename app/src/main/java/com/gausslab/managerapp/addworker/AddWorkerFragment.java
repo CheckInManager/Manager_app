@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -63,6 +64,7 @@ public class AddWorkerFragment extends Fragment {
 
     private FileService fileService;
     private File imageFile;
+    private Bitmap changeBitmap;
 
     public AddWorkerFragment() {
 
@@ -109,6 +111,7 @@ public class AddWorkerFragment extends Fragment {
                             iv_image.setImageBitmap(bitmap);
                             addWorkerViewModel.saveBitmapToMediaStore(bitmap);
                             iv_image.invalidate();
+                            changeBitmap = ((BitmapDrawable)iv_image.getDrawable()).getBitmap();
                         }
                     }
                 }
@@ -126,6 +129,7 @@ public class AddWorkerFragment extends Fragment {
                             selectedImage = result.getData().getData();
                             iv_image.setImageURI(selectedImage);
                             iv_image.invalidate();
+                            changeBitmap=((BitmapDrawable)iv_image.getDrawable()).getBitmap();
                         }
                     }
                 });
@@ -183,6 +187,7 @@ public class AddWorkerFragment extends Fragment {
                         null, sp_worksiteSpinner.getSelectedItem().toString(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
                 if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
                     addWorkerViewModel.addUser(userToAdd);
+                    addWorkerViewModel.saveUserImage(userToAdd,changeBitmap);
                     Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
                     NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
                 } else {
