@@ -115,13 +115,13 @@ public class WorksiteRepository {
         return worksiteQrDrawableMap.get(workName);
     }
 
-    public void loadQrDrawableForWorksite(String workPath, CompletedCallback<Result<Drawable>> callback) {
-        fileService.getImageDrawable(App.getWorksiteQrImagePath(workPath), new FileService.FileServiceCallback<Result<Drawable>>() {
+    public void loadQrDrawableForWorksite(String worksiteQrImagePath, CompletedCallback<Result<Drawable>> callback) {
+        fileService.getImageDrawable(App.getWorksiteQrImagePath(worksiteQrImagePath), new FileService.FileServiceCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result result) {
                 if (result instanceof Result.Success) {
                     Drawable drawable = ((Result.Success<Drawable>) result).getData();
-                    worksiteQrDrawableMap.put(workPath, drawable);
+                    worksiteQrDrawableMap.put(worksiteQrImagePath, drawable);
                 }
                 callback.onComplete(result);
             }

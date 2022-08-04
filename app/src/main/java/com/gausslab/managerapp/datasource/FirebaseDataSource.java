@@ -134,7 +134,7 @@ public class FirebaseDataSource implements DataSource {
                             List<DocumentSnapshot> snaps = value.getDocuments();
                             for (DocumentSnapshot snap:snaps) {
                                 if (snap.getString("worksiteName").equals(worksiteName)) {
-                                    User toAdd = new User(snap.getString("phoneNumber"), snap.getString("password"), snap.getString("userName"), snap.getString("career"), snap.getString("worksiteName"), snap.getString("accidentHistory"), snap.getString("memo"));
+                                    User toAdd = snap.toObject(User.class);
                                     toReturn.add(toAdd);
                                 }
                             }
