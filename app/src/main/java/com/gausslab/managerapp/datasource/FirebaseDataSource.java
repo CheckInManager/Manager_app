@@ -44,9 +44,9 @@ public class FirebaseDataSource implements DataSource {
                             List<DocumentSnapshot> snaps = value.getDocuments();
                             for (DocumentSnapshot snap:snaps) {
                                 String parsedStringStartDate = parseDate(snap.getString("startDate"));
-                                String parsedStringLastDate = parseDate(snap.getString("lastDate"));
-                                if ((Integer.parseInt(parsedStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsedStringLastDate) >= Integer.parseInt(todayCal))) {
-                                    Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getString("startDate"), snap.getString("lastDate"), snap.getString("location"));
+                                String parsedStringEndDate = parseDate(snap.getString("endDate"));
+                                if ((Integer.parseInt(parsedStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsedStringEndDate) >= Integer.parseInt(todayCal))) {
+                                    Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getString("startDate"), snap.getString("endDate"), snap.getString("location"));
                                     toReturn.add(toAdd);
                                 }
                             }

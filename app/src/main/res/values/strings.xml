@@ -4,8 +4,8 @@
     <string name="hint_worksiteName">Worksite Name</string>
     <string name="tv_startDateLabel">Start Date</string>
     <string name="hint_startDate">StartDate</string>
-    <string name="tv_lastDateLabel">Last Date</string>
-    <string name="hint_lastDate">Last Date</string>
+    <string name="tv_endDateLabel">End Date</string>
+    <string name="hint_endDate">End Date</string>
     <string name="tv_locationLabel">Location</string>
     <string name="hint_location">Location</string>
     <string name="bt_formAdd">Add</string>

@@ -3,13 +3,13 @@ package com.gausslab.managerapp.model;
 public class Worksite {
     private String worksiteName;
     private String startDate;
-    private String lastDate;
+    private String endDate;
     private String location;
 
-    public Worksite(String worksiteName, String startDate, String lastDate, String location) {
+    public Worksite(String worksiteName, String startDate, String endDate, String location) {
         this.worksiteName = worksiteName;
         this.startDate = startDate;
-        this.lastDate = lastDate;
+        this.endDate = endDate;
         this.location = location;
     }
 
@@ -29,12 +29,12 @@ public class Worksite {
         this.startDate = startDate;
     }
 
-    public String getLastDate() {
-        return lastDate;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setLastDate(String lastDate) {
-        this.lastDate = lastDate;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public String getLocation() {

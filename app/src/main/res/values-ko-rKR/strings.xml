@@ -5,8 +5,8 @@
     <string name="hint_worksiteName">작업장 이름을 적으세요</string>
     <string name="tv_startDateLabel">시작 날짜</string>
     <string name="hint_startDate">시작 날짜를 적으세요</string>
-    <string name="tv_lastDateLabel">종료 날짜</string>
-    <string name="hint_lastDate">종료 날짜를 적으세요</string>
+    <string name="tv_endDateLabel">종료 날짜</string>
+    <string name="hint_endDate">종료 날짜를 적으세요</string>
     <string name="hint_location">위치를 적으세요</string>
     <string name="bt_formAdd">추가</string>
     <string name="tv_locationLabel">위치</string>
