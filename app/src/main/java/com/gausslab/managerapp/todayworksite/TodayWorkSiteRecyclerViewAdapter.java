@@ -37,9 +37,9 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Worksite currWorksite = worksiteList.get(position);
-        holder.worksiteName.setText(currWorksite.getWorksiteName());
+        holder.tv_worksiteName.setText(currWorksite.getWorksiteName());
         if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
-            holder.card.setOnClickListener(new View.OnClickListener() {
+            holder.cv_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ((OnTodayWorksiteContextMenuInteractionListener<Worksite>) listener).onItemClick(worksiteList.get(holder.getAdapterPosition()));
@@ -59,13 +59,13 @@ public class TodayWorkSiteRecyclerViewAdapter extends RecyclerView.Adapter<Today
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final CardView card;
-        public final TextView worksiteName;
+        public final CardView cv_card;
+        public final TextView tv_worksiteName;
 
         public ViewHolder(ObjectTodayworksiteBinding binding) {
             super(binding.getRoot());
-            card = binding.objTodayworksiteCard;
-            worksiteName = binding.objTodayworksiteTvWorkName;
+            cv_card = binding.objTodayworksiteCard;
+            tv_worksiteName = binding.objTodayworksiteTvWorkName;
         }
 
         @Override

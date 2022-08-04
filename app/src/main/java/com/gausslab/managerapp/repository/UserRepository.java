@@ -31,6 +31,8 @@ public class UserRepository {
     private Map<String, List<User>> worksiteUsersMap = new HashMap<>();
     private Map<String, MutableLiveData<Boolean>> worksiteUsersLoaded = new HashMap<>();
 
+    private Map<String, Drawable> userImageDrawableMap = new HashMap<String, Drawable>();
+
     public static UserRepository getInstance() {
         return INSTANCE;
     }
@@ -90,6 +92,19 @@ public class UserRepository {
                 }else{
                     callback.onComplete(new Result.Error(new Exception("UserRepository : saveUserImage() : Problem saving image bitmap to disk")));
                 }
+            }
+        });
+    }
+
+    public void loadUserImageDrawable(String phoneNumber, CompletedCallback<Result<Drawable>> callback){
+        fileService.getImageDrawable(App.getUserImagePath(phoneNumber), new FileService.FileServiceCallback<Result<Drawable>>() {
+            @Override
+            public void onComplete(Result<Drawable> result) {
+                if(result instanceof Result.Success){
+                    Drawable drawable = ((Result.Success<Drawable>)result).getData();
+                    userImageDrawableMap.put(phoneNumber,drawable);
+                }
+                callback.onComplete(result);
             }
         });
     }

@@ -80,11 +80,13 @@ public class WorkerInformationFragment extends Fragment {
     private void init() {
         String phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         workerInformationViewModel.loadUserInformation(phoneNumber);
+        workerInformationViewModel.loadUserImage(phoneNumber);
         workerInformationViewModel.userInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
                 if (isLoaded) {
                     currUser = workerInformationViewModel.getUserInformation();
+                    iv_image.setImageDrawable(workerInformationViewModel.getUserImage());
                     tv_name.setText(currUser.getUserName());
                     tv_phoneNumber.setText(currUser.getPhoneNumber());
                     tv_career.setText(currUser.getCareer());

@@ -102,7 +102,7 @@ public class TodayWorkSiteFragment extends Fragment {
     }
 
     private void init() {
-        todayInCalendar();
+        convertDateFormat();
         todayWorkSiteViewModel.loadTodayWorksite(todayCal);
         todayWorksiteList = todayWorkSiteViewModel.getTodayWorksite();
 
@@ -113,7 +113,7 @@ public class TodayWorkSiteFragment extends Fragment {
         transaction.commit();
     }
 
-    private void todayInCalendar() {
+    private void convertDateFormat() {
         Calendar cal = Calendar.getInstance();
         todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
 

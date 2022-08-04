@@ -42,11 +42,11 @@ public class FirebaseDataSource implements DataSource {
                         if (error == null) {
                             List<Worksite> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (int i = 0; i < snaps.size(); i++) {
-                                String parsingStringStartDate = parseDate(snaps.get(i).getString("startDate"));
-                                String parsingStringLastDate = parseDate(snaps.get(i).getString("lastDate"));
-                                if ((Integer.parseInt(parsingStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsingStringLastDate) >= Integer.parseInt(todayCal))) {
-                                    Worksite toAdd = new Worksite((snaps.get(i).getString("worksiteName")), snaps.get(i).getString("startDate"), snaps.get(i).getString("lastDate"), snaps.get(i).getString("location"));
+                            for (DocumentSnapshot snap:snaps) {
+                                String parsedStringStartDate = parseDate(snap.getString("startDate"));
+                                String parsedStringLastDate = parseDate(snap.getString("lastDate"));
+                                if ((Integer.parseInt(parsedStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsedStringLastDate) >= Integer.parseInt(todayCal))) {
+                                    Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getString("startDate"), snap.getString("lastDate"), snap.getString("location"));
                                     toReturn.add(toAdd);
                                 }
                             }
@@ -132,9 +132,9 @@ public class FirebaseDataSource implements DataSource {
                         if (error == null) {
                             List<User> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (int i = 0; i < snaps.size(); i++) {
-                                if (snaps.get(i).getString("worksiteName").equals(worksiteName)) {
-                                    User toAdd = new User(snaps.get(i).getString("phoneNumber"), snaps.get(i).getString("password"), snaps.get(i).getString("userName"), snaps.get(i).getString("career"), snaps.get(i).getString("worksiteName"), snaps.get(i).getString("accidentHistory"), snaps.get(i).getString("memo"));
+                            for (DocumentSnapshot snap:snaps) {
+                                if (snap.getString("worksiteName").equals(worksiteName)) {
+                                    User toAdd = new User(snap.getString("phoneNumber"), snap.getString("password"), snap.getString("userName"), snap.getString("career"), snap.getString("worksiteName"), snap.getString("accidentHistory"), snap.getString("memo"));
                                     toReturn.add(toAdd);
                                 }
                             }
@@ -188,8 +188,8 @@ public class FirebaseDataSource implements DataSource {
                     if (task.isSuccessful()) {
                         List<String> toReturn = new ArrayList<>();
                         List<DocumentSnapshot> snaps = task.getResult().getDocuments();
-                        for (int i = 0; i < snaps.size(); i++) {
-                            toReturn.add(snaps.get(i).getString("phoneNumber"));
+                        for (DocumentSnapshot snap: snaps) {
+                            toReturn.add(snap.getString("phoneNumber"));
                         }
                         callback.onComplete(new Result.Success<List<String>>(toReturn));
                     }
@@ -205,8 +205,8 @@ public class FirebaseDataSource implements DataSource {
                     if (task.isSuccessful()) {
                         List<String> toReturn = new ArrayList<>();
                         List<DocumentSnapshot> snaps = task.getResult().getDocuments();
-                        for (int i = 0; i < snaps.size(); i++) {
-                            toReturn.add(snaps.get(i).getString("worksiteName"));
+                        for (DocumentSnapshot snap:snaps) {
+                            toReturn.add(snap.getString("worksiteName"));
                         }
                         callback.onComplete(new Result.Success<List<String>>(toReturn));
                     }
