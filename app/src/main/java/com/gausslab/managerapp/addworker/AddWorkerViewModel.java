@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
+import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.model.Result;
@@ -53,6 +54,17 @@ public class AddWorkerViewModel extends ViewModel {
         });
     }
 
+    public void addGuestUser(User userToAdd) {
+        userRepository.addGuestUser(userToAdd, result -> {
+            if (result instanceof Result.Success) {
+
+            } else {
+
+            }
+        });
+    }
+
+
     public void loadWorksiteNameList() {
         worksiteRepository.loadWorksiteNameList(result -> {
             if (result instanceof Result.Success) {
@@ -78,6 +90,15 @@ public class AddWorkerViewModel extends ViewModel {
 
     public void saveUserImage(User user,Bitmap userImage){
         userRepository.saveUserImage(user,userImage, result->{
+            if(result instanceof Result.Success){
+
+            }else{
+
+            }
+        });
+    }
+    public void saveNoPhoneNumberUserImage(User user,Bitmap userImage){
+        userRepository.saveNoPhoneNumberUserImage(user,userImage, result->{
             if(result instanceof Result.Success){
 
             }else{

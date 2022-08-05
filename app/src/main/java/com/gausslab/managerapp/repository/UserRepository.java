@@ -72,12 +72,36 @@ public class UserRepository {
         dataSource.addUser(userToAdd, callback);
     }
 
+    public void addGuestUser(final User userToAdd, final CompletedCallback<Result<String>> callback) {
+        dataSource.addGuestUser(userToAdd, callback);
+    }
+
     public void loadPhoneNumberList(final CompletedCallback<Result<List<String>>> callback) {
         dataSource.getPhoneNumberList(callback);
     }
 
     public void saveUserImage(final User user, final Bitmap userImage, CompletedCallback<Result>callback){
         String localDestinationPath = App.getUserImagePath(user.getPhoneNumber());
+        fileService.saveBitmapToDisk(localDestinationPath, userImage, new FileService.FileServiceCallback<Result<File>>() {
+            @Override
+            public void onComplete(Result<File> result) {
+                if(result instanceof Result.Success){
+                    File localFile = ((Result.Success<File>)result).getData();
+                    fileService.uploadFileToDatabase(localFile, localDestinationPath, new FileService.FileServiceCallback<Result<Uri>>() {
+                        @Override
+                        public void onComplete(Result<Uri> result) {
+                            callback.onComplete(result);
+                        }
+                    });
+                }else{
+                    callback.onComplete(new Result.Error(new Exception("UserRepository : saveUserImage() : Problem saving image bitmap to disk")));
+                }
+            }
+        });
+    }
+
+    public void saveNoPhoneNumberUserImage(final User user, final Bitmap userImage, CompletedCallback<Result>callback){
+        String localDestinationPath = App.getUserImagePath(user.getUserName());
         fileService.saveBitmapToDisk(localDestinationPath, userImage, new FileService.FileServiceCallback<Result<File>>() {
             @Override
             public void onComplete(Result<File> result) {

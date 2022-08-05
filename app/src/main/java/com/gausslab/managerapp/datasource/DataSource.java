@@ -19,6 +19,8 @@ public interface DataSource {
 
     void addUser(User addNewUser, CompletedCallback<Result<String>> callback);
 
+    void addGuestUser(User addNewUser, CompletedCallback<Result<String>> callback);
+
     void getPhoneNumberList(CompletedCallback<Result<List<String>>> callback);
 
     void loadWorksiteNameList(CompletedCallback<Result<List<String>>> callback);

@@ -181,6 +181,14 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
+    public void addGuestUser(User userToAdd, CompletedCallback<Result<String>> callback) {
+        db.collection("user")
+                .document("Guest_"+userToAdd.getUserName())
+                .set(userToAdd);
+        callback.onComplete(new Result.Success<String>("Success"));
+    }
+
+    @Override
     public void getPhoneNumberList(CompletedCallback<Result<List<String>>> callback) {
         db.collection("user")
                 .get()

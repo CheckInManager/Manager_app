@@ -59,50 +59,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="phone"
             android:hint="@string/hint_phoneNumber"
+            android:inputType="phone"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_phoneNumberLabel"
-            app:layout_constraintStart_toStartOf="@+id/addworker_et_password"
-            app:layout_constraintTop_toTopOf="@+id/addworker_tv_phoneNumberLabel" />
-
-        <TextView
-            android:id="@+id/addworker_tv_passwordLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/tv_passwordLabel"
-            app:layout_constraintEnd_toEndOf="@+id/addworker_tv_phoneNumberLabel"
-            app:layout_constraintTop_toBottomOf="@+id/addworker_tv_phoneNumberLabel" />
-
-        <EditText
-            android:id="@+id/addworker_et_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/hint_password"
-            app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_passwordLabel"
-            app:layout_constraintStart_toStartOf="@+id/addworker_et_accidentHistory"
-            app:layout_constraintTop_toTopOf="@+id/addworker_tv_passwordLabel" />
-
-        <TextView
-            android:id="@+id/addworker_tv_accidentHistoryLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/tv_accidentHistoryLabel"
-            app:layout_constraintEnd_toEndOf="@+id/addworker_tv_passwordLabel"
-            app:layout_constraintTop_toBottomOf="@+id/addworker_tv_passwordLabel" />
-
-        <EditText
-            android:id="@+id/addworker_et_accidentHistory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/hint_accidentHistory"
-            app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_accidentHistoryLabel"
             app:layout_constraintStart_toStartOf="@+id/addworker_et_memo"
-            app:layout_constraintTop_toTopOf="@+id/addworker_tv_accidentHistoryLabel" />
+            app:layout_constraintTop_toTopOf="@+id/addworker_tv_phoneNumberLabel" />
 
         <TextView
             android:id="@+id/addworker_tv_memoLabel"
@@ -110,8 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/tv_memoLabel"
-            app:layout_constraintEnd_toEndOf="@+id/addworker_tv_accidentHistoryLabel"
-            app:layout_constraintTop_toBottomOf="@+id/addworker_tv_accidentHistoryLabel" />
+            app:layout_constraintEnd_toEndOf="@+id/addworker_tv_phoneNumberLabel"
+            app:layout_constraintTop_toBottomOf="@+id/addworker_tv_phoneNumberLabel" />
 
         <EditText
             android:id="@+id/addworker_et_memo"
