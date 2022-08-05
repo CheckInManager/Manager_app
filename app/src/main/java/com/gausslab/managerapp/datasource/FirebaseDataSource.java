@@ -173,6 +173,14 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
+    public void changeNoPhoneNumberUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback) {
+        db.collection("user")
+                .document("Guest_"+changeUserInformation.getUserName())
+                .set(changeUserInformation);
+        callback.onComplete(new Result.Success<String>("Success"));
+    }
+
+    @Override
     public void addUser(User userToAdd, CompletedCallback<Result<String>> callback) {
         db.collection("user")
                 .document(userToAdd.getPhoneNumber())

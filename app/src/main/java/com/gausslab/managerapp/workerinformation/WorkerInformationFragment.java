@@ -70,7 +70,11 @@ public class WorkerInformationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getCareer(), currUser.getWorksiteName(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
-                workerInformationViewModel.changeInformation(currUser);
+                if(currUser.getPhoneNumber().length()<1){
+                    workerInformationViewModel.changeNoPhoneNumberUserInformation(currUser);
+                }else{
+                    workerInformationViewModel.changeInformation(currUser);
+                }
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
             }
         });

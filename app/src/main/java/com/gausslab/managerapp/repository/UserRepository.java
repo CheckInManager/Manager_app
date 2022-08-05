@@ -67,6 +67,9 @@ public class UserRepository {
     public void changeUserInformation(final User changeUserInformation, final CompletedCallback<Result<String>> callback) {
         dataSource.changeUserInformation(changeUserInformation, callback);
     }
+    public void changeNoPhoneNumberUserInformation(final User changeUserInformation, final CompletedCallback<Result<String>> callback) {
+        dataSource.changeNoPhoneNumberUserInformation(changeUserInformation, callback);
+    }
 
     public void addUser(final User userToAdd, final CompletedCallback<Result<String>> callback) {
         dataSource.addUser(userToAdd, callback);

@@ -36,6 +36,14 @@ public class WorkerInformationViewModel extends ViewModel {
         });
     }
 
+    public void changeNoPhoneNumberUserInformation(User changeInformation){
+        userRepository.changeNoPhoneNumberUserInformation(changeInformation, result->{
+            if(result instanceof Result.Success){
+
+            }
+        });
+    }
+
     public void loadUserImage(String phoneNumber){
         userRepository.loadUserImageDrawable(phoneNumber, new CompletedCallback<Result<Drawable>>(){
             @Override
