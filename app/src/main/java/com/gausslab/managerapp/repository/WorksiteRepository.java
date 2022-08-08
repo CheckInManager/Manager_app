@@ -31,6 +31,7 @@ public class WorksiteRepository {
 
     private Map<String, Drawable> worksiteQrDrawableMap = new HashMap<String, Drawable>();
     private Map<String, Worksite> worksiteMap = new HashMap<>();
+    public File localFile;
 
     public static WorksiteRepository getInstance() {
         return INSTANCE;
@@ -84,7 +85,7 @@ public class WorksiteRepository {
                 @Override
                 public void onComplete(Result<File> result) {
                     if (result instanceof Result.Success) {
-                        File localFile = ((Result.Success<File>) result).getData();
+                        localFile = ((Result.Success<File>) result).getData();
                         fileService.uploadFileToDatabase(localFile, localDestinationPath, new FileService.FileServiceCallback<Result<Uri>>() {
                             @Override
                             public void onComplete(Result<Uri> result) {

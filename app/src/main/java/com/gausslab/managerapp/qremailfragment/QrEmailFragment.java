@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -20,15 +21,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentQremailBinding;
+import com.gausslab.managerapp.repository.WorksiteRepository;
 
 import java.io.File;
 
 public class QrEmailFragment extends Fragment {
-
     private FragmentQremailBinding binding;
     private QrEmailViewModel qrEmailViewModel;
+    private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
 
     private ImageView iv_qr;
     private Button bt_sendEmail;
@@ -83,7 +86,8 @@ public class QrEmailFragment extends Fragment {
             public void onClick(View view) {
                 Intent mail_intent = new Intent(Intent.ACTION_SEND);
                 mail_intent.setType("*/*");
-                mail_intent.putExtra(Intent.EXTRA_STREAM, String.valueOf(iv_qr));
+                Uri uri = FileProvider.getUriForFile(requireActivity(), App.getFileProvider(),worksiteRepository.localFile);
+                mail_intent.putExtra(Intent.EXTRA_STREAM, uri);
                 mail_intent.putExtra(Intent.EXTRA_SUBJECT, "emailTest"); //이메일 제목
                 mail_intent.putExtra(Intent.EXTRA_TEXT, "test"); //메일 내용
                 startActivity(mail_intent);
