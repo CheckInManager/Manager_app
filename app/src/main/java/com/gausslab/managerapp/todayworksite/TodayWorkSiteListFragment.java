@@ -77,6 +77,8 @@ public class TodayWorkSiteListFragment extends Fragment {
                     String worksiteName = obj.getWorksiteName();
                     TodayWorkSiteFragmentDirections.ActionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment action = TodayWorkSiteFragmentDirections.actionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment();
                     action.setWorksiteName(worksiteName);
+                    action.setWorksiteLocation(obj.getLocation());
+                    action.setWorksiteStartDate(obj.getStartDate());
                     NavHostFragment.findNavController(TodayWorkSiteListFragment.this).navigate(action);
                 }
 

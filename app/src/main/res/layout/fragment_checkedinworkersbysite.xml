@@ -14,6 +14,26 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.25" />
 
+    <ImageView
+        android:id="@+id/checkedinworkersbysite_iv_qr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/checkedinworkersbysite_tv_worksiteName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/checkedInWorkersBySite_rv_userList"
+        app:layout_constraintEnd_toStartOf="@+id/checkedinworkersbysite_iv_qr"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/checkedInWorkersBySite_rv_userList"
         android:layout_width="0dp"
@@ -23,8 +43,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/object_checkedinworkersbysite" />
+        app:layout_constraintTop_toBottomOf="@+id/checkedinworkersbysite_iv_qr"
+        tools:listitem="@layout/object_checkedinworkersbysite">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

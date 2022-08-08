@@ -1,12 +1,13 @@
 package com.gausslab.managerapp.checkinworkerbysite;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,8 +33,12 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     private Button bt_addWorker;
     private Button bt_addNotice;
     private Button bt_map;
+    private ImageView iv_qr;
+    private TextView tv_worksiteName;
     private RecyclerView rv_userList;
     private CheckedInWorkersBySiteRecyclerViewAdapter adapter;
+
+    private String worksiteName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,8 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
         bt_addWorker = binding.checkedInWorkersBySiteBtAddWorker;
         bt_addNotice = binding.checkedInWorkersBySiteBtAddNotice;
         bt_map = binding.checkedInWorkersBySiteBtMap;
+        iv_qr = binding.checkedinworkersbysiteIvQr;
+        tv_worksiteName = binding.checkedinworkersbysiteTvWorksiteName;
 
         rv_userList.setLayoutManager(new LinearLayoutManager(requireContext()));
         rv_userList.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
@@ -63,6 +70,8 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tv_worksiteName.setText(worksiteName);
+
         //region Observer
         checkedInWorkersBySiteViewModel.isUserListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -70,6 +79,12 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
                 if (isLoaded) {
                     adapter.setUserList(checkedInWorkersBySiteViewModel.getUserList());
                 }
+            }
+        });
+
+        checkedInWorkersBySiteViewModel.isQrImageLoaded().observe(getViewLifecycleOwner(), isQrLoaded->{
+            if(isQrLoaded){
+                iv_qr.setImageDrawable(checkedInWorkersBySiteViewModel.getQrImage());
             }
         });
         //endregion
@@ -92,7 +107,9 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     }
 
     private void init() {
-        String worksiteName = CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName();
+        worksiteName = CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName();
+        checkedInWorkersBySiteViewModel.setWorksite(CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName(),
+                CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName()+CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteLocation()+CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteStartDate());
         checkedInWorkersBySiteViewModel.loadUserListByWorksite(worksiteName);
         setupAdapter();
     }
