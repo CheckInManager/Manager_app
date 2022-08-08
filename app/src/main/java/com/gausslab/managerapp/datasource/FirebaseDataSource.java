@@ -42,7 +42,7 @@ public class FirebaseDataSource implements DataSource {
                         if (error == null) {
                             List<Worksite> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (DocumentSnapshot snap:snaps) {
+                            for (DocumentSnapshot snap : snaps) {
                                 String parsedStringStartDate = parseDate(snap.getString("startDate"));
                                 String parsedStringEndDate = parseDate(snap.getString("endDate"));
                                 if ((Integer.parseInt(parsedStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsedStringEndDate) >= Integer.parseInt(todayCal))) {
@@ -132,7 +132,7 @@ public class FirebaseDataSource implements DataSource {
                         if (error == null) {
                             List<User> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (DocumentSnapshot snap:snaps) {
+                            for (DocumentSnapshot snap : snaps) {
                                 if (snap.getString("worksiteName").equals(worksiteName)) {
                                     User toAdd = snap.toObject(User.class);
                                     toReturn.add(toAdd);
@@ -175,7 +175,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void changeNoPhoneNumberUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback) {
         db.collection("user")
-                .document("Guest_"+changeUserInformation.getUserName())
+                .document("Guest_" + changeUserInformation.getUserName())
                 .set(changeUserInformation);
         callback.onComplete(new Result.Success<String>("Success"));
     }
@@ -191,7 +191,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void addGuestUser(User userToAdd, CompletedCallback<Result<String>> callback) {
         db.collection("user")
-                .document("Guest_"+userToAdd.getUserName())
+                .document("Guest_" + userToAdd.getUserName())
                 .set(userToAdd);
         callback.onComplete(new Result.Success<String>("Success"));
     }
@@ -204,7 +204,7 @@ public class FirebaseDataSource implements DataSource {
                     if (task.isSuccessful()) {
                         List<String> toReturn = new ArrayList<>();
                         List<DocumentSnapshot> snaps = task.getResult().getDocuments();
-                        for (DocumentSnapshot snap: snaps) {
+                        for (DocumentSnapshot snap : snaps) {
                             toReturn.add(snap.getString("phoneNumber"));
                         }
                         callback.onComplete(new Result.Success<List<String>>(toReturn));
@@ -221,7 +221,7 @@ public class FirebaseDataSource implements DataSource {
                     if (task.isSuccessful()) {
                         List<String> toReturn = new ArrayList<>();
                         List<DocumentSnapshot> snaps = task.getResult().getDocuments();
-                        for (DocumentSnapshot snap:snaps) {
+                        for (DocumentSnapshot snap : snaps) {
                             toReturn.add(snap.getString("worksiteName"));
                         }
                         callback.onComplete(new Result.Success<List<String>>(toReturn));

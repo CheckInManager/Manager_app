@@ -138,10 +138,10 @@ public class AddWorkerFragment extends Fragment {
         addWorkerViewModel.openWorksiteListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
+                if (isLoaded) {
                     List<String> toReturn = new ArrayList<>();
-                    List<Worksite> openWorksiteList =  addWorkerViewModel.getOpenWorksite();
-                    for(int i=0;i<openWorksiteList.size();i++){
+                    List<Worksite> openWorksiteList = addWorkerViewModel.getOpenWorksite();
+                    for (int i = 0; i < openWorksiteList.size(); i++) {
                         toReturn.add(openWorksiteList.get(i).getWorksiteName());
                     }
                     ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, toReturn);
@@ -186,13 +186,12 @@ public class AddWorkerFragment extends Fragment {
             public void onClick(View view) {
                 userToAdd = new User(et_phoneNumber.getText().toString(),
                         "", et_name.getText().toString(),
-                        "", sp_worksiteSpinner.getSelectedItem().toString(), "" , et_memo.getText().toString());
-                if(et_phoneNumber.getText().toString().length()<1){
+                        "", sp_worksiteSpinner.getSelectedItem().toString(), "", et_memo.getText().toString());
+                if (et_phoneNumber.getText().toString().length() < 1) {
                     noPhoneNumNewUser();
-                }
-                else if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
+                } else if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
                     phoneNumNewUser();
-                } else{
+                } else {
                     Toast.makeText(requireContext(), R.string.toast_changePhoneNumber, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -200,7 +199,7 @@ public class AddWorkerFragment extends Fragment {
         //endregion
     }
 
-    private void init(){
+    private void init() {
         convertDateFormat();
         addWorkerViewModel.loadOpenWorksite(todayCal);
         openWorksiteList = addWorkerViewModel.getOpenWorksite();
@@ -222,19 +221,19 @@ public class AddWorkerFragment extends Fragment {
         }
     }
 
-    private void noPhoneNumNewUser(){
+    private void noPhoneNumNewUser() {
         addWorkerViewModel.addGuestUser(userToAdd);
-        if(changeBitmap!=null){
+        if (changeBitmap != null) {
             addWorkerViewModel.saveNoPhoneNumberUserImage(userToAdd, changeBitmap);
             Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
             NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
         }
     }
 
-    private void phoneNumNewUser(){
+    private void phoneNumNewUser() {
         userToAdd.setPassword("0000");
         addWorkerViewModel.addUser(userToAdd);
-        if(changeBitmap!=null){
+        if (changeBitmap != null) {
             addWorkerViewModel.saveUserImage(userToAdd, changeBitmap);
             Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
             NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();

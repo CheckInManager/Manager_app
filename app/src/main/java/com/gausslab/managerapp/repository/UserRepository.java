@@ -67,6 +67,7 @@ public class UserRepository {
     public void changeUserInformation(final User changeUserInformation, final CompletedCallback<Result<String>> callback) {
         dataSource.changeUserInformation(changeUserInformation, callback);
     }
+
     public void changeNoPhoneNumberUserInformation(final User changeUserInformation, final CompletedCallback<Result<String>> callback) {
         dataSource.changeNoPhoneNumberUserInformation(changeUserInformation, callback);
     }
@@ -83,53 +84,53 @@ public class UserRepository {
         dataSource.getPhoneNumberList(callback);
     }
 
-    public void saveUserImage(final User user, final Bitmap userImage, CompletedCallback<Result>callback){
+    public void saveUserImage(final User user, final Bitmap userImage, CompletedCallback<Result> callback) {
         String localDestinationPath = App.getUserImagePath(user.getPhoneNumber());
         fileService.saveBitmapToDisk(localDestinationPath, userImage, new FileService.FileServiceCallback<Result<File>>() {
             @Override
             public void onComplete(Result<File> result) {
-                if(result instanceof Result.Success){
-                    File localFile = ((Result.Success<File>)result).getData();
+                if (result instanceof Result.Success) {
+                    File localFile = ((Result.Success<File>) result).getData();
                     fileService.uploadFileToDatabase(localFile, localDestinationPath, new FileService.FileServiceCallback<Result<Uri>>() {
                         @Override
                         public void onComplete(Result<Uri> result) {
                             callback.onComplete(result);
                         }
                     });
-                }else{
+                } else {
                     callback.onComplete(new Result.Error(new Exception("UserRepository : saveUserImage() : Problem saving image bitmap to disk")));
                 }
             }
         });
     }
 
-    public void saveNoPhoneNumberUserImage(final User user, final Bitmap userImage, CompletedCallback<Result>callback){
+    public void saveNoPhoneNumberUserImage(final User user, final Bitmap userImage, CompletedCallback<Result> callback) {
         String localDestinationPath = App.getUserImagePath(user.getUserName());
         fileService.saveBitmapToDisk(localDestinationPath, userImage, new FileService.FileServiceCallback<Result<File>>() {
             @Override
             public void onComplete(Result<File> result) {
-                if(result instanceof Result.Success){
-                    File localFile = ((Result.Success<File>)result).getData();
+                if (result instanceof Result.Success) {
+                    File localFile = ((Result.Success<File>) result).getData();
                     fileService.uploadFileToDatabase(localFile, localDestinationPath, new FileService.FileServiceCallback<Result<Uri>>() {
                         @Override
                         public void onComplete(Result<Uri> result) {
                             callback.onComplete(result);
                         }
                     });
-                }else{
+                } else {
                     callback.onComplete(new Result.Error(new Exception("UserRepository : saveUserImage() : Problem saving image bitmap to disk")));
                 }
             }
         });
     }
 
-    public void loadUserImageDrawable(String phoneNumber, CompletedCallback<Result<Drawable>> callback){
+    public void loadUserImageDrawable(String phoneNumber, CompletedCallback<Result<Drawable>> callback) {
         fileService.getImageDrawable(App.getUserImagePath(phoneNumber), new FileService.FileServiceCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result<Drawable> result) {
-                if(result instanceof Result.Success){
-                    Drawable drawable = ((Result.Success<Drawable>)result).getData();
-                    userImageDrawableMap.put(phoneNumber,drawable);
+                if (result instanceof Result.Success) {
+                    Drawable drawable = ((Result.Success<Drawable>) result).getData();
+                    userImageDrawableMap.put(phoneNumber, drawable);
                 }
                 callback.onComplete(result);
             }

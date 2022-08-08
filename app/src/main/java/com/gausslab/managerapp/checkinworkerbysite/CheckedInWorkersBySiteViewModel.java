@@ -28,7 +28,7 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         userRepository.registerWorksiteUserListListener(worksiteName);
     }
 
-    public void setWorksite(String worksiteName, String worksiteQrImagePath){
+    public void setWorksite(String worksiteName, String worksiteQrImagePath) {
         currWorksite = worksiteRepository.getWorksite(worksiteName);
 
         worksiteRepository.loadQrDrawableForWorksite(worksiteQrImagePath, new CompletedCallback<Result<Drawable>>() {

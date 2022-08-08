@@ -18,7 +18,7 @@ public class QrEmailViewModel extends ViewModel {
     private Worksite currWorksite;
     private Drawable qrImage;
 
-    public void setWorksite(String worksiteName,String worksiteQrImagePath) {
+    public void setWorksite(String worksiteName, String worksiteQrImagePath) {
         currWorksite = worksiteRepository.getWorksite(worksiteName);
 
         worksiteRepository.loadQrDrawableForWorksite(worksiteQrImagePath, new CompletedCallback<Result<Drawable>>() {

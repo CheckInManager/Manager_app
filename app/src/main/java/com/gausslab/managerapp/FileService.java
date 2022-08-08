@@ -160,8 +160,6 @@ public class FileService extends Service {
     }
 
 
-
-
     public interface FileServiceCallback<T> {
         void onComplete(T result);
     }

@@ -86,7 +86,7 @@ public class QrEmailFragment extends Fragment {
             public void onClick(View view) {
                 Intent mail_intent = new Intent(Intent.ACTION_SEND);
                 mail_intent.setType("*/*");
-                Uri uri = FileProvider.getUriForFile(requireActivity(), App.getFileProvider(),worksiteRepository.localFile);
+                Uri uri = FileProvider.getUriForFile(requireActivity(), App.getFileProvider(), worksiteRepository.localFile);
                 mail_intent.putExtra(Intent.EXTRA_STREAM, uri);
                 mail_intent.putExtra(Intent.EXTRA_SUBJECT, "emailTest"); //이메일 제목
                 mail_intent.putExtra(Intent.EXTRA_TEXT, "test"); //메일 내용

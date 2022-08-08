@@ -82,8 +82,8 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
             }
         });
 
-        checkedInWorkersBySiteViewModel.isQrImageLoaded().observe(getViewLifecycleOwner(), isQrLoaded->{
-            if(isQrLoaded){
+        checkedInWorkersBySiteViewModel.isQrImageLoaded().observe(getViewLifecycleOwner(), isQrLoaded -> {
+            if (isQrLoaded) {
                 iv_qr.setImageDrawable(checkedInWorkersBySiteViewModel.getQrImage());
             }
         });
@@ -109,7 +109,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     private void init() {
         worksiteName = CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName();
         checkedInWorkersBySiteViewModel.setWorksite(CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName(),
-                CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName()+CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteLocation()+CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteStartDate());
+                CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName() + CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteLocation() + CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteStartDate());
         checkedInWorkersBySiteViewModel.loadUserListByWorksite(worksiteName);
         setupAdapter();
     }
