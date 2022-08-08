@@ -9,7 +9,6 @@ import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 
 public class AddNewWorksiteFormViewModel extends ViewModel {
-
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private MutableLiveData<Boolean> addWorksiteFormSuccess = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> addWorksiteSuccess = new MutableLiveData<>(false);

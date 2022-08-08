@@ -64,6 +64,7 @@ public class AddWorkerFragment extends Fragment {
 
     private List<Worksite> openWorksiteList;
     private String todayCal;
+    private User userToAdd;
 
     private FileService fileService;
     private File imageFile;
@@ -133,7 +134,6 @@ public class AddWorkerFragment extends Fragment {
                     }
                 });
 
-
         //region Observer
         addWorkerViewModel.openWorksiteListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -184,29 +184,15 @@ public class AddWorkerFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User userToAdd = new User(et_phoneNumber.getText().toString(),
+                userToAdd = new User(et_phoneNumber.getText().toString(),
                         "", et_name.getText().toString(),
                         "", sp_worksiteSpinner.getSelectedItem().toString(), "" , et_memo.getText().toString());
                 if(et_phoneNumber.getText().toString().length()<1){
-                    //번호x, 새로운유저
-                    addWorkerViewModel.addGuestUser(userToAdd);
-                    if(changeBitmap!=null){
-                        addWorkerViewModel.saveNoPhoneNumberUserImage(userToAdd, changeBitmap);
-                        Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
-                        NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
-                    }
+                    noPhoneNumNewUser();
                 }
-                //번호ㅇ
                 else if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
-                    userToAdd.setPassword("0000");
-                    addWorkerViewModel.addUser(userToAdd);
-                    if(changeBitmap!=null){
-                        addWorkerViewModel.saveUserImage(userToAdd, changeBitmap);
-                        Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
-                        NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
-                    }
+                    phoneNumNewUser();
                 } else{
-                    //내용 덮어쓰기
                     Toast.makeText(requireContext(), R.string.toast_changePhoneNumber, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -233,6 +219,25 @@ public class AddWorkerFragment extends Fragment {
             todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
         } else if (todayDayCal.length() < 2) {
             todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        }
+    }
+
+    private void noPhoneNumNewUser(){
+        addWorkerViewModel.addGuestUser(userToAdd);
+        if(changeBitmap!=null){
+            addWorkerViewModel.saveNoPhoneNumberUserImage(userToAdd, changeBitmap);
+            Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
+        }
+    }
+
+    private void phoneNumNewUser(){
+        userToAdd.setPassword("0000");
+        addWorkerViewModel.addUser(userToAdd);
+        if(changeBitmap!=null){
+            addWorkerViewModel.saveUserImage(userToAdd, changeBitmap);
+            Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
         }
     }
 }

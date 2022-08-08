@@ -1,6 +1,7 @@
 package com.gausslab.managerapp.qremailfragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,9 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,13 +23,14 @@ import android.widget.ImageView;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentQremailBinding;
 
+import java.io.File;
+
 public class QrEmailFragment extends Fragment {
 
     private FragmentQremailBinding binding;
     private QrEmailViewModel qrEmailViewModel;
 
     private ImageView iv_qr;
-    private EditText et_emailAddress;
     private Button bt_sendEmail;
     private Button bt_home;
 
@@ -44,7 +49,6 @@ public class QrEmailFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentQremailBinding.inflate(inflater, container, false);
         iv_qr = binding.qremailIvQr;
-        et_emailAddress = binding.qremailEtEmailAddress;
         bt_sendEmail = binding.qreamilBtSendEmail;
         bt_home = binding.qremailBtHome;
 
@@ -73,13 +77,14 @@ public class QrEmailFragment extends Fragment {
             }
         });
 
+
         bt_sendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent mail_intent = new Intent(Intent.ACTION_SEND);
-                mail_intent.setType("text/plain");
-                mail_intent.putExtra(Intent.EXTRA_EMAIL, et_emailAddress.getText().toString()); //받는 사람 이메일
-                mail_intent.putExtra(Intent.EXTRA_SUBJECT, qrEmailViewModel.getCurrWorksite().getWorksiteName()); //이메일 제목
+                mail_intent.setType("*/*");
+                mail_intent.putExtra(Intent.EXTRA_STREAM, String.valueOf(iv_qr));
+                mail_intent.putExtra(Intent.EXTRA_SUBJECT, "emailTest"); //이메일 제목
                 mail_intent.putExtra(Intent.EXTRA_TEXT, "test"); //메일 내용
                 startActivity(mail_intent);
             }

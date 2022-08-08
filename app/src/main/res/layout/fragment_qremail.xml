@@ -17,28 +17,16 @@
         app:layout_constraintTop_toTopOf="@+id/guideline6"
         tools:src="@tools:sample/avatars" />
 
-    <EditText
-        android:id="@+id/qremail_et_emailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="18"
-        android:hint="@string/et_inputYourEmail"
-        android:layout_marginTop="20dp"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qremail_iv_qr" />
-
     <Button
         android:id="@+id/qreamil_bt_sendEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="@string/bt_share"
         android:textColor="@color/white"
-        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qremail_et_emailAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/qremail_iv_qr" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -58,12 +46,12 @@
         android:id="@+id/qremail_bt_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         android:text="@string/bt_home"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@+id/qremail_et_emailAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/qremail_iv_qr" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

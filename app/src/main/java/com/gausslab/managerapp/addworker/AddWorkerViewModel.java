@@ -65,39 +65,37 @@ public class AddWorkerViewModel extends ViewModel {
         });
     }
 
-    public void saveBitmapToMediaStore(Bitmap bm)
-    {
+    public void saveBitmapToMediaStore(Bitmap bm) {
         FileService fileService = App.getFileService();
-        fileService.saveBitmapToMediaStore("userImage_" + Timestamp.now().getSeconds(), bm, new FileService.FileServiceCallback<Result<String>>()
-        {
+        fileService.saveBitmapToMediaStore("userImage_" + Timestamp.now().getSeconds(), bm, new FileService.FileServiceCallback<Result<String>>() {
             @Override
-            public void onComplete(Result result)
-            {
+            public void onComplete(Result result) {
             }
         });
     }
 
-    public void saveUserImage(User user,Bitmap userImage){
-        userRepository.saveUserImage(user,userImage, result->{
-            if(result instanceof Result.Success){
+    public void saveUserImage(User user, Bitmap userImage) {
+        userRepository.saveUserImage(user, userImage, result -> {
+            if (result instanceof Result.Success) {
 
-            }else{
-
-            }
-        });
-    }
-    public void saveNoPhoneNumberUserImage(User user,Bitmap userImage){
-        userRepository.saveNoPhoneNumberUserImage(user,userImage, result->{
-            if(result instanceof Result.Success){
-
-            }else{
+            } else {
 
             }
         });
     }
 
-    public void loadOpenWorksite(String todayCal){
-        worksiteRepository.getTodayWorksite(todayCal,result -> {
+    public void saveNoPhoneNumberUserImage(User user, Bitmap userImage) {
+        userRepository.saveNoPhoneNumberUserImage(user, userImage, result -> {
+            if (result instanceof Result.Success) {
+
+            } else {
+
+            }
+        });
+    }
+
+    public void loadOpenWorksite(String todayCal) {
+        worksiteRepository.getTodayWorksite(todayCal, result -> {
             if (result instanceof Result.Success) {
                 worksiteList = ((Result.Success<List<Worksite>>) result).getData();
                 openWorksiteListLoaded.setValue(true);
