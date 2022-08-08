@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.datasource.CompletedCallback;
+import com.gausslab.managerapp.model.Worksite;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.model.Result;
@@ -22,9 +23,9 @@ import java.util.List;
 public class AddWorkerViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
-    private MutableLiveData<Boolean> isWorksiteNameList = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> openWorksiteListLoaded = new MutableLiveData<>(false);
     private List<String> phoneNumberList = new ArrayList<>();
-    private List<String> worksiteNameList = new ArrayList<>();
+    private List<Worksite> worksiteList = new ArrayList<>();
 
     public void loadPhoneNumberList() {
         userRepository.loadPhoneNumberList(result -> {
@@ -64,18 +65,6 @@ public class AddWorkerViewModel extends ViewModel {
         });
     }
 
-
-    public void loadWorksiteNameList() {
-        worksiteRepository.loadWorksiteNameList(result -> {
-            if (result instanceof Result.Success) {
-                worksiteNameList = ((Result.Success<List<String>>) result).getData();
-                isWorksiteNameList.postValue(true);
-            } else {
-
-            }
-        });
-    }
-
     public void saveBitmapToMediaStore(Bitmap bm)
     {
         FileService fileService = App.getFileService();
@@ -107,11 +96,20 @@ public class AddWorkerViewModel extends ViewModel {
         });
     }
 
-    public List<String> getWorksiteNameList() {
-        return worksiteNameList;
+    public void loadOpenWorksite(String todayCal){
+        worksiteRepository.getTodayWorksite(todayCal,result -> {
+            if (result instanceof Result.Success) {
+                worksiteList = ((Result.Success<List<Worksite>>) result).getData();
+                openWorksiteListLoaded.setValue(true);
+            }
+        });
     }
 
-    public LiveData<Boolean> isWorksiteNameList() {
-        return isWorksiteNameList;
+    public List<Worksite> getOpenWorksite() {
+        return worksiteList;
+    }
+
+    public LiveData<Boolean> openWorksiteListLoaded() {
+        return openWorksiteListLoaded;
     }
 }

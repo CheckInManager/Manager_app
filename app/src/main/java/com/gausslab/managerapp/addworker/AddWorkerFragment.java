@@ -40,9 +40,11 @@ import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddworkerBinding;
 import com.gausslab.managerapp.model.User;
+import com.gausslab.managerapp.model.Worksite;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AddWorkerFragment extends Fragment {
@@ -59,6 +61,9 @@ public class AddWorkerFragment extends Fragment {
     private Button bt_takePicture;
     private Button bt_importPicture;
     private Uri selectedImage;
+
+    private List<Worksite> openWorksiteList;
+    private String todayCal;
 
     private FileService fileService;
     private File imageFile;
@@ -87,6 +92,8 @@ public class AddWorkerFragment extends Fragment {
         bt_takePicture = binding.addworkerBtTakePicture;
         bt_importPicture = binding.addworkerBtImportPicture;
 
+        init();
+
         return binding.getRoot();
     }
 
@@ -95,7 +102,6 @@ public class AddWorkerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         addWorkerViewModel.loadPhoneNumberList();
-        addWorkerViewModel.loadWorksiteNameList();
 
         ActivityResultLauncher<Intent> launchCamera = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -129,11 +135,16 @@ public class AddWorkerFragment extends Fragment {
 
 
         //region Observer
-        addWorkerViewModel.isWorksiteNameList().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        addWorkerViewModel.openWorksiteListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if (isLoaded) {
-                    ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, addWorkerViewModel.getWorksiteNameList());
+                if(isLoaded){
+                    List<String> toReturn = new ArrayList<>();
+                    List<Worksite> openWorksiteList =  addWorkerViewModel.getOpenWorksite();
+                    for(int i=0;i<openWorksiteList.size();i++){
+                        toReturn.add(openWorksiteList.get(i).getWorksiteName());
+                    }
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, toReturn);
                     sp_worksiteSpinner.setAdapter(arrayAdapter);
                 }
             }
@@ -201,5 +212,27 @@ public class AddWorkerFragment extends Fragment {
             }
         });
         //endregion
+    }
+
+    private void init(){
+        convertDateFormat();
+        addWorkerViewModel.loadOpenWorksite(todayCal);
+        openWorksiteList = addWorkerViewModel.getOpenWorksite();
+    }
+
+    private void convertDateFormat() {
+        Calendar cal = Calendar.getInstance();
+        todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+
+        String todayMonthCal = ((cal.get(Calendar.MONTH) + 1) + "");
+        String todayDayCal = ((cal.get(Calendar.DATE)) + "");
+
+        if (todayMonthCal.length() < 2 && todayDayCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        } else if (todayMonthCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+        } else if (todayDayCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        }
     }
 }

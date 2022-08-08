@@ -26,4 +26,5 @@ public interface DataSource {
     void getPhoneNumberList(CompletedCallback<Result<List<String>>> callback);
 
     void loadWorksiteNameList(CompletedCallback<Result<List<String>>> callback);
+
 }
