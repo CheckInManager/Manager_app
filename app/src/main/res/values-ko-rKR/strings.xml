@@ -22,7 +22,7 @@
     <string name="hint_memo">메모를 입력하세요</string>
     <string name="bt_worksite">작업장</string>
     <string name="bt_addWorker">작업자 추가</string>
-    <string name="bt_addNotice">공지사항 추가</string>
+    <string name="bt_Notice">공지사항</string>
     <string name="bt_map">지도</string>
     <string name="bt_share">공유</string>
     <string name="bt_home">메인</string>
@@ -36,4 +36,5 @@
     <string name="toast_exit">앱을 종료합니다</string>
     <string name="bt_takePicture">사진찍기</string>
     <string name="bt_importPicture">사진 가져오기</string>
+    <string name="bt_addNoticeForm">+ 공지사항 추가</string>
 </resources>

@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.model.Worksite;
@@ -214,20 +215,10 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void loadWorksiteNameList(CompletedCallback<Result<List<String>>> callback) {
-        db.collection("worksite")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<String> toReturn = new ArrayList<>();
-                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
-                        for (DocumentSnapshot snap : snaps) {
-                            toReturn.add(snap.getString("worksiteName"));
-                        }
-                        callback.onComplete(new Result.Success<List<String>>(toReturn));
-                    }
-                    callback.onComplete(new Result.Error(new Exception("error")));
-                });
-    }
+    public void addNotice(Notice notice, CompletedCallback<Result<String>> callback) {
+        db.collection("notice")
+                .add(notice);
+        callback.onComplete(new Result.Success<String>("Success"));
 
+    }
 }

@@ -81,7 +81,7 @@
         <Button
             android:id="@+id/checkedInWorkersBySite_bt_addNotice"
             style="@style/navBar_button"
-            android:text="@string/bt_addNotice"
+            android:text="@string/bt_Notice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

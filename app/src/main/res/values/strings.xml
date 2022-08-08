@@ -21,7 +21,7 @@
     <string name="hint_memo">Write down memo</string>
     <string name="bt_worksite">Work Site</string>
     <string name="bt_addWorker">Add worker</string>
-    <string name="bt_addNotice">Add Notice</string>
+    <string name="bt_Notice">Notice</string>
     <string name="bt_map">map</string>
     <string name="bt_share">share</string>
     <string name="bt_home">home</string>
@@ -35,5 +35,9 @@
     <string name="toast_exit">Exit the app</string>
     <string name="bt_takePicture">Take Picture</string>
     <string name="bt_importPicture">Import Picture</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="bt_addNoticeForm">+ Add notice</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

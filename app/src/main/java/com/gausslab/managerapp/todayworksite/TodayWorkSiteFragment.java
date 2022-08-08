@@ -11,14 +11,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gausslab.managerapp.R;
@@ -29,14 +26,13 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TodayWorkSiteFragment extends Fragment {
-
     private FragmentTodayworksiteBinding binding;
     private TodayWorkSiteViewModel todayWorkSiteViewModel;
 
     private FrameLayout fl_list;
     private Button bt_worksite;
     private Button bt_addWorker;
-    private Button bt_addNotice;
+    private Button bt_notice;
     private Button bt_map;
     private Button bt_addWorksite;
 
@@ -73,7 +69,7 @@ public class TodayWorkSiteFragment extends Fragment {
         fl_list = binding.todayworksiteFlList;
         bt_worksite = binding.todayworksiteBtWorksite;
         bt_addWorker = binding.todayworksiteBtAddWorker;
-        bt_addNotice = binding.todayworksiteBtAddNotice;
+        bt_notice = binding.todayworksiteBtAddNotice;
         bt_map = binding.todayworksiteMap;
         bt_addWorksite = binding.todayworksiteBtAddWorksite;
 
@@ -99,6 +95,13 @@ public class TodayWorkSiteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_addWorkerFragment);
+            }
+        });
+
+        bt_notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_noticeFragment);
             }
         });
         //endregion

@@ -1,5 +1,6 @@
 package com.gausslab.managerapp.datasource;
 
+import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.model.Worksite;
@@ -25,6 +26,6 @@ public interface DataSource {
 
     void getPhoneNumberList(CompletedCallback<Result<List<String>>> callback);
 
-    void loadWorksiteNameList(CompletedCallback<Result<List<String>>> callback);
+    void addNotice(Notice notice, CompletedCallback<Result<String>> callback);
 
 }

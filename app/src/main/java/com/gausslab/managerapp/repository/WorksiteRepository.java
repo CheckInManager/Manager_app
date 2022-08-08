@@ -9,6 +9,7 @@ import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.DataSource;
+import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 import com.google.zxing.BarcodeFormat;
@@ -129,9 +130,10 @@ public class WorksiteRepository {
         });
     }
 
-    public void loadWorksiteNameList(CompletedCallback<Result<List<String>>> callback) {
-        dataSource.loadWorksiteNameList(callback);
+    public void addNotice(final Notice notice, CompletedCallback<Result<String>> callback) {
+        dataSource.addNotice(notice, callback);
     }
+
 
     public void setExecutor(Executor exec) {
         this.executor = exec;

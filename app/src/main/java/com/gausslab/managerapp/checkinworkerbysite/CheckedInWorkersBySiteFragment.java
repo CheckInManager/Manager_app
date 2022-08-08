@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +30,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
 
     private Button bt_worksite;
     private Button bt_addWorker;
-    private Button bt_addNotice;
+    private Button bt_notice;
     private Button bt_map;
     private ImageView iv_qr;
     private TextView tv_worksiteName;
@@ -53,7 +52,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
         rv_userList = binding.checkedInWorkersBySiteRvUserList;
         bt_worksite = binding.checkedInWorkersBySiteBtWorksite;
         bt_addWorker = binding.checkedInWorkersBySiteBtAddWorker;
-        bt_addNotice = binding.checkedInWorkersBySiteBtAddNotice;
+        bt_notice = binding.checkedInWorkersBySiteBtAddNotice;
         bt_map = binding.checkedInWorkersBySiteBtMap;
         iv_qr = binding.checkedinworkersbysiteIvQr;
         tv_worksiteName = binding.checkedinworkersbysiteTvWorksiteName;
@@ -101,6 +100,13 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(R.id.action_checkInWorkdersBySiteFragment_to_addWorkerFragment);
+            }
+        });
+
+        bt_notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(R.id.action_checkInWorkdersBySiteFragment_to_noticeFragment);
             }
         });
         //endregion
