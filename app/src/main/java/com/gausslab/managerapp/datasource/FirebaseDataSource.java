@@ -218,7 +218,8 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void addNotice(Notice notice, CompletedCallback<Result<String>> callback) {
         db.collection("notice")
-                .add(notice);
+                .document(notice.getNoticeName()+notice.getWorksiteName())
+                .set(notice);
         callback.onComplete(new Result.Success<String>("Success"));
 
     }
@@ -240,6 +241,25 @@ public class FirebaseDataSource implements DataSource {
                         } else {
                             callback.onUpdate(new Result.Error(new Exception("error")));
                         }
+                    }
+                });
+    }
+
+    @Override
+    public void deleteNotice(String noticeName, String worksiteName, CompletedCallback<Result<String>> callback) {
+        db.collection("notice")
+                .document(noticeName+worksiteName)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        callback.onComplete(new Result.Success<String>("Success"));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callback.onComplete(new Result.Error(new Exception("Failed")));
                     }
                 });
     }

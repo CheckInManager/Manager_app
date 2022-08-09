@@ -30,4 +30,6 @@ public interface DataSource {
 
     void getNoticeList(ListenerCallback<Result<List<Notice>>> callback);
 
+    void deleteNotice(String noticeName, String worksiteName, CompletedCallback<Result<String>> callback);
+
 }

@@ -41,6 +41,7 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
             @Override
             public void onClick(View view) {
                 //삭제하는 코드
+                noticeViewModel.deleteNotice(holder.tv_noticeName.getText().toString(),holder.tv_worksiteName.getText().toString());
             }
         });
 

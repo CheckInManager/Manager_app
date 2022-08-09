@@ -159,6 +159,10 @@ public class WorksiteRepository {
         return noticeList;
     }
 
+    public void deleteNotice(final String noticeName, final String worksiteName, CompletedCallback<Result<String>>callback){
+        dataSource.deleteNotice(noticeName,worksiteName,callback);
+    }
+
 
     public void setExecutor(Executor exec) {
         this.executor = exec;
