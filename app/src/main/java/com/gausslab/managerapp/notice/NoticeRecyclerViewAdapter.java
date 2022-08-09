@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gausslab.managerapp.databinding.ObjectNoticeBinding;
 import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.todayworksite.OnItemInteractionListener;
+import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
 import java.util.List;
 
@@ -40,10 +41,17 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         holder.bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //삭제하는 코드
                 noticeViewModel.deleteNotice(holder.tv_noticeName.getText().toString(),holder.tv_worksiteName.getText().toString());
             }
         });
+        if(listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener){
+            holder.cv_card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((OnTodayWorksiteContextMenuInteractionListener<Notice>)listener).onItemClick(noticeList.get(holder.getAdapterPosition()));
+                }
+            });
+        }
 
     }
 

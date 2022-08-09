@@ -32,4 +32,6 @@ public interface DataSource {
 
     void deleteNotice(String noticeName, String worksiteName, CompletedCallback<Result<String>> callback);
 
+    void getNoticeDetailByName(String noticeName, String worksiteName, CompletedCallback<Result<Notice>> callback);
+
 }

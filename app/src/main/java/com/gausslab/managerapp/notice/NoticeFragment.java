@@ -60,8 +60,7 @@ public class NoticeFragment extends Fragment {
 
         init();
 
-        View root = binding.getRoot();
-        return root;
+        return binding.getRoot();
     }
 
     @Override
@@ -109,8 +108,12 @@ public class NoticeFragment extends Fragment {
                 new OnTodayWorksiteContextMenuInteractionListener<Notice>() {
                     @Override
                     public void onItemClick(Notice obj) {
-                        String NoticeName = obj.getNoticeName();
+                        String noticeName = obj.getNoticeName();
                         String worksiteName = obj.getWorksiteName();
+                        NoticeFragmentDirections.ActionNoticeFragmentToNoticeDetailFragment action = NoticeFragmentDirections.actionNoticeFragmentToNoticeDetailFragment();
+                        action.setNoticeName(noticeName);
+                        action.setWorksiteName(worksiteName);
+                        NavHostFragment.findNavController(NoticeFragment.this).navigate(action);
                     }
 
                     @Override

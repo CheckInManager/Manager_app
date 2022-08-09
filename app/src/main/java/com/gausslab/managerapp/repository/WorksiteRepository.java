@@ -163,6 +163,10 @@ public class WorksiteRepository {
         dataSource.deleteNotice(noticeName,worksiteName,callback);
     }
 
+    public void getNoticeDetailByName(final String noticeName, final String worksiteName, CompletedCallback<Result<Notice>>callback){
+        dataSource.getNoticeDetailByName(noticeName, worksiteName, callback);
+    }
+
 
     public void setExecutor(Executor exec) {
         this.executor = exec;

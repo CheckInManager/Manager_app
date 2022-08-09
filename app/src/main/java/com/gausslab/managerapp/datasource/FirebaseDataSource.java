@@ -263,4 +263,20 @@ public class FirebaseDataSource implements DataSource {
                     }
                 });
     }
+
+    @Override
+    public void getNoticeDetailByName(String noticeName, String worksiteName, CompletedCallback<Result<Notice>> callback) {
+        db.collection("notice")
+                .whereEqualTo("noticeName", noticeName)
+                .whereEqualTo("worksiteName", worksiteName)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                        callback.onComplete(new Result.Success<Notice>(snaps.get(0).toObject(Notice.class)));
+                    } else {
+                        callback.onComplete(new Result.Error(new Exception("error")));
+                    }
+                });
+    }
 }
