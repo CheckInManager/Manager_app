@@ -1,5 +1,7 @@
 package com.gausslab.managerapp.checkinworkerbysite;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,15 +21,18 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentCheckedinworkersbysiteBinding;
 import com.gausslab.managerapp.model.User;
+import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
 public class CheckedInWorkersBySiteFragment extends Fragment {
 
     private FragmentCheckedinworkersbysiteBinding binding;
     private CheckedInWorkersBySiteViewModel checkedInWorkersBySiteViewModel;
+    private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
 
     private Button bt_worksite;
     private Button bt_addWorker;
@@ -107,6 +113,19 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(R.id.action_checkInWorkdersBySiteFragment_to_noticeFragment);
+            }
+        });
+
+        iv_qr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mail_intent = new Intent(Intent.ACTION_SEND);
+                mail_intent.setType("*/*");
+                Uri uri = FileProvider.getUriForFile(requireActivity(), App.getFileProvider(), worksiteRepository.localFile);
+                mail_intent.putExtra(Intent.EXTRA_STREAM, uri);
+                mail_intent.putExtra(Intent.EXTRA_SUBJECT, "emailTest"); //이메일 제목
+                mail_intent.putExtra(Intent.EXTRA_TEXT, "test"); //메일 내용
+                startActivity(mail_intent);
             }
         });
         //endregion

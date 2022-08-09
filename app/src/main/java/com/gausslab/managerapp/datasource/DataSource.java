@@ -28,4 +28,6 @@ public interface DataSource {
 
     void addNotice(Notice notice, CompletedCallback<Result<String>> callback);
 
+    void getNoticeList(ListenerCallback<Result<List<Notice>>> callback);
+
 }

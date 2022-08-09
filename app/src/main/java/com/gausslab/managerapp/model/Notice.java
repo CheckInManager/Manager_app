@@ -11,6 +11,10 @@ public class Notice {
         this.worksiteName = worksiteName;
     }
 
+    public Notice(){
+
+    }
+
     public String getNoticeName() {
         return noticeName;
     }

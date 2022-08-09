@@ -4,11 +4,16 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.DataSource;
+import com.gausslab.managerapp.datasource.ListenerCallback;
 import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
@@ -32,6 +37,8 @@ public class WorksiteRepository {
 
     private Map<String, Drawable> worksiteQrDrawableMap = new HashMap<String, Drawable>();
     private Map<String, Worksite> worksiteMap = new HashMap<>();
+    private MutableLiveData<Boolean> noticeListLoaded = new MutableLiveData<>(false);
+    public List<Notice> noticeList = new ArrayList<>();
     public File localFile;
 
     public static WorksiteRepository getInstance() {
@@ -134,6 +141,24 @@ public class WorksiteRepository {
         dataSource.addNotice(notice, callback);
     }
 
+    public void registerNoticeListListener(){
+        dataSource.getNoticeList(new ListenerCallback<Result<List<Notice>>>() {
+            @Override
+            public void onUpdate(Result<List<Notice>> result) {
+                if(result instanceof Result.Success){
+                    noticeList =((Result.Success<List<Notice>>)result).getData();
+                    noticeListLoaded.postValue(true);
+                }else{
+                    noticeListLoaded.postValue(false);
+                }
+            }
+        });
+    }
+
+    public List<Notice> getNoticeList(){
+        return noticeList;
+    }
+
 
     public void setExecutor(Executor exec) {
         this.executor = exec;
@@ -145,6 +170,10 @@ public class WorksiteRepository {
 
     public void setFileService(FileService fs) {
         this.fileService = fs;
+    }
+
+    public LiveData<Boolean> isNoticeListLoaded(){
+        return noticeListLoaded;
     }
 
 }

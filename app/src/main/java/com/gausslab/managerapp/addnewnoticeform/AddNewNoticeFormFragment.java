@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddnewnoticeformBinding;
@@ -92,9 +93,13 @@ public class AddNewNoticeFormFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),sp_worksiteName.getSelectedItem().toString());
-                addNewNoticeFormViewModel.addNotice(notice);
-                bt_add.setEnabled(false);
+                if(et_noticeName.getText().toString().length()<1){
+                    Toast.makeText(requireContext(), "noticeName is empty", Toast.LENGTH_SHORT).show();
+                }else{
+                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),sp_worksiteName.getSelectedItem().toString());
+                    addNewNoticeFormViewModel.addNotice(notice);
+                    bt_add.setEnabled(false);
+                }
             }
         });
     }

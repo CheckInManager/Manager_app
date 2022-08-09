@@ -10,6 +10,7 @@ import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.model.Worksite;
+import com.gausslab.managerapp.notice.NoticeViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -220,5 +221,26 @@ public class FirebaseDataSource implements DataSource {
                 .add(notice);
         callback.onComplete(new Result.Success<String>("Success"));
 
+    }
+
+    @Override
+    public void getNoticeList(ListenerCallback<Result<List<Notice>>> callback) {
+        db.collection("notice")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
+                            List<Notice> toReturn = new ArrayList<>();
+                            List<DocumentSnapshot> snaps = value.getDocuments();
+                            for (DocumentSnapshot snap : snaps) {
+                                Notice toAdd = snap.toObject(Notice.class);
+                                toReturn.add(toAdd);
+                            }
+                            callback.onUpdate(new Result.Success<List<Notice>>(toReturn));
+                        } else {
+                            callback.onUpdate(new Result.Error(new Exception("error")));
+                        }
+                    }
+                });
     }
 }
