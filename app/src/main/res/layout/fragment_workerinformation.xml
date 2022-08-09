@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/hint_name"
-            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_phoneNumber"
-            app:layout_constraintTop_toBottomOf="@+id/workinformation_iv_image" />
+            app:layout_constraintTop_toBottomOf="@+id/workinformation_iv_image"
+            tools:layout_editor_absoluteX="158dp" />
 
         <TextView
             android:id="@+id/workerinformation_tv_phoneNumberLabel"
@@ -58,8 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/hint_phoneNumber"
-            app:layout_constraintStart_toStartOf="@+id/workerinformation_et_career"
-            app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_name" />
+            app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_name"
+            tools:layout_editor_absoluteX="158dp" />
 
         <TextView
             android:id="@+id/workerinformation_tv_careerLabel"
