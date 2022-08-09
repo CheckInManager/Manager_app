@@ -38,11 +38,12 @@
             android:id="@+id/addworker_et_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="@string/hint_name"
+            android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_nameLabel"
-            app:layout_constraintStart_toStartOf="@+id/addworker_et_phoneNumber"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/addworker_tv_nameLabel" />
 
         <TextView
@@ -62,29 +63,27 @@
             android:hint="@string/hint_phoneNumber"
             android:inputType="phone"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_phoneNumberLabel"
-            app:layout_constraintStart_toStartOf="@+id/addworker_et_memo"
+            app:layout_constraintStart_toStartOf="@+id/addworker_et_name"
             app:layout_constraintTop_toTopOf="@+id/addworker_tv_phoneNumberLabel" />
 
         <TextView
             android:id="@+id/addworker_tv_memoLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="@string/tv_memoLabel"
-            app:layout_constraintEnd_toEndOf="@+id/addworker_tv_phoneNumberLabel"
-            app:layout_constraintTop_toBottomOf="@+id/addworker_tv_phoneNumberLabel" />
+            app:layout_constraintEnd_toStartOf="@+id/addworker_et_memo"
+            app:layout_constraintStart_toStartOf="@+id/addworker_tv_worksiteNameLabel"
+            app:layout_constraintTop_toTopOf="@+id/addworker_et_memo" />
 
-        <EditText
+        <MultiAutoCompleteTextView
             android:id="@+id/addworker_et_memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
             android:hint="@string/hint_memo"
-            app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_memoLabel"
             app:layout_constraintStart_toStartOf="@+id/addworker_sp_worksiteSpinner"
-            app:layout_constraintTop_toTopOf="@+id/addworker_tv_memoLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/addworker_sp_worksiteSpinner" />
 
         <TextView
             android:id="@+id/addworker_tv_worksiteNameLabel"
@@ -92,17 +91,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/tv_worksiteNameLabel"
-            app:layout_constraintEnd_toEndOf="@+id/addworker_tv_memoLabel"
-            app:layout_constraintTop_toBottomOf="@+id/addworker_tv_memoLabel" />
+            app:layout_constraintEnd_toEndOf="@+id/addworker_tv_phoneNumberLabel"
+            app:layout_constraintTop_toBottomOf="@+id/addworker_tv_phoneNumberLabel" />
 
         <Spinner
             android:id="@+id/addworker_sp_worksiteSpinner"
             android:layout_width="210dp"
             android:layout_height="25dp"
             app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_worksiteNameLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/addworker_tv_nameLabel"
+            app:layout_constraintStart_toStartOf="@+id/addworker_et_phoneNumber"
             app:layout_constraintTop_toTopOf="@+id/addworker_tv_worksiteNameLabel" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -120,8 +117,9 @@
             android:text="@string/bt_formAdd"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addworker_sp_worksiteSpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/addworker_et_memo" />
 
         <Button
             android:id="@+id/addworker_bt_takePicture"
