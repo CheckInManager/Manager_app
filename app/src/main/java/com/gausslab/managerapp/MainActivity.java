@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 
+import com.gausslab.managerapp.repository.AccidentRepository;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.datasource.FirebaseDataSource;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     FileService fileService;
     WorksiteRepository worksiteRepository;
     UserRepository userRepository;
+    AccidentRepository accidentRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         userRepository = UserRepository.getInstance();
         userRepository.setDataSource(ds);
         userRepository.setExecutor(executorService);
+        accidentRepository = AccidentRepository.getInstance();
+        accidentRepository.setDataSource(ds);
+        accidentRepository.setExecutor(executorService);
 
         ServiceConnection connection = new ServiceConnection() {
             @Override
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 fileService.setFirebaseDataSource(ds);
                 worksiteRepository.setFileService(fileService);
                 userRepository.setFileService(fileService);
+                accidentRepository.setFileService(fileService);
                 fileService.setExecutor(executorService);
                 App.setFileService(fileService);
             }

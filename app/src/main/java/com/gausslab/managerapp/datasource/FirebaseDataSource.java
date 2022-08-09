@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
@@ -278,5 +279,15 @@ public class FirebaseDataSource implements DataSource {
                         callback.onComplete(new Result.Error(new Exception("error")));
                     }
                 });
+    }
+
+    @Override
+    public void addAccidentHistory(String userPhoneNumber, AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
+        Map<String, Object> accident = new HashMap<>();
+        accident.put("userPhoneNumber", userPhoneNumber);
+        accident.put("accidentHistory", accidentHistory);
+        db.collection("accidenthistory")
+                .add(accident);
+        callback.onComplete(new Result.Success<String>("Success"));
     }
 }

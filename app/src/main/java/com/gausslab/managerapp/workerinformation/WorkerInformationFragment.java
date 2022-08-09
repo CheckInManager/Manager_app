@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentWorkerinformationBinding;
@@ -28,7 +29,8 @@ public class WorkerInformationFragment extends Fragment {
     private TextView tv_name;
     private TextView tv_phoneNumber;
     private TextView tv_career;
-    private EditText et_accidentHistory;
+    private RecyclerView rv_accidentHistoryList;
+    private Button bt_accidentHistoryAdd;
     private EditText et_memo;
     private Button bt_complete;
 
@@ -52,7 +54,8 @@ public class WorkerInformationFragment extends Fragment {
         tv_name = binding.workerinformationEtName;
         tv_phoneNumber = binding.workerinformationEtPhoneNumber;
         tv_career = binding.workerinformationEtCareer;
-        et_accidentHistory = binding.workerinformationEtAccidentHistory;
+        rv_accidentHistoryList= binding.workerinformationRvAccidentHisoryList;
+        bt_accidentHistoryAdd = binding.workerinformationBtAccidentHistoryAdd;
         et_memo = binding.workerinformationEtMemo;
         bt_complete = binding.workerinformationBtComplete;
 
@@ -66,10 +69,20 @@ public class WorkerInformationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //region Listener
+
+        bt_accidentHistoryAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WorkerInformationFragmentDirections.ActionUserInformationFragmentToAddAccidentHistoryFormFragment action = WorkerInformationFragmentDirections.actionUserInformationFragmentToAddAccidentHistoryFormFragment();
+                action.setPhoneNumber(currUser.getPhoneNumber());
+                NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(action);
+            }
+        });
+
         bt_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getCareer(), currUser.getWorksiteName(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
+                currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getCareer(), currUser.getWorksiteName(), "", et_memo.getText().toString());
                 if (currUser.getPhoneNumber().length() < 1) {
                     workerInformationViewModel.changeNoPhoneNumberUserInformation(currUser);
                 } else {
@@ -94,7 +107,6 @@ public class WorkerInformationFragment extends Fragment {
                     tv_name.setText(currUser.getUserName());
                     tv_phoneNumber.setText(currUser.getPhoneNumber());
                     tv_career.setText(currUser.getCareer());
-                    et_accidentHistory.setText(currUser.getAccidentHistory());
                     et_memo.setText(currUser.getMemo());
                 }
             }

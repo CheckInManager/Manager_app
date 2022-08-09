@@ -1,5 +1,6 @@
 package com.gausslab.managerapp.datasource;
 
+import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
@@ -33,5 +34,7 @@ public interface DataSource {
     void deleteNotice(String noticeName, String worksiteName, CompletedCallback<Result<String>> callback);
 
     void getNoticeDetailByName(String noticeName, String worksiteName, CompletedCallback<Result<Notice>> callback);
+
+    void addAccidentHistory(String userPhoneNumber, AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
 }

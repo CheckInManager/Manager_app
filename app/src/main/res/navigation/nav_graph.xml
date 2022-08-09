@@ -95,6 +95,9 @@
         <action
             android:id="@+id/action_userInformationFragment_to_checkInWorkdersBySiteFragment"
             app:destination="@id/checkInWorkdersBySiteFragment" />
+        <action
+            android:id="@+id/action_userInformationFragment_to_addAccidentHistoryFormFragment"
+            app:destination="@id/addAccidentHistoryFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/addWorkerFragment"
@@ -140,5 +143,15 @@
         <action
             android:id="@+id/action_noticeDetailFragment_to_noticeFragment"
             app:destination="@id/noticeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAccidentHistoryFormFragment"
+        android:name="com.gausslab.managerapp.addaccidenthistoryform.AddAccidentHistoryFormFragment"
+        android:label="fragment_addaccidenthistoryform"
+        tools:layout="@layout/fragment_addaccidenthistoryform" >
+        <argument
+            android:name="phoneNumber"
+            android:defaultValue="01000000000"
+            app:argType="string"/>
     </fragment>
 </navigation>
