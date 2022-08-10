@@ -22,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentWorkerinformationBinding;
+import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.User;
+import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
 public class WorkerInformationFragment extends Fragment {
     private FragmentWorkerinformationBinding binding;
@@ -152,7 +154,22 @@ public class WorkerInformationFragment extends Fragment {
 
     private void setupAdapter() {
         adapter = new AccidentHistoryRecyclerViewAdapter(workerInformationViewModel.getAccidentHistoryList(phoneNumber),
-                workerInformationViewModel);
+                workerInformationViewModel, new OnTodayWorksiteContextMenuInteractionListener<AccidentHistory>() {
+            @Override
+            public void onItemClick(AccidentHistory obj) {
+                WorkerInformationFragmentDirections.ActionUserInformationFragmentToAccidentHistoryDetailFragment action = WorkerInformationFragmentDirections.actionUserInformationFragmentToAccidentHistoryDetailFragment();
+                action.setDescription(obj.getDescription());
+                action.setPlace(obj.getPlace());
+                action.setDate(obj.getDate());
+                action.setTime(obj.getTime());
+                NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(action);
+            }
+
+            @Override
+            public void onContextReturnWorksite(AccidentHistory obj) {
+
+            }
+        });
         rv_accidentHistoryList.setAdapter(adapter);
     }
 }

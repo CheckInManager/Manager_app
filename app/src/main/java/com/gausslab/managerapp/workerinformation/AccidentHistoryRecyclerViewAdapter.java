@@ -13,16 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.databinding.ObjectAccidenthistoryBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
+import com.gausslab.managerapp.todayworksite.OnItemInteractionListener;
 
 import java.util.List;
 
 public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<AccidentHistoryRecyclerViewAdapter.ViewHolder> {
     private List<AccidentHistory> accidentHistoryList;
     private WorkerInformationViewModel workerInformationViewModel;
+    private OnItemInteractionListener listener;
 
-    public AccidentHistoryRecyclerViewAdapter(List<AccidentHistory> accidentHistoryList, WorkerInformationViewModel workerInformationViewModel) {
+    public AccidentHistoryRecyclerViewAdapter(List<AccidentHistory> accidentHistoryList, WorkerInformationViewModel workerInformationViewModel, OnItemInteractionListener<AccidentHistory> clickListener) {
         this.accidentHistoryList = accidentHistoryList;
         this.workerInformationViewModel = workerInformationViewModel;
+        listener = clickListener;
     }
 
     @Override

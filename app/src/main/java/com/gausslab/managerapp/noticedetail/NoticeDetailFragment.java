@@ -42,7 +42,6 @@ public class NoticeDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentNoticedetailBinding.inflate(inflater, container, false);
 
         tv_noticeName = binding.noticedetailTvNoticeName;

@@ -102,6 +102,9 @@
         <action
             android:id="@+id/action_userInformationFragment_to_addAccidentHistoryFormFragment"
             app:destination="@id/addAccidentHistoryFormFragment" />
+        <action
+            android:id="@+id/action_userInformationFragment_to_accidentHistoryDetailFragment"
+            app:destination="@id/accidentHistoryDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/addWorkerFragment"
@@ -167,6 +170,28 @@
         <argument
             android:name="userName"
             android:defaultValue="userName"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/accidentHistoryDetailFragment"
+        android:name="com.gausslab.managerapp.accidenthistorydetail.AccidentHistoryDetailFragment"
+        android:label="fragment_accidenthistorydetail"
+        tools:layout="@layout/fragment_accidenthistorydetail" >
+        <argument
+            android:name="description"
+            android:defaultValue="description"
+            app:argType="string"/>
+        <argument
+            android:name="place"
+            android:defaultValue="place"
+            app:argType="string"/>
+        <argument
+            android:name="date"
+            android:defaultValue="date"
+            app:argType="string"/>
+        <argument
+            android:name="time"
+            android:defaultValue="time"
             app:argType="string"/>
     </fragment>
 </navigation>
