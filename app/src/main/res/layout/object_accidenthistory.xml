@@ -59,6 +59,16 @@
                 android:text="time"
                 app:layout_constraintStart_toEndOf="@+id/obj_accidenthistory_tv_date"
                 app:layout_constraintTop_toBottomOf="@+id/obj_accidenthistory_tv_description" />
+
+            <Button
+                android:id="@+id/obj_accidenthistory_bt_delete"
+                android:layout_width="38dp"
+                android:layout_height="31dp"
+                android:text="X"
+                android:textColor="@color/white"
+                android:textSize="9sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

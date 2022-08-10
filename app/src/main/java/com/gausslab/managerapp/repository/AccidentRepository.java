@@ -53,6 +53,10 @@ public class AccidentRepository {
         });
     }
 
+    public void deleteAccidentHistory(final String description, final String place, final String date, CompletedCallback<Result<String>>callback){
+        dataSource.deleteAccidentHistory(description, place, date, callback);
+    }
+
 
     public void setExecutor(Executor exec) {
         this.executor = exec;

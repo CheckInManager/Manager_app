@@ -1,5 +1,8 @@
 package com.gausslab.managerapp.addaccidenthistoryform;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,17 +16,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddaccidenthistoryformBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+
 public class AddAccidentHistoryFormFragment extends Fragment {
     private FragmentAddaccidenthistoryformBinding binding;
     private AddAccidentHistoryFormViewModel addAccidentHistoryFormViewModel;
+    private DialogInterface.OnCancelListener dateCancelListener;
     private EditText et_description;
     private EditText et_place;
     private EditText et_date;
@@ -88,5 +97,66 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                 }
             }
         });
+
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                String s = ""+year+"."+(month+1)+"."+dayOfMonth;
+                et_date.setText(s);
+            }
+        };
+
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int min) {
+                String s= ""+hour+":"+min;
+                et_time.setText(s);
+            }
+        };
+
+        dateCancelListener = new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                et_date.clearFocus();
+                et_time.clearFocus();
+            }
+        };
+
+        et_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus){
+                    showDatePicker(dateSetListener);
+                }
+            }
+        });
+
+        et_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus){
+                    showTimePicker(timeSetListener);
+                }
+            }
+        });
+    }
+
+    private void showDatePicker(DatePickerDialog.OnDateSetListener listener){
+        Calendar c = Calendar.getInstance();
+        int y = c.get(Calendar.YEAR);
+        int m = c.get(Calendar.MONTH);
+        int d = c.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog dpd = new DatePickerDialog(getContext(), listener, y, m, d);
+        dpd.setOnCancelListener(dateCancelListener);
+        dpd.show();
+    }
+
+    private void showTimePicker(TimePickerDialog.OnTimeSetListener listener){
+        Calendar c = Calendar.getInstance();
+        int h = c.get(Calendar.HOUR_OF_DAY);
+        int m = c.get(Calendar.MINUTE);
+        TimePickerDialog tpd = new TimePickerDialog(getContext(), android.R.style.Theme_Holo_Light_Dialog,listener,h,m, false);
+        tpd.setOnCancelListener(dateCancelListener);
+        tpd.show();
     }
 }

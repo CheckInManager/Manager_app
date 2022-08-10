@@ -40,4 +40,6 @@ public interface DataSource {
     void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
     void getAccidentHistoryByUser(String phoneNumber, ListenerCallback<Result<List<AccidentHistory>>> callback);
+
+    void deleteAccidentHistory(String description, String place, String date, CompletedCallback<Result<String>> callback);
 }
