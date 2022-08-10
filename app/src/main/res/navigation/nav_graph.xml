@@ -92,6 +92,10 @@
             android:name="phoneNumber"
             android:defaultValue="01000000000"
             app:argType="string"/>
+        <argument
+            android:name="userName"
+            android:defaultValue="userName"
+            app:argType="string"/>
         <action
             android:id="@+id/action_userInformationFragment_to_checkInWorkdersBySiteFragment"
             app:destination="@id/checkInWorkersBySiteFragment" />
@@ -152,6 +156,10 @@
         <argument
             android:name="phoneNumber"
             android:defaultValue="01000000000"
+            app:argType="string"/>
+        <argument
+            android:name="userName"
+            android:defaultValue="userName"
             app:argType="string"/>
     </fragment>
 </navigation>

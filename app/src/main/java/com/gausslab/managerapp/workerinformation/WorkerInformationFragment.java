@@ -39,7 +39,8 @@ public class WorkerInformationFragment extends Fragment {
     private AccidentHistoryRecyclerViewAdapter adapter;
 
     private User currUser;
-    private  String phoneNumber;
+    private String phoneNumber;
+    private String userName;
 
     public WorkerInformationFragment() {
 
@@ -59,7 +60,7 @@ public class WorkerInformationFragment extends Fragment {
         tv_name = binding.workerinformationEtName;
         tv_phoneNumber = binding.workerinformationEtPhoneNumber;
         tv_career = binding.workerinformationEtCareer;
-        rv_accidentHistoryList= binding.workerinformationRvAccidentHisoryList;
+        rv_accidentHistoryList = binding.workerinformationRvAccidentHisoryList;
         bt_accidentHistoryAdd = binding.workerinformationBtAccidentHistoryAdd;
         et_memo = binding.workerinformationEtMemo;
         bt_complete = binding.workerinformationBtComplete;
@@ -79,7 +80,7 @@ public class WorkerInformationFragment extends Fragment {
         workerInformationViewModel.isAccidentHistoryListLoaded(phoneNumber).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
+                if (isLoaded) {
                     adapter.setAccidentHistoryList(workerInformationViewModel.getAccidentHistoryList(phoneNumber));
                 }
             }
@@ -91,6 +92,7 @@ public class WorkerInformationFragment extends Fragment {
             public void onClick(View view) {
                 WorkerInformationFragmentDirections.ActionUserInformationFragmentToAddAccidentHistoryFormFragment action = WorkerInformationFragmentDirections.actionUserInformationFragmentToAddAccidentHistoryFormFragment();
                 action.setPhoneNumber(currUser.getPhoneNumber());
+                action.setUserName(currUser.getUserName());
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(action);
             }
         });
@@ -98,7 +100,13 @@ public class WorkerInformationFragment extends Fragment {
         bt_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getCareer(), currUser.getWorksiteName(), "", et_memo.getText().toString());
+                if (workerInformationViewModel.getAccidentHistoryList(phoneNumber).toString().length() < 3) {
+                    currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getCareer(), currUser.getWorksiteName(),
+                            "", et_memo.getText().toString());
+                } else {
+                    currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getCareer(), currUser.getWorksiteName(),
+                            workerInformationViewModel.getAccidentHistoryList(phoneNumber).toString(), et_memo.getText().toString());
+                }
                 if (currUser.getPhoneNumber().length() < 1) {
                     workerInformationViewModel.changeNoPhoneNumberUserInformation(currUser);
                 } else {
@@ -112,9 +120,20 @@ public class WorkerInformationFragment extends Fragment {
 
     private void init() {
         phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
-        workerInformationViewModel.loadUserInformation(phoneNumber);
-        workerInformationViewModel.loadUserImage(phoneNumber);
-        workerInformationViewModel.loadAccidentHistoryListByUser(phoneNumber);
+        userName = WorkerInformationFragmentArgs.fromBundle(getArguments()).getUserName();
+
+
+        if(phoneNumber.length()>1){
+            workerInformationViewModel.loadUserInformation(phoneNumber);
+            workerInformationViewModel.loadUserImage(phoneNumber);
+            workerInformationViewModel.loadAccidentHistoryListByUser(phoneNumber);
+
+        }else{
+            phoneNumber = userName;
+            workerInformationViewModel.noPhoneNumberLoadUserInformation(userName);
+            workerInformationViewModel.loadUserImage(userName);
+            workerInformationViewModel.loadAccidentHistoryListByUser(userName);
+        }
         workerInformationViewModel.userInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
@@ -131,7 +150,7 @@ public class WorkerInformationFragment extends Fragment {
         setupAdapter();
     }
 
-    private void setupAdapter(){
+    private void setupAdapter() {
         adapter = new AccidentHistoryRecyclerViewAdapter(workerInformationViewModel.getAccidentHistoryList(phoneNumber),
                 workerInformationViewModel);
         rv_accidentHistoryList.setAdapter(adapter);

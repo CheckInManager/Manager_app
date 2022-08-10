@@ -167,6 +167,24 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
+    public void noPhoneNumberGetUser(String userName, CompletedCallback<Result<User>> callback) {
+        db.collection("user")
+                .whereEqualTo("userName",userName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                            callback.onComplete(new Result.Success<User>(snaps.get(0).toObject(User.class)));
+                        } else {
+                            callback.onComplete(new Result.Error(new Exception("error")));
+                        }
+                    }
+                });
+    }
+
+    @Override
     public void changeUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback) {
         db.collection("user")
                 .document(changeUserInformation.getPhoneNumber())

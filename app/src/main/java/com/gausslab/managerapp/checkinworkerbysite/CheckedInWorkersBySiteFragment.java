@@ -147,6 +147,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
                         String phoneNumber = obj.getPhoneNumber();
                         CheckedInWorkersBySiteFragmentDirections.ActionCheckInWorkdersBySiteFragmentToUserInformationFragment action = CheckedInWorkersBySiteFragmentDirections.actionCheckInWorkdersBySiteFragmentToUserInformationFragment();
                         action.setPhoneNumber(phoneNumber);
+                        action.setUserName(obj.getUserName());
                         NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(action);
                     }
 

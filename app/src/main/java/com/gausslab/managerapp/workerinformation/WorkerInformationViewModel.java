@@ -33,6 +33,15 @@ public class WorkerInformationViewModel extends ViewModel {
         });
     }
 
+    public void noPhoneNumberLoadUserInformation(String userName) {
+        userRepository.noPhoneNumberGetUser(userName, result -> {
+            if (result instanceof Result.Success) {
+                currUser = ((Result.Success<User>) result).getData();
+                userInformationLoaded.setValue(true);
+            }
+        });
+    }
+
     public void changeInformation(User changeInformation) {
         userRepository.changeUserInformation(changeInformation, result -> {
             if (result instanceof Result.Success) {
@@ -61,6 +70,7 @@ public class WorkerInformationViewModel extends ViewModel {
             }
         });
     }
+
 
     public void loadAccidentHistoryListByUser(String phoneNumber){
         accidentRepository.registerAccidentHistoryListListener(phoneNumber);

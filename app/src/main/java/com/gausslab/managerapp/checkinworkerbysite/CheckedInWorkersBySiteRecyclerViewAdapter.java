@@ -1,10 +1,7 @@
 package com.gausslab.managerapp.checkinworkerbysite;
 
 import android.graphics.Color;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -45,13 +42,13 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
         holder.tv_phoneNum.setText(currUser.getPhoneNumber());
 
         if (currUser.getAccidentHistory().length() != 0) {
-            holder.card.setBackgroundColor(Color.RED);
+            holder.cv_card.setBackgroundColor(Color.RED);
         } else {
-            holder.card.setBackgroundColor(Color.WHITE);
+            holder.cv_card.setBackgroundColor(Color.WHITE);
         }
 
         if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
-            holder.card.setOnClickListener(new View.OnClickListener() {
+            holder.cv_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ((OnTodayWorksiteContextMenuInteractionListener<User>) listener).onItemClick(userList.get(holder.getAdapterPosition()));
@@ -71,13 +68,13 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final CardView card;
+        public final CardView cv_card;
         public final TextView tv_userName;
         public final TextView tv_phoneNum;
 
         public ViewHolder(ObjectCheckedinworkersbysiteBinding binding) {
             super(binding.getRoot());
-            card = binding.objCheckinworkersbysiteCard;
+            cv_card = binding.objCheckinworkersbysiteCard;
             tv_userName = binding.objCheckinworkersbysiteTvUserName;
             tv_phoneNum = binding.objCheckinworkersbysiteTvPhonenum;
         }

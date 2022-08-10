@@ -31,6 +31,8 @@ public class AddAccidentHistoryFormFragment extends Fragment {
     private Button bt_add;
 
     private String userPhoneNumber;
+    private String userName;
+    private AccidentHistory accidentHistory;
 
     public AddAccidentHistoryFormFragment() {
 
@@ -54,6 +56,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         bt_add = binding.addaccidenthistoryBtAdd;
 
         userPhoneNumber = AddAccidentHistoryFormFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
+        userName = AddAccidentHistoryFormFragmentArgs.fromBundle(getArguments()).getUserName();
         return binding.getRoot();
     }
 
@@ -75,7 +78,11 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                 if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    AccidentHistory accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber);
+                    if(userPhoneNumber.length()>1){
+                        accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber);
+                    }else{
+                        accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userName);
+                    }
                     addAccidentHistoryFormViewModel.addAccidentHistory(accidentHistory);
                     bt_add.setEnabled(false);
                 }

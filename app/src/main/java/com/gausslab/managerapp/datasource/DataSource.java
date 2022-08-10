@@ -17,6 +17,8 @@ public interface DataSource {
 
     void getUserByPhoneNumber(String phoneNumber, CompletedCallback<Result<User>> callback);
 
+    void noPhoneNumberGetUser(String userName, CompletedCallback<Result<User>> callback);
+
     void changeUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback);
 
     void changeNoPhoneNumberUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback);

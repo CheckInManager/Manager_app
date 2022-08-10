@@ -26,11 +26,11 @@
             android:id="@+id/workerinformation_tv_nameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/tv_nameLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline10" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/workinformation_iv_image" />
 
         <TextView
             android:id="@+id/workerinformation_et_name"
@@ -90,10 +90,10 @@
             android:id="@+id/workerinformation_rv_accidentHisoryList"
             android:layout_width="204dp"
             android:layout_height="100dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layoutManager="LinearLayoutManager"
-            app:layout_constraintEnd_toStartOf="@+id/workerinformation_bt_accidentHistoryAdd"
-            app:layout_constraintStart_toEndOf="@+id/workerinformation_tv_accidentHistoryLabel"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_career"
             tools:listitem="@layout/object_accidenthistory" />
 
@@ -104,6 +104,7 @@
             android:text="+"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/workerinformation_rv_accidentHisoryList"
             app:layout_constraintTop_toTopOf="@+id/workerinformation_rv_accidentHisoryList" />
 
         <TextView
@@ -145,7 +146,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_memo" />
 
-
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

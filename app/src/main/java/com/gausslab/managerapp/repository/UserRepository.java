@@ -64,6 +64,10 @@ public class UserRepository {
         dataSource.getUserByPhoneNumber(phoneNumber, callback);
     }
 
+    public void noPhoneNumberGetUser(final String userName, final CompletedCallback<Result<User>> callback) {
+        dataSource.noPhoneNumberGetUser(userName, callback);
+    }
+
     public void changeUserInformation(final User changeUserInformation, final CompletedCallback<Result<String>> callback) {
         dataSource.changeUserInformation(changeUserInformation, callback);
     }
@@ -136,6 +140,7 @@ public class UserRepository {
             }
         });
     }
+
 
 
     public void setExecutor(Executor exec) {
