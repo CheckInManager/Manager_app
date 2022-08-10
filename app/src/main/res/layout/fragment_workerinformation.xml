@@ -89,7 +89,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/workerinformation_rv_accidentHisoryList"
             android:layout_width="204dp"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layoutManager="LinearLayoutManager"
@@ -112,14 +112,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_memoLabel"
-            app:layout_constraintBottom_toBottomOf="@+id/workerinformation_et_memo"
-            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_accidentHistoryLabel" />
+            app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_accidentHistoryLabel"
+            app:layout_constraintTop_toTopOf="@+id/workerinformation_et_memo" />
 
         <EditText
             android:id="@+id/workerinformation_et_memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="40dp"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"

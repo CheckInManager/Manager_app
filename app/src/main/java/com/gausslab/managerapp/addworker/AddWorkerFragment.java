@@ -61,6 +61,10 @@ public class AddWorkerFragment extends Fragment {
     private Button bt_takePicture;
     private Button bt_importPicture;
     private Uri selectedImage;
+    private Button bt_worksite;
+    private Button bt_addWorker;
+    private Button bt_notice;
+    private Button bt_map;
 
     private List<Worksite> openWorksiteList;
     private String todayCal;
@@ -92,6 +96,10 @@ public class AddWorkerFragment extends Fragment {
         bt_add = binding.addworkerBtAdd;
         bt_takePicture = binding.addworkerBtTakePicture;
         bt_importPicture = binding.addworkerBtImportPicture;
+        bt_worksite = binding.addworkerBtWorksite;
+        bt_addWorker = binding.addworkerBtAddWorker;
+        bt_notice = binding.addworkerBtAddNotice;
+        bt_map = binding.addworkerMap;
 
         init();
 
@@ -190,10 +198,10 @@ public class AddWorkerFragment extends Fragment {
                 if(et_name.getText().toString().length()<1){
                     Toast.makeText(requireContext(),"name is empty",Toast.LENGTH_SHORT).show();
                 }
+                if(iv_image.getDrawable() == null){
+                    Toast.makeText(requireContext(),"image is empty",Toast.LENGTH_SHORT).show();
+                }
                 else{
-                    if(iv_image == null){
-                        Toast.makeText(requireContext(),"image is empty",Toast.LENGTH_SHORT).show();
-                    }
                     if (et_phoneNumber.getText().toString().length() < 1) {
                         noPhoneNumNewUser();
                     } else if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
@@ -202,6 +210,20 @@ public class AddWorkerFragment extends Fragment {
                         Toast.makeText(requireContext(), R.string.toast_changePhoneNumber, Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+
+        bt_worksite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(AddWorkerFragment.this).navigate(R.id.action_addWorkerFragment_to_todayWorkSiteFragment);
+            }
+        });
+
+        bt_notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(AddWorkerFragment.this).navigate(R.id.action_addWorkerFragment_to_noticeFragment);
             }
         });
         //endregion

@@ -107,7 +107,14 @@
         android:id="@+id/addWorkerFragment"
         android:name="com.gausslab.managerapp.addworker.AddWorkerFragment"
         android:label="AddWorkerFragment"
-        tools:layout="@layout/fragment_addworker"/>
+        tools:layout="@layout/fragment_addworker">
+        <action
+            android:id="@+id/action_addWorkerFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+        <action
+            android:id="@+id/action_addWorkerFragment_to_todayWorkSiteFragment"
+            app:destination="@id/todayWorkSiteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/noticeFragment"
         android:name="com.gausslab.managerapp.notice.NoticeFragment"
