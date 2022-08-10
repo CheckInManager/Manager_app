@@ -23,12 +23,22 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
+        android:id="@+id/checkedinworkersbysite_tv_worksiteNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_worksiteNameLabel"
+        app:layout_constraintBottom_toTopOf="@+id/checkedinworkersbysite_tv_worksiteName"
+        app:layout_constraintEnd_toStartOf="@+id/checkedinworkersbysite_iv_qr"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+    <TextView
         android:id="@+id/checkedinworkersbysite_tv_worksiteName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_marginTop="16dp"
         android:textColor="@color/black"
+        android:textSize="23sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/checkedInWorkersBySite_rv_userList"
         app:layout_constraintEnd_toStartOf="@+id/checkedinworkersbysite_iv_qr"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -110,5 +120,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0." />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
