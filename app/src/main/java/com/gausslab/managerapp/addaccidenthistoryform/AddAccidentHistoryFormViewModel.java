@@ -14,8 +14,8 @@ public class AddAccidentHistoryFormViewModel extends ViewModel {
     private AccidentRepository accidentRepository = AccidentRepository.getInstance();
     private MutableLiveData<Boolean> addAccidentHistorySuccess = new MutableLiveData<>(false);
 
-    public void addAccidentHistory(String userPhoneNumber, AccidentHistory accidentHistory){
-        accidentRepository.addAccidentHistory(userPhoneNumber, accidentHistory, result->{
+    public void addAccidentHistory(AccidentHistory accidentHistory){
+        accidentRepository.addAccidentHistory(accidentHistory, result->{
            if(result instanceof Result.Success){
                addAccidentHistorySuccess.postValue(true);
            } else{

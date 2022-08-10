@@ -1,24 +1,28 @@
 package com.gausslab.managerapp.model;
 
 public class AccidentHistory {
-    private String Description;
+    private String description;
     private String place;
     private String date;
     private String time;
+    private String userPhoneNumber;
 
-    public AccidentHistory(String description, String place, String date, String time) {
-        Description = description;
+    public AccidentHistory(){}
+
+    public AccidentHistory(String description, String place, String date, String time,String userPhoneNumber) {
+        this.description = description;
         this.place = place;
         this.date = date;
         this.time = time;
+        this.userPhoneNumber = userPhoneNumber;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getPlace() {
@@ -43,5 +47,13 @@ public class AccidentHistory {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getUserPhoneNumber() {
+        return userPhoneNumber;
+    }
+
+    public void setUserPhoneNumber(String userPhoneNumber) {
+        this.userPhoneNumber = userPhoneNumber;
     }
 }

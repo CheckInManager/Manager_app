@@ -11,7 +11,6 @@ import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.model.Worksite;
-import com.gausslab.managerapp.notice.NoticeViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -282,12 +281,32 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void addAccidentHistory(String userPhoneNumber, AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
-        Map<String, Object> accident = new HashMap<>();
-        accident.put("userPhoneNumber", userPhoneNumber);
-        accident.put("accidentHistory", accidentHistory);
+    public void addAccidentHistory( AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .add(accident);
+                .add(accidentHistory);
         callback.onComplete(new Result.Success<String>("Success"));
+    }
+
+    @Override
+    public void getAccidentHistoryByUser(String phoneNumber, ListenerCallback<Result<List<AccidentHistory>>> callback) {
+        db.collection("accidenthistory")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
+                            List<AccidentHistory> toReturn = new ArrayList<>();
+                            List<DocumentSnapshot> snaps = value.getDocuments();
+                            for (DocumentSnapshot snap : snaps) {
+                                AccidentHistory toAdd = snap.toObject(AccidentHistory.class);
+                                if (toAdd.getUserPhoneNumber().equals(phoneNumber)) {
+                                    toReturn.add(toAdd);
+                                }
+                            }
+                            callback.onUpdate(new Result.Success<List<AccidentHistory>>(toReturn));
+                        } else {
+                            callback.onUpdate(new Result.Error(new Exception("error")));
+                        }
+                    }
+                });
     }
 }

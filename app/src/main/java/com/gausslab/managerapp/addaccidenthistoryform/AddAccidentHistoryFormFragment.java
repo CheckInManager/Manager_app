@@ -63,19 +63,20 @@ public class AddAccidentHistoryFormFragment extends Fragment {
 
         addAccidentHistoryFormViewModel.isAddAccidentHistorySuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                NavHostFragment.findNavController(AddAccidentHistoryFormFragment.this).navigateUp();
+            public void onChanged(Boolean isSuccess) {
+                if (isSuccess)
+                    NavHostFragment.findNavController(AddAccidentHistoryFormFragment.this).navigateUp();
             }
         });
 
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(et_description.getText().toString().length()<1){
+                if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
-                }else{
-                    AccidentHistory accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString());
-                    addAccidentHistoryFormViewModel.addAccidentHistory(userPhoneNumber, accidentHistory);
+                } else {
+                    AccidentHistory accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber);
+                    addAccidentHistoryFormViewModel.addAccidentHistory(accidentHistory);
                     bt_add.setEnabled(false);
                 }
             }

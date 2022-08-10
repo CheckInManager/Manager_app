@@ -7,12 +7,17 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.gausslab.managerapp.datasource.CompletedCallback;
+import com.gausslab.managerapp.model.AccidentHistory;
+import com.gausslab.managerapp.repository.AccidentRepository;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.User;
 
+import java.util.List;
+
 public class WorkerInformationViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
+    private final AccidentRepository accidentRepository = AccidentRepository.getInstance();
     private final MutableLiveData<Boolean> userInformationLoaded = new MutableLiveData<>(false);
 
     private User currUser;
@@ -57,6 +62,14 @@ public class WorkerInformationViewModel extends ViewModel {
         });
     }
 
+    public void loadAccidentHistoryListByUser(String phoneNumber){
+        accidentRepository.registerAccidentHistoryListListener(phoneNumber);
+    }
+
+    public List<AccidentHistory> getAccidentHistoryList(String phoneNumber){
+        return accidentRepository.getAccidentHistoryListByUser(phoneNumber);
+    }
+
     public Drawable getUserImage() {
         return userImage;
     }
@@ -67,6 +80,10 @@ public class WorkerInformationViewModel extends ViewModel {
 
     public LiveData<Boolean> userInformationLoaded() {
         return userInformationLoaded;
+    }
+
+    public LiveData<Boolean> isAccidentHistoryListLoaded(String phoneNumber){
+        return accidentRepository.isAccidentHistoryListLoadedByUser(phoneNumber);
     }
 
 }

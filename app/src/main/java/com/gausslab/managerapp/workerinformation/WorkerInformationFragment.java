@@ -1,6 +1,7 @@
 package com.gausslab.managerapp.workerinformation;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.R;
@@ -33,8 +36,10 @@ public class WorkerInformationFragment extends Fragment {
     private Button bt_accidentHistoryAdd;
     private EditText et_memo;
     private Button bt_complete;
+    private AccidentHistoryRecyclerViewAdapter adapter;
 
     private User currUser;
+    private  String phoneNumber;
 
     public WorkerInformationFragment() {
 
@@ -59,6 +64,9 @@ public class WorkerInformationFragment extends Fragment {
         et_memo = binding.workerinformationEtMemo;
         bt_complete = binding.workerinformationBtComplete;
 
+        rv_accidentHistoryList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        rv_accidentHistoryList.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
+
         init();
 
         return binding.getRoot();
@@ -68,8 +76,16 @@ public class WorkerInformationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //region Listener
+        workerInformationViewModel.isAccidentHistoryListLoaded(phoneNumber).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if(isLoaded){
+                    adapter.setAccidentHistoryList(workerInformationViewModel.getAccidentHistoryList(phoneNumber));
+                }
+            }
+        });
 
+        //region Listener
         bt_accidentHistoryAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,9 +111,10 @@ public class WorkerInformationFragment extends Fragment {
     }
 
     private void init() {
-        String phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
+        phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         workerInformationViewModel.loadUserInformation(phoneNumber);
         workerInformationViewModel.loadUserImage(phoneNumber);
+        workerInformationViewModel.loadAccidentHistoryListByUser(phoneNumber);
         workerInformationViewModel.userInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
@@ -111,5 +128,12 @@ public class WorkerInformationFragment extends Fragment {
                 }
             }
         });
+        setupAdapter();
+    }
+
+    private void setupAdapter(){
+        adapter = new AccidentHistoryRecyclerViewAdapter(workerInformationViewModel.getAccidentHistoryList(phoneNumber),
+                workerInformationViewModel);
+        rv_accidentHistoryList.setAdapter(adapter);
     }
 }

@@ -35,6 +35,7 @@ public interface DataSource {
 
     void getNoticeDetailByName(String noticeName, String worksiteName, CompletedCallback<Result<Notice>> callback);
 
-    void addAccidentHistory(String userPhoneNumber, AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
+    void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
+    void getAccidentHistoryByUser(String phoneNumber, ListenerCallback<Result<List<AccidentHistory>>> callback);
 }
