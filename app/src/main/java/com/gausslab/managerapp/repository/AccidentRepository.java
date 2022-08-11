@@ -64,7 +64,7 @@ public class AccidentRepository {
     }
 
     public void getAccidentHistoryKey(final CompletedCallback<Result<String>> callback){
-        dataSource.getNewKey(callback);
+        dataSource.getNewKey("accidentHistory",callback);
     }
 
     public void setExecutor(Executor exec) {

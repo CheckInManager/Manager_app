@@ -356,10 +356,15 @@ public class FirebaseDataSource implements DataSource {
         callback.onComplete(new Result.Success<String>("Success"));
     }
 
-    public void getNewKey(CompletedCallback<Result<String>> callback)
+    public void getNewKey(String type, CompletedCallback<Result<String>> callback)
     {
         DocumentReference docRef = null;
-        docRef = db.collection("accidenthistorykey").document("accidenthistorykey");
+        if(type.equals("accidentHistory")){
+            docRef = db.collection("accidenthistorykey").document("accidenthistorykey");
+        }
+        if(type.equals("notice")){
+            docRef = db.collection("noticeKey").document("noticeKey");
+        }
         if(docRef != null)
         {
             DocumentReference finalDocRef = docRef;

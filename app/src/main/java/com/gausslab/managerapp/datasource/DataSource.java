@@ -45,6 +45,6 @@ public interface DataSource {
 
     void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
-    void getNewKey(CompletedCallback<Result<String>>callback);
+    void getNewKey(String type, CompletedCallback<Result<String>>callback);
 
 }
