@@ -1,80 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout8"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".addnewnoticeform.AddNewNoticeFormFragment" >
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/addnewnoticeform_tv_noticeNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NoticeName"
-        app:layout_constraintBottom_toTopOf="@+id/addnewnoticeform_et_noticeName"
-        app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_et_noticeName" />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/frameLayout8"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".addnewnoticeform.AddNewNoticeFormFragment">
 
-    <EditText
-        android:id="@+id/addnewnoticeform_et_noticeName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="13"
-        android:inputType="textPersonName"
-        android:hint="Notice Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+<TextView
+    android:id="@+id/addnewnoticeform_tv_noticeNameLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="NoticeName"
+    app:layout_constraintBottom_toTopOf="@+id/addnewnoticeform_et_noticeName"
+    app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_et_noticeName" />
 
-    <TextView
-        android:id="@+id/addnewnoticeform_tv_memoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="memo"
-        app:layout_constraintBottom_toTopOf="@+id/addnewnoticeform_et_memo"
-        app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_et_memo" />
+<EditText
+    android:id="@+id/addnewnoticeform_et_noticeName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ems="13"
+    android:hint="Notice Name"
+    android:inputType="textPersonName"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/addnewnoticeform_et_memo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="13"
-        android:hint="This is memo about newNotice~!~!"
-        app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_et_noticeName"
-        app:layout_constraintTop_toBottomOf="@+id/addnewnoticeform_et_noticeName" />
+<TextView
+    android:id="@+id/addnewnoticeform_tv_memoLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="memo"
+    app:layout_constraintBottom_toTopOf="@+id/addnewnoticeform_et_memo"
+    app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_et_memo" />
 
-    <TextView
-        android:id="@+id/addnewnoticeform_tv_worksiteNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_worksiteNameLabel"
-        app:layout_constraintBottom_toTopOf="@+id/addnewnoticeform_sp_worksiteSpinner"
-        app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_sp_worksiteSpinner" />
+<MultiAutoCompleteTextView
+    android:id="@+id/addnewnoticeform_et_memo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:ems="13"
+    android:hint="This is memo about newNotice~!~!"
+    app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_et_noticeName"
+    app:layout_constraintTop_toBottomOf="@+id/addnewnoticeform_et_noticeName" />
 
-    <Spinner
-        android:id="@+id/addnewnoticeform_sp_worksiteSpinner"
-        android:layout_width="262dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_et_memo"
-        app:layout_constraintTop_toBottomOf="@+id/addnewnoticeform_et_memo" />
+<TextView
+    android:id="@+id/addnewnoticeform_tv_worksiteNameLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/tv_worksiteNameLabel"
+    app:layout_constraintBottom_toTopOf="@+id/addnewnoticeform_sp_worksiteSpinner"
+    app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_sp_worksiteSpinner" />
 
-    <Button
-        android:id="@+id/addnewnotice_bt_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/bt_formAdd"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addnewnoticeform_sp_worksiteSpinner" />
+<Spinner
+    android:id="@+id/addnewnoticeform_sp_worksiteSpinner"
+    android:layout_width="262dp"
+    android:layout_height="22dp"
+    android:layout_marginTop="32dp"
+    app:layout_constraintStart_toStartOf="@+id/addnewnoticeform_et_memo"
+    app:layout_constraintTop_toBottomOf="@+id/addnewnoticeform_et_memo" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+<Button
+    android:id="@+id/addnewnotice_bt_add"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:text="@string/bt_formAdd"
+    android:textColor="@color/white"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/addnewnoticeform_sp_worksiteSpinner" />
+
+<androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline9"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.15" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>

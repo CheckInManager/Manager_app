@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gausslab.managerapp.databinding.ObjectAccidenthistoryBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.todayworksite.OnItemInteractionListener;
+import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
 import java.util.List;
 
@@ -44,9 +45,17 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
             @Override
             public void onClick(View view) {
                 workerInformationViewModel.deleteAccidentHistory(holder.tv_description.getText().toString(), holder.tv_place.getText().toString(),
-                        holder.tv_date.getText().toString());
+                        holder.tv_date.getText().toString(),holder.tv_time.getText().toString());
             }
         });
+        if(listener!=null && listener instanceof OnTodayWorksiteContextMenuInteractionListener){
+            holder.cv_card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((OnTodayWorksiteContextMenuInteractionListener<AccidentHistory>) listener).onItemClick(accidentHistoryList.get(holder.getAdapterPosition()));
+                }
+            });
+        }
     }
 
     @Override

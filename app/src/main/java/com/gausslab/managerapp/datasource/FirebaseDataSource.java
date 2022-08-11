@@ -301,7 +301,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void addAccidentHistory( AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .document(accidentHistory.getDescription()+accidentHistory.getPlace()+accidentHistory.getDate())
+                .document(accidentHistory.getDescription()+accidentHistory.getPlace()+accidentHistory.getDate()+accidentHistory.getTime())
                 .set(accidentHistory);
         callback.onComplete(new Result.Success<String>("Success"));
     }
@@ -330,9 +330,9 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void deleteAccidentHistory(String description, String place, String date, CompletedCallback<Result<String>> callback) {
+    public void deleteAccidentHistory(String description, String place, String date, String time, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .document(description+place+date)
+                .document(description+place+date+time)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -346,5 +346,13 @@ public class FirebaseDataSource implements DataSource {
                         callback.onComplete(new Result.Error(new Exception("Failed")));
                     }
                 });
+    }
+
+    @Override
+    public void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
+        db.collection("accidenthistory")
+                .document(accidentHistory.getDescription()+accidentHistory.getPlace()+accidentHistory.getDate()+accidentHistory.getTime())
+                .set(accidentHistory);
+        callback.onComplete(new Result.Success<String>("Success"));
     }
 }

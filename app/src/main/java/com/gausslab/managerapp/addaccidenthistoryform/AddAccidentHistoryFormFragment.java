@@ -109,7 +109,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int min) {
-                String s= ""+hour+":"+min;
+                String s= "h"+hour+"m"+min;
                 et_time.setText(s);
             }
         };

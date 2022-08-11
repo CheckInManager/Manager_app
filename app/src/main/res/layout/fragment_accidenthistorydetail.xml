@@ -1,101 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/frameLayout11"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".accidenthistorydetail.AccidentHistoryDetailFragment">
-    <TextView
-        android:id="@+id/accidenthistorydetail_tv_descriptionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accident Description"
-        app:layout_constraintBottom_toTopOf="@+id/accidenthistorydetail_et_description"
-        app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_description" />
+    android:layout_height="wrap_content">
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/accidenthistorydetail_et_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="13"
-        android:hint="accident Description write here"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".accidenthistorydetail.AccidentHistoryDetailFragment">
 
-    <TextView
-        android:id="@+id/accidenthistorydetail_tv_placeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accident place"
-        app:layout_constraintBottom_toTopOf="@+id/accidenthistorydetail_et_place"
-        app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_place" />
+        <TextView
+            android:id="@+id/accidenthistorydetail_tv_descriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accident Description"
+            app:layout_constraintBottom_toTopOf="@+id/accidenthistorydetail_et_description"
+            app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_description" />
 
-    <EditText
-        android:id="@+id/accidenthistorydetail_et_place"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="13"
-        android:inputType="textPersonName"
-        android:hint="place write here"
-        app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_description"
-        app:layout_constraintTop_toBottomOf="@+id/accidenthistorydetail_et_description" />
+        <MultiAutoCompleteTextView
+            android:id="@+id/accidenthistorydetail_et_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="13"
+            android:hint="accident Description write here"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
-    <TextView
-        android:id="@+id/accidenthistorydetail_tv_dateLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accident date"
-        app:layout_constraintBottom_toTopOf="@+id/accidenthistorydetail_et_date"
-        app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_date" />
+        <TextView
+            android:id="@+id/accidenthistorydetail_tv_placeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accident place"
+            app:layout_constraintBottom_toTopOf="@+id/accidenthistorydetail_et_place"
+            app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_place" />
 
-    <EditText
-        android:id="@+id/accidenthistorydetail_et_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="13"
-        android:inputType="textPersonName"
-        android:hint="Date write here"
-        app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_place"
-        app:layout_constraintTop_toBottomOf="@+id/accidenthistorydetail_et_place" />
+        <EditText
+            android:id="@+id/accidenthistorydetail_et_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="13"
+            android:hint="place write here"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_description"
+            app:layout_constraintTop_toBottomOf="@+id/accidenthistorydetail_et_description" />
 
-    <TextView
-        android:id="@+id/accidenthistorydetail_tv_timeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accident Time"
-        app:layout_constraintBottom_toTopOf="@+id/accidenthistorydetail_et_time"
-        app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_time" />
+        <TextView
+            android:id="@+id/accidenthistorydetail_tv_dateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accident date"
+            app:layout_constraintBottom_toTopOf="@+id/accidenthistorydetail_et_date"
+            app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_date" />
 
-    <EditText
-        android:id="@+id/accidenthistorydetail_et_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="13"
-        android:inputType="textPersonName"
-        android:hint="time write here"
-        app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_date"
-        app:layout_constraintTop_toBottomOf="@+id/accidenthistorydetail_et_date" />
+        <EditText
+            android:id="@+id/accidenthistorydetail_et_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="13"
+            android:hint="Date write here"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_place"
+            app:layout_constraintTop_toBottomOf="@+id/accidenthistorydetail_et_place" />
 
-    <Button
-        android:id="@+id/accidenthistorydetail_bt_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:textColor="@color/white"
-        android:text="@string/bt_formAdd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accidenthistorydetail_et_time" />
+        <TextView
+            android:id="@+id/accidenthistorydetail_tv_timeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accident Time"
+            app:layout_constraintBottom_toTopOf="@+id/accidenthistorydetail_et_time"
+            app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_time" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/accidenthistorydetail_et_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="13"
+            android:hint="time write here"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="@+id/accidenthistorydetail_et_date"
+            app:layout_constraintTop_toBottomOf="@+id/accidenthistorydetail_et_date" />
+
+        <Button
+            android:id="@+id/accidenthistorydetail_bt_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="ok"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accidenthistorydetail_et_time" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

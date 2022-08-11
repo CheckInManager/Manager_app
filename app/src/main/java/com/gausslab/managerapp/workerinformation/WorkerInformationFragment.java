@@ -162,6 +162,7 @@ public class WorkerInformationFragment extends Fragment {
                 action.setPlace(obj.getPlace());
                 action.setDate(obj.getDate());
                 action.setTime(obj.getTime());
+                action.setUserPhoneNumber(phoneNumber);
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(action);
             }
 
