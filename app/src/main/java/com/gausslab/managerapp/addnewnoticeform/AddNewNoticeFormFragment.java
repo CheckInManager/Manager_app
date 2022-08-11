@@ -71,7 +71,7 @@ public class AddNewNoticeFormFragment extends Fragment {
         addNewNoticeFormViewModel.isAddNoticeFormSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSaved) {
-                if(isSaved){
+                if (isSaved) {
                     NavHostFragment.findNavController(AddNewNoticeFormFragment.this).navigateUp();
                 }
             }
@@ -95,13 +95,13 @@ public class AddNewNoticeFormFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(et_noticeName.getText().toString().length()<1){
+                if (et_noticeName.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "noticeName is empty", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     long mNow = System.currentTimeMillis();
                     Date mDate = new Date(mNow);
-                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),sp_worksiteName.getSelectedItem().toString(),
+                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(), sp_worksiteName.getSelectedItem().toString(),
                             mFormat.format(mDate));
                     addNewNoticeFormViewModel.addNotice(notice);
                     bt_add.setEnabled(false);
@@ -110,7 +110,7 @@ public class AddNewNoticeFormFragment extends Fragment {
         });
     }
 
-    private void init(){
+    private void init() {
         convertDateFormat();
         addNewNoticeFormViewModel.loadOpenWorksite(todayCal);
     }

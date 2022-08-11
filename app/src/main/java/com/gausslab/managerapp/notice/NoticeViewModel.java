@@ -12,25 +12,25 @@ import java.util.List;
 public class NoticeViewModel extends ViewModel {
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
 
-    public void loadNoticeList(){
+    public void loadNoticeList() {
         worksiteRepository.registerNoticeListListener();
     }
 
-    public void deleteNotice(String noticeName, String worksiteName){
-        worksiteRepository.deleteNotice(noticeName, worksiteName, result->{
-           if(result instanceof Result.Success){
+    public void deleteNotice(String noticeName, String worksiteName) {
+        worksiteRepository.deleteNotice(noticeName, worksiteName, result -> {
+            if (result instanceof Result.Success) {
 
-           } else{
+            } else {
 
-           }
+            }
         });
     }
 
-    public List<Notice> getNoticeList(){
+    public List<Notice> getNoticeList() {
         return worksiteRepository.getNoticeList();
     }
 
-    public LiveData<Boolean> isNoticeListLoaded(){
+    public LiveData<Boolean> isNoticeListLoaded() {
         return worksiteRepository.isNoticeListLoaded();
     }
 

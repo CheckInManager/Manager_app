@@ -11,11 +11,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -247,4 +251,5 @@ public class AddNewWorksiteFormFragment extends Fragment {
         dpd.setOnCancelListener(dateCancelListener);
         dpd.show();
     }
+
 }

@@ -169,7 +169,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void noPhoneNumberGetUser(String userName, CompletedCallback<Result<User>> callback) {
         db.collection("user")
-                .whereEqualTo("userName",userName)
+                .whereEqualTo("userName", userName)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -236,7 +236,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void addNotice(Notice notice, CompletedCallback<Result<String>> callback) {
         db.collection("notice")
-                .document(notice.getNoticeName()+notice.getWorksiteName())
+                .document(notice.getNoticeName() + notice.getWorksiteName())
                 .set(notice);
         callback.onComplete(new Result.Success<String>("Success"));
 
@@ -266,7 +266,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void deleteNotice(String noticeName, String worksiteName, CompletedCallback<Result<String>> callback) {
         db.collection("notice")
-                .document(noticeName+worksiteName)
+                .document(noticeName + worksiteName)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -299,9 +299,9 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void addAccidentHistory( AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
+    public void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .document(accidentHistory.getDescription()+accidentHistory.getPlace()+accidentHistory.getDate()+accidentHistory.getTime())
+                .document(accidentHistory.getDescription() + accidentHistory.getPlace() + accidentHistory.getDate() + accidentHistory.getTime())
                 .set(accidentHistory);
         callback.onComplete(new Result.Success<String>("Success"));
     }
@@ -332,7 +332,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void deleteAccidentHistory(String description, String place, String date, String time, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .document(description+place+date+time)
+                .document(description + place + date + time)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -351,7 +351,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .document(accidentHistory.getDescription()+accidentHistory.getPlace()+accidentHistory.getDate()+accidentHistory.getTime())
+                .document(accidentHistory.getDescription() + accidentHistory.getPlace() + accidentHistory.getDate() + accidentHistory.getTime())
                 .set(accidentHistory);
         callback.onComplete(new Result.Success<String>("Success"));
     }

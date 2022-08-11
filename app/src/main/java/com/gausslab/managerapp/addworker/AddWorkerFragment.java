@@ -195,13 +195,12 @@ public class AddWorkerFragment extends Fragment {
                 userToAdd = new User(et_phoneNumber.getText().toString(),
                         "", et_name.getText().toString(),
                         "", sp_worksiteSpinner.getSelectedItem().toString(), "", et_memo.getText().toString());
-                if(et_name.getText().toString().length()<1){
-                    Toast.makeText(requireContext(),"name is empty",Toast.LENGTH_SHORT).show();
+                if (et_name.getText().toString().length() < 1) {
+                    Toast.makeText(requireContext(), "name is empty", Toast.LENGTH_SHORT).show();
                 }
-                if(iv_image.getDrawable() == null){
-                    Toast.makeText(requireContext(),"image is empty",Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if (iv_image.getDrawable() == null) {
+                    Toast.makeText(requireContext(), "image is empty", Toast.LENGTH_SHORT).show();
+                } else {
                     if (et_phoneNumber.getText().toString().length() < 1) {
                         noPhoneNumNewUser();
                     } else if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {

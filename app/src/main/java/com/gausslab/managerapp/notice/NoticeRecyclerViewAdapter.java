@@ -22,15 +22,15 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
     private NoticeViewModel noticeViewModel;
     private OnItemInteractionListener<Notice> listener;
 
-    public NoticeRecyclerViewAdapter(List<Notice> items, NoticeViewModel nvm, OnItemInteractionListener<Notice> clickListener){
+    public NoticeRecyclerViewAdapter(List<Notice> items, NoticeViewModel nvm, OnItemInteractionListener<Notice> clickListener) {
         noticeList = items;
         noticeViewModel = nvm;
-        listener= clickListener;
+        listener = clickListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(ObjectNoticeBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+        return new ViewHolder(ObjectNoticeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -42,14 +42,14 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         holder.bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                noticeViewModel.deleteNotice(holder.tv_noticeName.getText().toString(),holder.tv_worksiteName.getText().toString());
+                noticeViewModel.deleteNotice(holder.tv_noticeName.getText().toString(), holder.tv_worksiteName.getText().toString());
             }
         });
-        if(listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener){
+        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
             holder.cv_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((OnTodayWorksiteContextMenuInteractionListener<Notice>)listener).onItemClick(noticeList.get(holder.getAdapterPosition()));
+                    ((OnTodayWorksiteContextMenuInteractionListener<Notice>) listener).onItemClick(noticeList.get(holder.getAdapterPosition()));
                 }
             });
         }
@@ -61,19 +61,19 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         return noticeList.size();
     }
 
-    public void setNoticeList(List<Notice> newNoticeList){
+    public void setNoticeList(List<Notice> newNoticeList) {
         noticeList = newNoticeList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final CardView cv_card;
         public final TextView tv_noticeName;
         public final TextView tv_worksiteName;
         public final Button bt_delete;
         public final TextView tv_time;
 
-        public ViewHolder(ObjectNoticeBinding binding){
+        public ViewHolder(ObjectNoticeBinding binding) {
             super(binding.getRoot());
             cv_card = binding.objNoticeCard;
             tv_noticeName = binding.objNoticeTvNoticeName;
@@ -83,6 +83,8 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         }
 
         @Override
-        public String toString(){return super.toString()+"";}
+        public String toString() {
+            return super.toString() + "";
+        }
     }
 }

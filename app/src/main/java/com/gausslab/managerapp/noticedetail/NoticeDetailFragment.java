@@ -63,14 +63,14 @@ public class NoticeDetailFragment extends Fragment {
         });
     }
 
-    private void init(){
+    private void init() {
         String noticeName = NoticeDetailFragmentArgs.fromBundle(getArguments()).getNoticeName();
         String worksiteName = NoticeDetailFragmentArgs.fromBundle(getArguments()).getWorksiteName();
         noticeDetailViewModel.loadNoticeDetail(noticeName, worksiteName);
         noticeDetailViewModel.isNoticeDetailLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
+                if (isLoaded) {
                     Notice currNotice = noticeDetailViewModel.getNoticeDetail();
                     tv_noticeName.setText(currNotice.getNoticeName());
                     tv_memo.setText(currNotice.getMemo());

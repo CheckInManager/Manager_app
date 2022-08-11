@@ -8,15 +8,15 @@ public class Notice {
     private String worksiteName;
     private String time;
 
-    public Notice(){}
+    public Notice() {
+    }
 
-    public Notice(String noticeName, String memo, String worksiteName,String time) {
+    public Notice(String noticeName, String memo, String worksiteName, String time) {
         this.noticeName = noticeName;
         this.memo = memo;
         this.worksiteName = worksiteName;
         this.time = time;
     }
-
 
     public String getNoticeName() {
         return noticeName;

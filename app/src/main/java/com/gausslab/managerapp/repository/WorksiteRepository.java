@@ -141,29 +141,29 @@ public class WorksiteRepository {
         dataSource.addNotice(notice, callback);
     }
 
-    public void registerNoticeListListener(){
+    public void registerNoticeListListener() {
         dataSource.getNoticeList(new ListenerCallback<Result<List<Notice>>>() {
             @Override
             public void onUpdate(Result<List<Notice>> result) {
-                if(result instanceof Result.Success){
-                    noticeList =((Result.Success<List<Notice>>)result).getData();
+                if (result instanceof Result.Success) {
+                    noticeList = ((Result.Success<List<Notice>>) result).getData();
                     noticeListLoaded.postValue(true);
-                }else{
+                } else {
                     noticeListLoaded.postValue(false);
                 }
             }
         });
     }
 
-    public List<Notice> getNoticeList(){
+    public List<Notice> getNoticeList() {
         return noticeList;
     }
 
-    public void deleteNotice(final String noticeName, final String worksiteName, CompletedCallback<Result<String>>callback){
-        dataSource.deleteNotice(noticeName,worksiteName,callback);
+    public void deleteNotice(final String noticeName, final String worksiteName, CompletedCallback<Result<String>> callback) {
+        dataSource.deleteNotice(noticeName, worksiteName, callback);
     }
 
-    public void getNoticeDetailByName(final String noticeName, final String worksiteName, CompletedCallback<Result<Notice>>callback){
+    public void getNoticeDetailByName(final String noticeName, final String worksiteName, CompletedCallback<Result<Notice>> callback) {
         dataSource.getNoticeDetailByName(noticeName, worksiteName, callback);
     }
 
@@ -180,7 +180,7 @@ public class WorksiteRepository {
         this.fileService = fs;
     }
 
-    public LiveData<Boolean> isNoticeListLoaded(){
+    public LiveData<Boolean> isNoticeListLoaded() {
         return noticeListLoaded;
     }
 

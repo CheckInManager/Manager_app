@@ -19,13 +19,13 @@ public class AddNewNoticeFormViewModel extends ViewModel {
 
     private List<Worksite> worksiteList = new ArrayList<>();
 
-    public void addNotice(Notice notice){
-        worksiteRepository.addNotice(notice, result->{
-           if(result instanceof Result.Success){
-               addNoticeFormSuccess.postValue(true);
-           } else{
-               addNoticeFormSuccess.postValue(false);
-           }
+    public void addNotice(Notice notice) {
+        worksiteRepository.addNotice(notice, result -> {
+            if (result instanceof Result.Success) {
+                addNoticeFormSuccess.postValue(true);
+            } else {
+                addNoticeFormSuccess.postValue(false);
+            }
         });
     }
 
@@ -42,7 +42,9 @@ public class AddNewNoticeFormViewModel extends ViewModel {
         return worksiteList;
     }
 
-    public LiveData<Boolean> isAddNoticeFormSuccess(){return addNoticeFormSuccess;}
+    public LiveData<Boolean> isAddNoticeFormSuccess() {
+        return addNoticeFormSuccess;
+    }
 
     public LiveData<Boolean> openWorksiteListLoaded() {
         return openWorksiteListLoaded;

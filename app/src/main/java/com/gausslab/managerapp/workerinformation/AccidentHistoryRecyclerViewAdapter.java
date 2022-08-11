@@ -30,8 +30,8 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        return new ViewHolder(ObjectAccidenthistoryBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(ObjectAccidenthistoryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -45,10 +45,10 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
             @Override
             public void onClick(View view) {
                 workerInformationViewModel.deleteAccidentHistory(holder.tv_description.getText().toString(), holder.tv_place.getText().toString(),
-                        holder.tv_date.getText().toString(),holder.tv_time.getText().toString());
+                        holder.tv_date.getText().toString(), holder.tv_time.getText().toString());
             }
         });
-        if(listener!=null && listener instanceof OnTodayWorksiteContextMenuInteractionListener){
+        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
             holder.cv_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -63,12 +63,12 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
         return accidentHistoryList.size();
     }
 
-    public void setAccidentHistoryList(List<AccidentHistory> newAccidentHistoryList){
+    public void setAccidentHistoryList(List<AccidentHistory> newAccidentHistoryList) {
         accidentHistoryList = newAccidentHistoryList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final CardView cv_card;
         public final TextView tv_description;
         public final TextView tv_place;
@@ -88,7 +88,7 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
 
         @Override
         public String toString() {
-            return super.toString()+"";
+            return super.toString() + "";
         }
     }
 }

@@ -125,12 +125,12 @@ public class WorkerInformationFragment extends Fragment {
         userName = WorkerInformationFragmentArgs.fromBundle(getArguments()).getUserName();
 
 
-        if(phoneNumber.length()>1){
+        if (phoneNumber.length() > 1) {
             workerInformationViewModel.loadUserInformation(phoneNumber);
             workerInformationViewModel.loadUserImage(phoneNumber);
             workerInformationViewModel.loadAccidentHistoryListByUser(phoneNumber);
 
-        }else{
+        } else {
             phoneNumber = userName;
             workerInformationViewModel.noPhoneNumberLoadUserInformation(userName);
             workerInformationViewModel.loadUserImage(userName);

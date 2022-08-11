@@ -87,9 +87,9 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                 if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(userPhoneNumber.length()>1){
+                    if (userPhoneNumber.length() > 1) {
                         accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber);
-                    }else{
+                    } else {
                         accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userName);
                     }
                     addAccidentHistoryFormViewModel.addAccidentHistory(accidentHistory);
@@ -101,7 +101,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                String s = ""+year+"."+(month+1)+"."+dayOfMonth;
+                String s = "" + year + "." + (month + 1) + "." + dayOfMonth;
                 et_date.setText(s);
             }
         };
@@ -109,7 +109,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int min) {
-                String s= "h"+hour+"m"+min;
+                String s = "h" + hour + "m" + min;
                 et_time.setText(s);
             }
         };
@@ -125,7 +125,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         et_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     showDatePicker(dateSetListener);
                 }
             }
@@ -134,14 +134,14 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         et_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     showTimePicker(timeSetListener);
                 }
             }
         });
     }
 
-    private void showDatePicker(DatePickerDialog.OnDateSetListener listener){
+    private void showDatePicker(DatePickerDialog.OnDateSetListener listener) {
         Calendar c = Calendar.getInstance();
         int y = c.get(Calendar.YEAR);
         int m = c.get(Calendar.MONTH);
@@ -151,11 +151,11 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         dpd.show();
     }
 
-    private void showTimePicker(TimePickerDialog.OnTimeSetListener listener){
+    private void showTimePicker(TimePickerDialog.OnTimeSetListener listener) {
         Calendar c = Calendar.getInstance();
         int h = c.get(Calendar.HOUR_OF_DAY);
         int m = c.get(Calendar.MINUTE);
-        TimePickerDialog tpd = new TimePickerDialog(getContext(), android.R.style.Theme_Holo_Light_Dialog,listener,h,m, false);
+        TimePickerDialog tpd = new TimePickerDialog(getContext(), android.R.style.Theme_Holo_Light_Dialog, listener, h, m, false);
         tpd.setOnCancelListener(dateCancelListener);
         tpd.show();
     }

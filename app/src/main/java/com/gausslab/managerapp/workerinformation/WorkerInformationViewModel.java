@@ -72,19 +72,19 @@ public class WorkerInformationViewModel extends ViewModel {
     }
 
 
-    public void loadAccidentHistoryListByUser(String phoneNumber){
+    public void loadAccidentHistoryListByUser(String phoneNumber) {
         accidentRepository.registerAccidentHistoryListListener(phoneNumber);
     }
 
-    public List<AccidentHistory> getAccidentHistoryList(String phoneNumber){
+    public List<AccidentHistory> getAccidentHistoryList(String phoneNumber) {
         return accidentRepository.getAccidentHistoryListByUser(phoneNumber);
     }
 
-    public void deleteAccidentHistory(String description, String place, String date,String time){
-        accidentRepository.deleteAccidentHistory(description, place, date, time,result->{
-           if(result instanceof Result.Success){
+    public void deleteAccidentHistory(String description, String place, String date, String time) {
+        accidentRepository.deleteAccidentHistory(description, place, date, time, result -> {
+            if (result instanceof Result.Success) {
 
-           }
+            }
         });
     }
 
@@ -100,7 +100,7 @@ public class WorkerInformationViewModel extends ViewModel {
         return userInformationLoaded;
     }
 
-    public LiveData<Boolean> isAccidentHistoryListLoaded(String phoneNumber){
+    public LiveData<Boolean> isAccidentHistoryListLoaded(String phoneNumber) {
         return accidentRepository.isAccidentHistoryListLoadedByUser(phoneNumber);
     }
 

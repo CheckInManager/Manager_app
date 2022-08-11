@@ -18,46 +18,48 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 
 public class AccidentRepository {
-    private static volatile AccidentRepository  INSTANCE = new AccidentRepository();
+    private static volatile AccidentRepository INSTANCE = new AccidentRepository();
     protected Executor executor;
     private DataSource dataSource;
     private FileService fileService;
     private Map<String, List<AccidentHistory>> userAccidentHistoryMap = new HashMap<>();
     protected Map<String, MutableLiveData<Boolean>> userAccidentHistoryLoaded = new HashMap<>();
 
-    public static AccidentRepository getInstance(){return INSTANCE;}
-
-    public void addAccidentHistory( AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback){
-        dataSource.addAccidentHistory( accidentHistory, callback);
+    public static AccidentRepository getInstance() {
+        return INSTANCE;
     }
 
-    public List<AccidentHistory> getAccidentHistoryListByUser(final String phoneNumber){
+    public void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
+        dataSource.addAccidentHistory(accidentHistory, callback);
+    }
+
+    public List<AccidentHistory> getAccidentHistoryListByUser(final String phoneNumber) {
         return userAccidentHistoryMap.get(phoneNumber);
     }
 
-    public void registerAccidentHistoryListListener(String phoneNumber){
-        if(userAccidentHistoryMap.containsKey(phoneNumber))
+    public void registerAccidentHistoryListListener(String phoneNumber) {
+        if (userAccidentHistoryMap.containsKey(phoneNumber))
             return;
         userAccidentHistoryMap.put(phoneNumber, new ArrayList<>());
         userAccidentHistoryLoaded.put(phoneNumber, new MutableLiveData<>());
-        dataSource.getAccidentHistoryByUser(phoneNumber, new ListenerCallback<Result<List<AccidentHistory>>>(){
+        dataSource.getAccidentHistoryByUser(phoneNumber, new ListenerCallback<Result<List<AccidentHistory>>>() {
             @Override
             public void onUpdate(Result<List<AccidentHistory>> result) {
-                if(result instanceof Result.Success){
-                    userAccidentHistoryMap.put(phoneNumber, ((Result.Success<List<AccidentHistory>>)result).getData());
+                if (result instanceof Result.Success) {
+                    userAccidentHistoryMap.put(phoneNumber, ((Result.Success<List<AccidentHistory>>) result).getData());
                     userAccidentHistoryLoaded.get(phoneNumber).postValue(true);
-                }else{
+                } else {
 
                 }
             }
         });
     }
 
-    public void deleteAccidentHistory(final String description, final String place, final String date, final String time, CompletedCallback<Result<String>>callback){
+    public void deleteAccidentHistory(final String description, final String place, final String date, final String time, CompletedCallback<Result<String>> callback) {
         dataSource.deleteAccidentHistory(description, place, date, time, callback);
     }
 
-    public void changeAccidentHistory(final AccidentHistory accidentHistory, final CompletedCallback<Result<String>> callback){
+    public void changeAccidentHistory(final AccidentHistory accidentHistory, final CompletedCallback<Result<String>> callback) {
         dataSource.changeAccidentHistory(accidentHistory, callback);
     }
 
@@ -74,7 +76,7 @@ public class AccidentRepository {
         this.fileService = fs;
     }
 
-    public LiveData<Boolean> isAccidentHistoryListLoadedByUser(String phoneNumber){
+    public LiveData<Boolean> isAccidentHistoryListLoadedByUser(String phoneNumber) {
         return userAccidentHistoryLoaded.get(phoneNumber);
     }
 }

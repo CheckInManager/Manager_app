@@ -7,9 +7,10 @@ public class AccidentHistory {
     private String time;
     private String userPhoneNumber;
 
-    public AccidentHistory(){}
+    public AccidentHistory() {
+    }
 
-    public AccidentHistory(String description, String place, String date, String time,String userPhoneNumber) {
+    public AccidentHistory(String description, String place, String date, String time, String userPhoneNumber) {
         this.description = description;
         this.place = place;
         this.date = date;
