@@ -41,7 +41,6 @@ public class AddNewNoticeFormFragment extends Fragment {
     private String todayCal;
 
     public AddNewNoticeFormFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -68,6 +67,7 @@ public class AddNewNoticeFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //region Observer
         addNewNoticeFormViewModel.isAddNoticeFormSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSaved) {
@@ -91,7 +91,9 @@ public class AddNewNoticeFormFragment extends Fragment {
                 }
             }
         });
+        //endregion
 
+        //region Listener
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +110,7 @@ public class AddNewNoticeFormFragment extends Fragment {
                 }
             }
         });
+        //endregion
     }
 
     private void init() {

@@ -80,7 +80,6 @@ public class QrEmailFragment extends Fragment {
             }
         });
 
-
         bt_sendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -57,7 +57,6 @@ public class AddNewWorksiteFormFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentAddnewworksiteformBinding.inflate(inflater, container, false);
         et_worksiteName = binding.worksiteformEtWorksiteName;
         et_startDate = binding.worksiteformEtStartDate;

@@ -79,6 +79,7 @@ public class WorkerInformationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //region Observer
         workerInformationViewModel.isAccidentHistoryListLoaded(phoneNumber).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
@@ -87,6 +88,7 @@ public class WorkerInformationFragment extends Fragment {
                 }
             }
         });
+        //endregion
 
         //region Listener
         bt_accidentHistoryAdd.setOnClickListener(new View.OnClickListener() {

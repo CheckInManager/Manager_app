@@ -55,12 +55,15 @@ public class NoticeDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //region Listener
         bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(NoticeDetailFragment.this).navigate(R.id.action_noticeDetailFragment_to_noticeFragment);
             }
         });
+        //endregion
     }
 
     private void init() {

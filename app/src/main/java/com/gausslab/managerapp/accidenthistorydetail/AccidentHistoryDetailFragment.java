@@ -70,6 +70,8 @@ public class AccidentHistoryDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //region Observer
         accidentHistoryDetailViewModel.isDeletedSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSuccessful) {
@@ -81,7 +83,9 @@ public class AccidentHistoryDetailFragment extends Fragment {
                 }
             }
         });
+        //endregion
 
+        //region Listener
         bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +113,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
                 et_time.setText(s);
             }
         };
+
         dateCancelListener = new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -134,7 +139,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
                 }
             }
         });
-
+        //endregion
     }
 
     private void showDatePicker(DatePickerDialog.OnDateSetListener listener) {

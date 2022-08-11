@@ -73,6 +73,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //region Observer
         addAccidentHistoryFormViewModel.isAddAccidentHistorySuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSuccess) {
@@ -80,7 +81,9 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                     NavHostFragment.findNavController(AddAccidentHistoryFormFragment.this).navigateUp();
             }
         });
+        //endregion
 
+        //region Listener
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,6 +142,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                 }
             }
         });
+        //endregion
     }
 
     private void showDatePicker(DatePickerDialog.OnDateSetListener listener) {

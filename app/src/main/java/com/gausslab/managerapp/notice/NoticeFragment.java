@@ -67,6 +67,7 @@ public class NoticeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //region Observer
         noticeViewModel.isNoticeListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
@@ -75,7 +76,9 @@ public class NoticeFragment extends Fragment {
                 }
             }
         });
+        //endregion
 
+        //region Listener
         bt_worksite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +99,7 @@ public class NoticeFragment extends Fragment {
                 NavHostFragment.findNavController(NoticeFragment.this).navigate(R.id.action_noticeFragment_to_addNewNoticeFormFragment);
             }
         });
+        //endregion
     }
 
     private void init() {
