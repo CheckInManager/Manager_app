@@ -41,7 +41,10 @@ public interface DataSource {
 
     void getAccidentHistoryByUser(String phoneNumber, ListenerCallback<Result<List<AccidentHistory>>> callback);
 
-    void deleteAccidentHistory(String description, String place, String date, String time, CompletedCallback<Result<String>> callback);
+    void deleteAccidentHistory(String keyValue, CompletedCallback<Result<String>> callback);
 
     void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
+
+    void getNewKey(CompletedCallback<Result<String>>callback);
+
 }

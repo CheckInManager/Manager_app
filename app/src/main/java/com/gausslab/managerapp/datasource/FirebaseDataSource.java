@@ -15,11 +15,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -27,9 +29,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FirebaseDataSource implements DataSource {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -301,7 +301,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .document(accidentHistory.getDescription() + accidentHistory.getPlace() + accidentHistory.getDate() + accidentHistory.getTime())
+                .document(accidentHistory.getKeyValue())
                 .set(accidentHistory);
         callback.onComplete(new Result.Success<String>("Success"));
     }
@@ -330,9 +330,9 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void deleteAccidentHistory(String description, String place, String date, String time, CompletedCallback<Result<String>> callback) {
+    public void deleteAccidentHistory(String keyValue, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .document(description + place + date + time)
+                .document(keyValue)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -351,8 +351,43 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
-                .document(accidentHistory.getDescription() + accidentHistory.getPlace() + accidentHistory.getDate() + accidentHistory.getTime())
+                .document(accidentHistory.getKeyValue())
                 .set(accidentHistory);
         callback.onComplete(new Result.Success<String>("Success"));
+    }
+
+    public void getNewKey(CompletedCallback<Result<String>> callback)
+    {
+        DocumentReference docRef = null;
+        docRef = db.collection("accidenthistorykey").document("accidenthistorykey");
+        if(docRef != null)
+        {
+            DocumentReference finalDocRef = docRef;
+            db.runTransaction(new Transaction.Function<String>()
+            {
+                @Nullable
+                @Override
+                public String apply(@NonNull Transaction transaction) throws FirebaseFirestoreException
+                {
+                    int currKey = transaction.get(finalDocRef).getDouble("key").intValue();
+                    transaction.update(finalDocRef, "key", currKey + 1);
+                    return "" + currKey;
+                }
+            }).addOnSuccessListener(new OnSuccessListener<String>()
+            {
+                @Override
+                public void onSuccess(String key)
+                {
+                    callback.onComplete(new Result.Success<String>(key));
+                }
+            }).addOnFailureListener(new OnFailureListener()
+            {
+                @Override
+                public void onFailure(@NonNull Exception e)
+                {
+                    callback.onComplete(new Result.Error(e));
+                }
+            });
+        }
     }
 }

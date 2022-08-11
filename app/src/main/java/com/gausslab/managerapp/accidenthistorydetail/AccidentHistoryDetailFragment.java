@@ -42,6 +42,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
     private String loadPlace;
     private String loadDate;
     private String loadTime;
+    private String loadKeyValue;
 
 
     public AccidentHistoryDetailFragment() {
@@ -77,7 +78,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
             public void onChanged(Boolean isSuccessful) {
                 if (isSuccessful) {
                     AccidentHistory accidentHistory = new AccidentHistory(et_description.getText().toString(),
-                            et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber);
+                            et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber,loadKeyValue);
                     accidentHistoryDetailViewModel.changeAccidentHistory(accidentHistory);
                     NavHostFragment.findNavController(AccidentHistoryDetailFragment.this).navigateUp();
                 }
@@ -92,7 +93,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
                 if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    AccidentHistory exAccidentHistory = new AccidentHistory(loadDescription, loadPlace, loadDate, loadTime, userPhoneNumber);
+                    AccidentHistory exAccidentHistory = new AccidentHistory(loadDescription, loadPlace, loadDate, loadTime, userPhoneNumber,loadKeyValue);
                     accidentHistoryDetailViewModel.deleteExAccidentHistory(exAccidentHistory);
                 }
             }
@@ -167,6 +168,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
         loadDate = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getDate();
         loadTime = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getTime();
         userPhoneNumber = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getUserPhoneNumber();
+        loadKeyValue = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
         //accidentHistoryDetailViewModel.loadAccidentHistoryDetail(description,place,date,time);
         et_description.setText(loadDescription);
         et_place.setText(loadPlace);

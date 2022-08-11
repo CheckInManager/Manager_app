@@ -197,5 +197,9 @@
             android:name="userPhoneNumber"
             android:defaultValue="01000000000"
             app:argType="string"/>
+        <argument
+            android:name="keyValue"
+            android:defaultValue="key"
+            app:argType="string"/>
     </fragment>
 </navigation>

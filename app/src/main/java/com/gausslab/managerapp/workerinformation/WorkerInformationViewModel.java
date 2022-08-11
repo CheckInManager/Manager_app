@@ -80,8 +80,8 @@ public class WorkerInformationViewModel extends ViewModel {
         return accidentRepository.getAccidentHistoryListByUser(phoneNumber);
     }
 
-    public void deleteAccidentHistory(String description, String place, String date, String time) {
-        accidentRepository.deleteAccidentHistory(description, place, date, time, result -> {
+    public void deleteAccidentHistory(String keyValue) {
+        accidentRepository.deleteAccidentHistory(keyValue,result -> {
             if (result instanceof Result.Success) {
 
             }

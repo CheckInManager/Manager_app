@@ -55,14 +55,17 @@ public class AccidentRepository {
         });
     }
 
-    public void deleteAccidentHistory(final String description, final String place, final String date, final String time, CompletedCallback<Result<String>> callback) {
-        dataSource.deleteAccidentHistory(description, place, date, time, callback);
+    public void deleteAccidentHistory(final String keyValue, CompletedCallback<Result<String>> callback) {
+        dataSource.deleteAccidentHistory(keyValue, callback);
     }
 
     public void changeAccidentHistory(final AccidentHistory accidentHistory, final CompletedCallback<Result<String>> callback) {
         dataSource.changeAccidentHistory(accidentHistory, callback);
     }
 
+    public void getAccidentHistoryKey(final CompletedCallback<Result<String>> callback){
+        dataSource.getNewKey(callback);
+    }
 
     public void setExecutor(Executor exec) {
         this.executor = exec;

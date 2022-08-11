@@ -44,8 +44,7 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
         holder.bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                workerInformationViewModel.deleteAccidentHistory(holder.tv_description.getText().toString(), holder.tv_place.getText().toString(),
-                        holder.tv_date.getText().toString(), holder.tv_time.getText().toString());
+                workerInformationViewModel.deleteAccidentHistory(currAccidentHistory.getKeyValue());
             }
         });
         if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {

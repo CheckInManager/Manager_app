@@ -12,21 +12,19 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddaccidenthistoryformBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 
 public class AddAccidentHistoryFormFragment extends Fragment {
@@ -42,11 +40,11 @@ public class AddAccidentHistoryFormFragment extends Fragment {
     private String userPhoneNumber;
     private String userName;
     private AccidentHistory accidentHistory;
+    private String accidentHistoryKey;
 
     public AddAccidentHistoryFormFragment() {
 
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,9 +61,9 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         et_date = binding.addaccidenthistoryEtDate;
         et_time = binding.addaccidenthistoryEtTime;
         bt_add = binding.addaccidenthistoryBtAdd;
-
         userPhoneNumber = AddAccidentHistoryFormFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         userName = AddAccidentHistoryFormFragmentArgs.fromBundle(getArguments()).getUserName();
+
         return binding.getRoot();
     }
 
@@ -73,12 +71,25 @@ public class AddAccidentHistoryFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        addAccidentHistoryFormViewModel.loadAccidentHistoryKey();
+
         //region Observer
+        addAccidentHistoryFormViewModel.isAccidentHistoryKeyLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if(isLoaded){
+                    accidentHistoryKey= String.valueOf(addAccidentHistoryFormViewModel.getAccidentHistoryKey());
+                    Log.d("asdfadsfasdfasdfasdf", "onChanged: "+accidentHistoryKey);
+                }
+            }
+        });
+
         addAccidentHistoryFormViewModel.isAddAccidentHistorySuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSuccess) {
-                if (isSuccess)
+                if (isSuccess){
                     NavHostFragment.findNavController(AddAccidentHistoryFormFragment.this).navigateUp();
+                }
             }
         });
         //endregion
@@ -91,9 +102,9 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
                 } else {
                     if (userPhoneNumber.length() > 1) {
-                        accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber);
+                        accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber,accidentHistoryKey);
                     } else {
-                        accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userName);
+                        accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userName,accidentHistoryKey);
                     }
                     addAccidentHistoryFormViewModel.addAccidentHistory(accidentHistory);
                     bt_add.setEnabled(false);

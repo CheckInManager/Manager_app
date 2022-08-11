@@ -21,7 +21,7 @@ public class AccidentHistoryDetailViewModel extends ViewModel {
     }
 
     public void deleteExAccidentHistory(AccidentHistory exAccidentHistory) {
-        accidentRepository.deleteAccidentHistory(exAccidentHistory.getDescription(), exAccidentHistory.getPlace(), exAccidentHistory.getDate(), exAccidentHistory.getTime(), result -> {
+        accidentRepository.deleteAccidentHistory(exAccidentHistory.getKeyValue(), result -> {
             if (result instanceof Result.Success) {
                 deletedSuccess.postValue(true);
             } else {

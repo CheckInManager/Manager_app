@@ -6,16 +6,18 @@ public class AccidentHistory {
     private String date;
     private String time;
     private String userPhoneNumber;
+    private String keyValue;
 
     public AccidentHistory() {
     }
 
-    public AccidentHistory(String description, String place, String date, String time, String userPhoneNumber) {
+    public AccidentHistory(String description, String place, String date, String time, String userPhoneNumber,String keyValue) {
         this.description = description;
         this.place = place;
         this.date = date;
         this.time = time;
         this.userPhoneNumber = userPhoneNumber;
+        this.keyValue = keyValue;
     }
 
     public String getDescription() {
@@ -56,5 +58,13 @@ public class AccidentHistory {
 
     public void setUserPhoneNumber(String userPhoneNumber) {
         this.userPhoneNumber = userPhoneNumber;
+    }
+
+    public String getKeyValue() {
+        return keyValue;
+    }
+
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
     }
 }
