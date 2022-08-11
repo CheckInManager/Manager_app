@@ -30,6 +30,10 @@ public class AccidentHistoryDetailViewModel extends ViewModel {
         });
     }
 
+    public void setDeletedSuccess(){
+        deletedSuccess.postValue(false);
+    }
+
     public LiveData<Boolean> isDeletedSuccess() {
         return deletedSuccess;
     }

@@ -81,6 +81,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
                             et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber,loadKeyValue);
                     accidentHistoryDetailViewModel.changeAccidentHistory(accidentHistory);
                     NavHostFragment.findNavController(AccidentHistoryDetailFragment.this).navigateUp();
+                    accidentHistoryDetailViewModel.setDeletedSuccess();
                 }
             }
         });
