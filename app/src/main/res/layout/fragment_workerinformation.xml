@@ -37,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:textColor="@color/black"
             android:text="@string/hint_name"
             app:layout_constraintStart_toStartOf="@+id/workerinformation_et_phoneNumber"
             app:layout_constraintTop_toBottomOf="@+id/workinformation_iv_image" />
@@ -55,6 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:textColor="@color/black"
             android:text="@string/hint_phoneNumber"
             app:layout_constraintStart_toStartOf="@+id/workerinformation_et_career"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_name" />
@@ -73,6 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:textColor="@color/black"
             android:text="@string/et_career"
             app:layout_constraintStart_toStartOf="@+id/workerinformation_rv_accidentHisoryList"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_phoneNumber" />

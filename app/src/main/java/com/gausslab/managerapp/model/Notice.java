@@ -1,19 +1,22 @@
 package com.gausslab.managerapp.model;
 
+import java.util.Date;
+
 public class Notice {
     private String noticeName;
     private String memo;
     private String worksiteName;
+    private String time;
 
-    public Notice(String noticeName, String memo, String worksiteName) {
+    public Notice(){}
+
+    public Notice(String noticeName, String memo, String worksiteName,String time) {
         this.noticeName = noticeName;
         this.memo = memo;
         this.worksiteName = worksiteName;
+        this.time = time;
     }
 
-    public Notice(){
-
-    }
 
     public String getNoticeName() {
         return noticeName;
@@ -39,4 +42,11 @@ public class Notice {
         this.worksiteName = worksiteName;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }

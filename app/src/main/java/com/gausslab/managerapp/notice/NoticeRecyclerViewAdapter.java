@@ -38,6 +38,7 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         Notice currNotice = noticeList.get(position);
         holder.tv_noticeName.setText(currNotice.getNoticeName());
         holder.tv_worksiteName.setText(currNotice.getWorksiteName());
+        holder.tv_time.setText(currNotice.getTime());
         holder.bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +71,7 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         public final TextView tv_noticeName;
         public final TextView tv_worksiteName;
         public final Button bt_delete;
+        public final TextView tv_time;
 
         public ViewHolder(ObjectNoticeBinding binding){
             super(binding.getRoot());
@@ -77,6 +79,7 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
             tv_noticeName = binding.objNoticeTvNoticeName;
             tv_worksiteName = binding.objNoticeTvWorksiteName;
             bt_delete = binding.objNoticeBtDelete;
+            tv_time = binding.objNoticeTvTime;
         }
 
         @Override

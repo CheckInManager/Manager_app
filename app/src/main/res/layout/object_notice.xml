@@ -27,6 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:text="Notice Name Here"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -51,6 +53,16 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/tv_worksiteNameLabel"
                 app:layout_constraintStart_toStartOf="@+id/obj_notice_tv_noticeName"
+                app:layout_constraintTop_toBottomOf="@+id/obj_notice_tv_noticeName" />
+
+            <TextView
+                android:id="@+id/obj_notice_tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="time"
+                app:layout_constraintStart_toEndOf="@+id/obj_notice_tv_worksiteName"
                 app:layout_constraintTop_toBottomOf="@+id/obj_notice_tv_noticeName" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -23,8 +23,10 @@ import com.gausslab.managerapp.databinding.FragmentAddnewnoticeformBinding;
 import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Worksite;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AddNewNoticeFormFragment extends Fragment {
@@ -96,7 +98,11 @@ public class AddNewNoticeFormFragment extends Fragment {
                 if(et_noticeName.getText().toString().length()<1){
                     Toast.makeText(requireContext(), "noticeName is empty", Toast.LENGTH_SHORT).show();
                 }else{
-                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),sp_worksiteName.getSelectedItem().toString());
+                    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    long mNow = System.currentTimeMillis();
+                    Date mDate = new Date(mNow);
+                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),sp_worksiteName.getSelectedItem().toString(),
+                            mFormat.format(mDate));
                     addNewNoticeFormViewModel.addNotice(notice);
                     bt_add.setEnabled(false);
                 }

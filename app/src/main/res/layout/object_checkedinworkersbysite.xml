@@ -26,6 +26,7 @@
                 android:id="@+id/obj_checkinworkersbysite_tv_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="Worker Name Here"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
