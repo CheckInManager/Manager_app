@@ -7,15 +7,17 @@ public class Notice {
     private String memo;
     private String worksiteName;
     private String time;
+    private String keyValue;
 
     public Notice() {
     }
 
-    public Notice(String noticeName, String memo, String worksiteName, String time) {
+    public Notice(String noticeName, String memo, String worksiteName, String time,String keyValue) {
         this.noticeName = noticeName;
         this.memo = memo;
         this.worksiteName = worksiteName;
         this.time = time;
+        this.keyValue = keyValue;
     }
 
     public String getNoticeName() {
@@ -48,5 +50,13 @@ public class Notice {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getKeyValue() {
+        return keyValue;
+    }
+
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
     }
 }

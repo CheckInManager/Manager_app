@@ -16,17 +16,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NoticeName"
-            app:layout_constraintBottom_toTopOf="@+id/noticedetail_tv_noticeName"
-            app:layout_constraintStart_toStartOf="@+id/noticedetail_tv_noticeName" />
+            app:layout_constraintBottom_toTopOf="@+id/noticedetail_et_noticeName"
+            app:layout_constraintStart_toStartOf="@+id/noticedetail_et_noticeName" />
 
-        <TextView
-            android:id="@+id/noticedetail_tv_noticeName"
+        <EditText
+            android:id="@+id/noticedetail_et_noticeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="noticeName"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:ems="12"
+            android:inputType="textPersonName"
+            android:text="notice name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline9" />
@@ -36,51 +35,49 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="memo"
-            app:layout_constraintBottom_toTopOf="@+id/noticedetail_tv_memo"
-            app:layout_constraintStart_toStartOf="@+id/noticedetail_tv_memo" />
+            app:layout_constraintBottom_toTopOf="@+id/noticedetail_et_memo"
+            app:layout_constraintStart_toStartOf="@+id/noticedetail_et_memo" />
 
-        <TextView
-            android:id="@+id/noticedetail_tv_memo"
+
+        <EditText
+            android:id="@+id/noticedetail_et_memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:ems="10"
-            android:text="This is memo~!~!"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/noticedetail_tv_noticeName"
-            app:layout_constraintTop_toBottomOf="@+id/noticedetail_tv_noticeName" />
+            android:ems="12"
+            android:inputType="textPersonName"
+            android:text="memo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noticedetail_et_noticeName" />
 
         <TextView
             android:id="@+id/noticedetail_tv_worksiteNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_worksiteNameLabel"
-            app:layout_constraintBottom_toTopOf="@+id/noticedetail_tv_worksiteName"
-            app:layout_constraintStart_toStartOf="@+id/noticedetail_tv_worksiteName" />
+            app:layout_constraintBottom_toTopOf="@+id/noticedetila_sp_worksiteName"
+            app:layout_constraintStart_toStartOf="@+id/noticedetila_sp_worksiteName" />
 
-        <TextView
-            android:id="@+id/noticedetail_tv_worksiteName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Spinner
+            android:id="@+id/noticedetila_sp_worksiteName"
+            android:layout_width="251dp"
+            android:layout_height="27dp"
             android:layout_marginTop="32dp"
-            android:ems="10"
-            android:text="worksiteName"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/noticedetail_tv_memo"
-            app:layout_constraintTop_toBottomOf="@+id/noticedetail_tv_memo" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noticedetail_et_memo" />
 
         <Button
             android:id="@+id/noticedetail_bt_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="ok"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/noticedetail_tv_worksiteName" />
+            app:layout_constraintTop_toBottomOf="@+id/noticedetila_sp_worksiteName" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -89,6 +86,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.15" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

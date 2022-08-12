@@ -16,8 +16,10 @@ public class AddNewNoticeFormViewModel extends ViewModel {
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private MutableLiveData<Boolean> addNoticeFormSuccess = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> openWorksiteListLoaded = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> noticeKeyLoaded = new MutableLiveData<>(false);
 
     private List<Worksite> worksiteList = new ArrayList<>();
+    private String noticeKey;
 
     public void addNotice(Notice notice) {
         worksiteRepository.addNotice(notice, result -> {
@@ -38,6 +40,19 @@ public class AddNewNoticeFormViewModel extends ViewModel {
         });
     }
 
+    public void loadNoticeKey(){
+        worksiteRepository.getNoticeKey(result -> {
+            if(result instanceof Result.Success){
+                noticeKey =((Result.Success<String>)result).getData();
+                noticeKeyLoaded.postValue(true);
+            }else{
+                noticeKeyLoaded.postValue(false);
+            }
+        });
+    }
+
+    public String getNoticeKey(){return noticeKey;}
+
     public List<Worksite> getOpenWorksite() {
         return worksiteList;
     }
@@ -49,4 +64,6 @@ public class AddNewNoticeFormViewModel extends ViewModel {
     public LiveData<Boolean> openWorksiteListLoaded() {
         return openWorksiteListLoaded;
     }
+
+    public LiveData<Boolean> isNoticeKeyLoaded(){return noticeKeyLoaded;}
 }

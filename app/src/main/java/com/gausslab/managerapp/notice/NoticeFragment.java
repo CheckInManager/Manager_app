@@ -117,6 +117,7 @@ public class NoticeFragment extends Fragment {
                         NoticeFragmentDirections.ActionNoticeFragmentToNoticeDetailFragment action = NoticeFragmentDirections.actionNoticeFragmentToNoticeDetailFragment();
                         action.setNoticeName(noticeName);
                         action.setWorksiteName(worksiteName);
+                        action.setKeyValue(obj.getKeyValue());
                         NavHostFragment.findNavController(NoticeFragment.this).navigate(action);
                     }
 

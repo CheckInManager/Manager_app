@@ -42,7 +42,7 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         holder.bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                noticeViewModel.deleteNotice(holder.tv_noticeName.getText().toString(), holder.tv_worksiteName.getText().toString());
+                noticeViewModel.deleteNotice(currNotice.getKeyValue());
             }
         });
         if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {

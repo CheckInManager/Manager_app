@@ -159,14 +159,21 @@ public class WorksiteRepository {
         return noticeList;
     }
 
-    public void deleteNotice(final String noticeName, final String worksiteName, CompletedCallback<Result<String>> callback) {
-        dataSource.deleteNotice(noticeName, worksiteName, callback);
+    public void deleteNotice(final String keyValue, CompletedCallback<Result<String>> callback) {
+        dataSource.deleteNotice(keyValue, callback);
     }
 
-    public void getNoticeDetailByName(final String noticeName, final String worksiteName, CompletedCallback<Result<Notice>> callback) {
-        dataSource.getNoticeDetailByName(noticeName, worksiteName, callback);
+    public void getNoticeDetailByName(final String keyValue, CompletedCallback<Result<Notice>> callback) {
+        dataSource.getNoticeDetailByName(keyValue, callback);
     }
 
+    public void getNoticeKey(final CompletedCallback<Result<String>> callback){
+        dataSource.getNewKey("notice", callback);
+    }
+
+    public void changeNotice(final Notice notice, final CompletedCallback<Result<String>> callback){
+        dataSource.changeNotice(notice, callback);
+    }
 
     public void setExecutor(Executor exec) {
         this.executor = exec;

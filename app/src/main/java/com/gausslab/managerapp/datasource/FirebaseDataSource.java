@@ -236,7 +236,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void addNotice(Notice notice, CompletedCallback<Result<String>> callback) {
         db.collection("notice")
-                .document(notice.getNoticeName() + notice.getWorksiteName())
+                .document(notice.getKeyValue())
                 .set(notice);
         callback.onComplete(new Result.Success<String>("Success"));
 
@@ -264,9 +264,9 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void deleteNotice(String noticeName, String worksiteName, CompletedCallback<Result<String>> callback) {
+    public void deleteNotice(String keyValue, CompletedCallback<Result<String>> callback) {
         db.collection("notice")
-                .document(noticeName + worksiteName)
+                .document(keyValue)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -283,10 +283,9 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void getNoticeDetailByName(String noticeName, String worksiteName, CompletedCallback<Result<Notice>> callback) {
+    public void getNoticeDetailByName(String keyValue, CompletedCallback<Result<Notice>> callback) {
         db.collection("notice")
-                .whereEqualTo("noticeName", noticeName)
-                .whereEqualTo("worksiteName", worksiteName)
+                .whereEqualTo("keyValue", keyValue)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -394,5 +393,13 @@ public class FirebaseDataSource implements DataSource {
                 }
             });
         }
+    }
+
+    @Override
+    public void changeNotice(Notice notice, CompletedCallback<Result<String>> callback) {
+        db.collection("notice")
+                .document(notice.getKeyValue())
+                .set(notice);
+        callback.onComplete(new Result.Success<String>("Success"));
     }
 }

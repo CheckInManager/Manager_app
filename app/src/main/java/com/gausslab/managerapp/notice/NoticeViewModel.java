@@ -16,8 +16,8 @@ public class NoticeViewModel extends ViewModel {
         worksiteRepository.registerNoticeListListener();
     }
 
-    public void deleteNotice(String noticeName, String worksiteName) {
-        worksiteRepository.deleteNotice(noticeName, worksiteName, result -> {
+    public void deleteNotice(String keyValue) {
+        worksiteRepository.deleteNotice(keyValue, result -> {
             if (result instanceof Result.Success) {
 
             } else {

@@ -33,9 +33,9 @@ public interface DataSource {
 
     void getNoticeList(ListenerCallback<Result<List<Notice>>> callback);
 
-    void deleteNotice(String noticeName, String worksiteName, CompletedCallback<Result<String>> callback);
+    void deleteNotice(String keyValue, CompletedCallback<Result<String>> callback);
 
-    void getNoticeDetailByName(String noticeName, String worksiteName, CompletedCallback<Result<Notice>> callback);
+    void getNoticeDetailByName(String keyValue, CompletedCallback<Result<Notice>> callback);
 
     void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
@@ -46,5 +46,7 @@ public interface DataSource {
     void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
     void getNewKey(String type, CompletedCallback<Result<String>>callback);
+
+    void changeNotice(Notice notice, CompletedCallback<Result<String>> callback);
 
 }
