@@ -1,6 +1,7 @@
 package com.gausslab.managerapp.workerinformation;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,14 +45,19 @@ public class WorkerInformationFragment extends Fragment {
     private String phoneNumber;
     private String userName;
 
+    private String mMemo;
+
     public WorkerInformationFragment() {
 
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
+
+
     }
 
     @Override
@@ -67,12 +73,25 @@ public class WorkerInformationFragment extends Fragment {
         et_memo = binding.workerinformationEtMemo;
         bt_complete = binding.workerinformationBtComplete;
 
+
         rv_accidentHistoryList.setLayoutManager(new LinearLayoutManager(requireContext()));
         rv_accidentHistoryList.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
 
         init();
 
+        if(savedInstanceState==null){
+        }else{
+            mMemo = savedInstanceState.getString("mMemo");
+            et_memo.setText(mMemo);
+        }
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("mMemo",et_memo.getText().toString());
     }
 
     @Override
