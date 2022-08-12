@@ -21,7 +21,7 @@ public class WorkerInformationViewModel extends ViewModel {
     private final MutableLiveData<Boolean> userInformationLoaded = new MutableLiveData<>(false);
 
     private User currUser;
-
+    private String memoText = "";
     private Drawable userImage;
 
     public void loadUserInformation(String phoneNumber) {
@@ -88,6 +88,10 @@ public class WorkerInformationViewModel extends ViewModel {
         });
     }
 
+    public void updateMemoText(String s){memoText = s;}
+
+    public String getMemoText(){return memoText;}
+
     public Drawable getUserImage() {
         return userImage;
     }
@@ -103,5 +107,4 @@ public class WorkerInformationViewModel extends ViewModel {
     public LiveData<Boolean> isAccidentHistoryListLoaded(String phoneNumber) {
         return accidentRepository.isAccidentHistoryListLoadedByUser(phoneNumber);
     }
-
 }

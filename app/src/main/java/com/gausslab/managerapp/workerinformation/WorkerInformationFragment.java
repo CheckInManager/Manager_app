@@ -56,8 +56,7 @@ public class WorkerInformationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
-
-
+        init();
     }
 
     @Override
@@ -73,30 +72,21 @@ public class WorkerInformationFragment extends Fragment {
         et_memo = binding.workerinformationEtMemo;
         bt_complete = binding.workerinformationBtComplete;
 
-
         rv_accidentHistoryList.setLayoutManager(new LinearLayoutManager(requireContext()));
         rv_accidentHistoryList.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
 
-        init();
 
-        if(savedInstanceState==null){
-        }else{
-            mMemo = savedInstanceState.getString("mMemo");
-            et_memo.setText(mMemo);
-        }
-
+        rv_accidentHistoryList.setAdapter(adapter);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("mMemo",et_memo.getText().toString());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(!workerInformationViewModel.getMemoText().isEmpty()){
+            et_memo.setText(workerInformationViewModel.getMemoText());
+        }
 
         //region Observer
         workerInformationViewModel.isAccidentHistoryListLoaded(phoneNumber).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -104,6 +94,22 @@ public class WorkerInformationFragment extends Fragment {
             public void onChanged(Boolean isLoaded) {
                 if (isLoaded) {
                     adapter.setAccidentHistoryList(workerInformationViewModel.getAccidentHistoryList(phoneNumber));
+                }
+            }
+        });
+
+        workerInformationViewModel.userInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
+                    currUser = workerInformationViewModel.getUserInformation();
+                    iv_image.setImageDrawable(workerInformationViewModel.getUserImage());
+                    tv_name.setText(currUser.getUserName());
+                    tv_phoneNumber.setText(currUser.getPhoneNumber());
+                    tv_career.setText(currUser.getCareer());
+                    if(workerInformationViewModel.getMemoText().isEmpty()) {
+                        et_memo.setText(currUser.getMemo());
+                    }
                 }
             }
         });
@@ -141,6 +147,12 @@ public class WorkerInformationFragment extends Fragment {
         //endregion
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        workerInformationViewModel.updateMemoText(et_memo.getText().toString());
+    }
+
     private void init() {
         phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         userName = WorkerInformationFragmentArgs.fromBundle(getArguments()).getUserName();
@@ -157,19 +169,6 @@ public class WorkerInformationFragment extends Fragment {
             workerInformationViewModel.loadUserImage(userName);
             workerInformationViewModel.loadAccidentHistoryListByUser(userName);
         }
-        workerInformationViewModel.userInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isLoaded) {
-                if (isLoaded) {
-                    currUser = workerInformationViewModel.getUserInformation();
-                    iv_image.setImageDrawable(workerInformationViewModel.getUserImage());
-                    tv_name.setText(currUser.getUserName());
-                    tv_phoneNumber.setText(currUser.getPhoneNumber());
-                    tv_career.setText(currUser.getCareer());
-                    et_memo.setText(currUser.getMemo());
-                }
-            }
-        });
         setupAdapter();
     }
 
@@ -193,6 +192,6 @@ public class WorkerInformationFragment extends Fragment {
 
             }
         });
-        rv_accidentHistoryList.setAdapter(adapter);
     }
+
 }
