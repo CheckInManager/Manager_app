@@ -112,13 +112,8 @@ public class NoticeFragment extends Fragment {
                 new OnTodayWorksiteContextMenuInteractionListener<Notice>() {
                     @Override
                     public void onItemClick(Notice obj) {
-                        String noticeName = obj.getNoticeName();
-                        String worksiteName = obj.getWorksiteName();
                         NoticeFragmentDirections.ActionNoticeFragmentToNoticeDetailFragment action = NoticeFragmentDirections.actionNoticeFragmentToNoticeDetailFragment();
-                        action.setNoticeName(noticeName);
-                        action.setWorksiteName(worksiteName);
                         action.setKeyValue(obj.getKeyValue());
-                        action.setTime(obj.getTime());
                         NavHostFragment.findNavController(NoticeFragment.this).navigate(action);
                     }
 

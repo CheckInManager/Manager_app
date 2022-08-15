@@ -39,11 +39,11 @@ public class NoticeDetailFragment extends Fragment {
 
     private String todayCal;
     private ArrayAdapter arrayAdapter;
-    private String loadNoticeName;
-    private String loadMemo;
-    private String loadWorksiteName;
-    private String loadKeyValue;
-    private String loadTime;
+    private String loadedNoticeName;
+    private String loadedMemo;
+    private String loadedWorksiteName;
+    private String loadedKeyValue;
+    private String loadedTime;
 
     public NoticeDetailFragment() {
     }
@@ -94,7 +94,7 @@ public class NoticeDetailFragment extends Fragment {
                     long mNow = System.currentTimeMillis();
                     Date mDate = new Date(mNow);
                     Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),
-                            sp_worksiteName.getSelectedItem().toString(),mFormat.format(mDate), loadKeyValue);
+                            sp_worksiteName.getSelectedItem().toString(),mFormat.format(mDate), loadedKeyValue);
                     noticeDetailViewModel.changeNotice(notice);
                     NavHostFragment.findNavController(NoticeDetailFragment.this).navigate(R.id.action_noticeDetailFragment_to_noticeFragment);
                     noticeDetailViewModel.setDeletedSuccess();
@@ -109,11 +109,11 @@ public class NoticeDetailFragment extends Fragment {
                 if (et_noticeName.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "noticeName is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    if((loadNoticeName+loadMemo+loadWorksiteName).equals(
+                    if((loadedNoticeName + loadedMemo + loadedWorksiteName).equals(
                             (et_noticeName.getText().toString()+et_memo.getText().toString()+sp_worksiteName.getSelectedItem().toString()))){
                         NavHostFragment.findNavController(NoticeDetailFragment.this).navigateUp();
                     }else{
-                        Notice exNotice = new Notice(loadNoticeName, loadMemo, loadWorksiteName, "", loadKeyValue);
+                        Notice exNotice = new Notice(loadedNoticeName, loadedMemo, loadedWorksiteName, "", loadedKeyValue);
                         noticeDetailViewModel.deleteExNotice(exNotice);
                     }
                 }
@@ -125,17 +125,17 @@ public class NoticeDetailFragment extends Fragment {
     private void init() {
         convertDateFormat();
         noticeDetailViewModel.loadOpenWorksite(todayCal);
-        loadTime = NoticeDetailFragmentArgs.fromBundle(getArguments()).getTime();
-        loadKeyValue = NoticeDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
-        noticeDetailViewModel.loadNoticeDetail(loadKeyValue);
+        loadedKeyValue = NoticeDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
+        noticeDetailViewModel.loadNoticeDetail(loadedKeyValue);
         noticeDetailViewModel.isNoticeDetailLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
                 if (isLoaded) {
                     Notice currNotice = noticeDetailViewModel.getNoticeDetail();
-                    loadNoticeName = currNotice.getNoticeName();
-                    loadMemo = currNotice.getMemo();
-                    loadWorksiteName = currNotice.getWorksiteName();
+                    loadedNoticeName = currNotice.getNoticeName();
+                    loadedMemo = currNotice.getMemo();
+                    loadedWorksiteName = currNotice.getWorksiteName();
+                    loadedTime = currNotice.getTime();
                     et_noticeName.setText(currNotice.getNoticeName());
                     et_memo.setText(currNotice.getMemo());
                     sp_worksiteName.setSelection(getIndex(sp_worksiteName, currNotice.getWorksiteName()));
