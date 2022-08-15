@@ -43,6 +43,7 @@ public class NoticeDetailFragment extends Fragment {
     private String loadMemo;
     private String loadWorksiteName;
     private String loadKeyValue;
+    private String loadTime;
 
     public NoticeDetailFragment() {
     }
@@ -108,8 +109,13 @@ public class NoticeDetailFragment extends Fragment {
                 if (et_noticeName.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "noticeName is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    Notice exNotice = new Notice(loadNoticeName, loadMemo, loadWorksiteName, "", loadKeyValue);
-                    noticeDetailViewModel.deleteExNotice(exNotice);
+                    if((loadNoticeName+loadMemo+loadWorksiteName).equals(
+                            (et_noticeName.getText().toString()+et_memo.getText().toString()+sp_worksiteName.getSelectedItem().toString()))){
+                        NavHostFragment.findNavController(NoticeDetailFragment.this).navigateUp();
+                    }else{
+                        Notice exNotice = new Notice(loadNoticeName, loadMemo, loadWorksiteName, "", loadKeyValue);
+                        noticeDetailViewModel.deleteExNotice(exNotice);
+                    }
                 }
             }
         });
@@ -119,8 +125,7 @@ public class NoticeDetailFragment extends Fragment {
     private void init() {
         convertDateFormat();
         noticeDetailViewModel.loadOpenWorksite(todayCal);
-        String noticeName = NoticeDetailFragmentArgs.fromBundle(getArguments()).getNoticeName();
-        String worksiteName = NoticeDetailFragmentArgs.fromBundle(getArguments()).getWorksiteName();
+        loadTime = NoticeDetailFragmentArgs.fromBundle(getArguments()).getTime();
         loadKeyValue = NoticeDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
         noticeDetailViewModel.loadNoticeDetail(loadKeyValue);
         noticeDetailViewModel.isNoticeDetailLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {

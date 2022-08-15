@@ -158,6 +158,10 @@
             android:name="keyValue"
             android:defaultValue="keyValue"
             app:argType="string"/>
+        <argument
+            android:name="time"
+            android:defaultValue="time"
+            app:argType="string"/>
         <action
             android:id="@+id/action_noticeDetailFragment_to_noticeFragment"
             app:destination="@id/noticeFragment" />

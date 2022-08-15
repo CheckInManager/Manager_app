@@ -118,6 +118,7 @@ public class NoticeFragment extends Fragment {
                         action.setNoticeName(noticeName);
                         action.setWorksiteName(worksiteName);
                         action.setKeyValue(obj.getKeyValue());
+                        action.setTime(obj.getTime());
                         NavHostFragment.findNavController(NoticeFragment.this).navigate(action);
                     }
 
