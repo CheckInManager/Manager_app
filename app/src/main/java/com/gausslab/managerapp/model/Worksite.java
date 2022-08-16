@@ -5,12 +5,14 @@ public class Worksite {
     private String startDate;
     private String endDate;
     private String location;
+    private String keyValue;
 
-    public Worksite(String worksiteName, String startDate, String endDate, String location) {
+    public Worksite(String worksiteName, String startDate, String endDate, String location, String keyValue) {
         this.worksiteName = worksiteName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
+        this.keyValue = keyValue;
     }
 
     public String getWorksiteName() {
@@ -43,5 +45,13 @@ public class Worksite {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getKeyValue() {
+        return keyValue;
+    }
+
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
     }
 }

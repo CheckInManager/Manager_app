@@ -30,8 +30,8 @@ public class WorkerInformationViewModel extends ViewModel
     private User currUser;
     private Drawable userImage;
 
-    private List<AccidentHistory> deletedAccidentHistoryList;
-    private List<AccidentHistory> addedAccidentHistoryList;
+    private List<AccidentHistory> deletedAccidentHistoryList= new ArrayList<>();
+    private List<AccidentHistory> addedAccidentHistoryList = new ArrayList<>();
 
     public void saveUser()
     {
@@ -40,7 +40,24 @@ public class WorkerInformationViewModel extends ViewModel
             @Override
             public void onComplete(Result<String> result)
             {
+                for(AccidentHistory newAdd : addedAccidentHistoryList){
+                    accidentRepository.addAccidentHistory(newAdd, new CompletedCallback<Result<String>>() {
+                        @Override
+                        public void onComplete(Result<String> result) {
 
+                        }
+                    });
+                }
+                for(AccidentHistory del : deletedAccidentHistoryList){
+                    accidentRepository.deleteAccidentHistory(del.getKeyValue(), new CompletedCallback<Result<String>>() {
+                        @Override
+                        public void onComplete(Result<String> result) {
+
+                        }
+                    });
+                }
+                addedAccidentHistoryList.clear();
+                deletedAccidentHistoryList.clear();
             }
         });
     }
@@ -49,6 +66,7 @@ public class WorkerInformationViewModel extends ViewModel
     {
         List<AccidentHistory> updatedList = new ArrayList<>(accidentHistoryList.getValue());
         updatedList.add(toAdd);
+        addedAccidentHistoryList.add(toAdd);
         accidentHistoryList.postValue(updatedList);
         addAccidentHistorySuccess.postValue(new Event<>(true));
     }
@@ -62,6 +80,7 @@ public class WorkerInformationViewModel extends ViewModel
     {
         List<AccidentHistory> updatedList = new ArrayList<>(accidentHistoryList.getValue());
         updatedList.remove(toRemove);
+        deletedAccidentHistoryList.add(toRemove);
         accidentHistoryList.postValue(updatedList);
     }
 

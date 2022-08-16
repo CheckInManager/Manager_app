@@ -33,7 +33,6 @@ public class AccidentRepository
 
     public void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback)
     {
-
         dataSource.addAccidentHistory(accidentHistory, callback);
     }
 
