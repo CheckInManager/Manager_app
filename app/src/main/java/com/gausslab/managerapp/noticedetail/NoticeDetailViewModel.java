@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.gausslab.managerapp.Event;
 import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
@@ -16,7 +17,7 @@ public class NoticeDetailViewModel extends ViewModel {
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private final MutableLiveData<Boolean> noticeDetailLoaded = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> openWorksiteListLoaded = new MutableLiveData<>(false);
-    private final MutableLiveData<Boolean> deleteSuccess = new MutableLiveData<>(false);
+    private final MutableLiveData<Event<Boolean>> noticeUpdateSuccessful = new MutableLiveData<>();
 
     private List<Worksite> worksiteList = new ArrayList<>();
     private Notice currNotice;
@@ -41,24 +42,24 @@ public class NoticeDetailViewModel extends ViewModel {
         });
     }
 
-    public void deleteExNotice(Notice exNotice){
-        worksiteRepository.deleteNotice(exNotice.getKeyValue(), result -> {
-            if(result instanceof Result.Success){
-                deleteSuccess.postValue(true);
-            }else{
-                deleteSuccess.postValue(false);
-            }
-        });
-    }
+//    public void deleteExNotice(Notice exNotice){
+//        worksiteRepository.deleteNotice(exNotice.getKeyValue(), result -> {
+//            if(result instanceof Result.Success){
+//                deleteSuccess.postValue(true);
+//            }else{
+//                deleteSuccess.postValue(false);
+//            }
+//        });
+//    }
 
-    public void setDeletedSuccess(){
-        deleteSuccess.postValue(false);
-    }
+//    public void setDeletedSuccess(){
+//        noticeUpdateSuccessful.postValue(false);
+//    }
 
     public void changeNotice(Notice notice){
         worksiteRepository.changeNotice(notice, result->{
            if(result instanceof Result.Success){
-
+                noticeUpdateSuccessful.postValue(new Event<Boolean>(true));
            }
         });
     }
@@ -79,5 +80,5 @@ public class NoticeDetailViewModel extends ViewModel {
         return openWorksiteListLoaded;
     }
 
-    public LiveData<Boolean> isDeleteSuccess(){return deleteSuccess;}
+    public LiveData<Event<Boolean>> isNoticeUpdateSuccessful(){return noticeUpdateSuccessful;}
 }

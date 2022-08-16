@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.gausslab.managerapp.Event;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentNoticedetailBinding;
 import com.gausslab.managerapp.model.Notice;
@@ -86,18 +87,30 @@ public class NoticeDetailFragment extends Fragment {
             }
         });
 
-        noticeDetailViewModel.isDeleteSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+//        noticeDetailViewModel.isNoticeUpdateSuccessful().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean isSuccessful) {
+//                if (isSuccessful) {
+//                    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//                    long mNow = System.currentTimeMillis();
+//                    Date mDate = new Date(mNow);
+//                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),
+//                            sp_worksiteName.getSelectedItem().toString(),mFormat.format(mDate), loadedKeyValue);
+//                    noticeDetailViewModel.changeNotice(notice);
+//                    NavHostFragment.findNavController(NoticeDetailFragment.this).navigate(R.id.action_noticeDetailFragment_to_noticeFragment);
+//                    noticeDetailViewModel.setDeletedSuccess();
+//                }
+//            }
+//        });
+
+        noticeDetailViewModel.isNoticeUpdateSuccessful().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
             @Override
-            public void onChanged(Boolean isSuccessful) {
-                if (isSuccessful) {
-                    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    long mNow = System.currentTimeMillis();
-                    Date mDate = new Date(mNow);
-                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),
-                            sp_worksiteName.getSelectedItem().toString(),mFormat.format(mDate), loadedKeyValue);
-                    noticeDetailViewModel.changeNotice(notice);
-                    NavHostFragment.findNavController(NoticeDetailFragment.this).navigate(R.id.action_noticeDetailFragment_to_noticeFragment);
-                    noticeDetailViewModel.setDeletedSuccess();
+            public void onChanged(Event<Boolean> booleanEvent) {
+                if(!booleanEvent.isHandled()){
+                    boolean isSuccessful = booleanEvent.consumeData();
+                    if(isSuccessful){
+                        NavHostFragment.findNavController(NoticeDetailFragment.this).navigate(R.id.action_noticeDetailFragment_to_noticeFragment);
+                    }
                 }
             }
         });
@@ -113,8 +126,12 @@ public class NoticeDetailFragment extends Fragment {
                             (et_noticeName.getText().toString()+et_memo.getText().toString()+sp_worksiteName.getSelectedItem().toString()))){
                         NavHostFragment.findNavController(NoticeDetailFragment.this).navigateUp();
                     }else{
-                        Notice exNotice = new Notice(loadedNoticeName, loadedMemo, loadedWorksiteName, "", loadedKeyValue);
-                        noticeDetailViewModel.deleteExNotice(exNotice);
+                        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        long mNow = System.currentTimeMillis();
+                        Date mDate = new Date(mNow);
+                        Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),
+                                sp_worksiteName.getSelectedItem().toString(), mFormat.format(mDate), loadedKeyValue);
+                        noticeDetailViewModel.changeNotice(notice);
                     }
                 }
             }
