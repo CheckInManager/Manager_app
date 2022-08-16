@@ -21,20 +21,6 @@ public class AccidentHistoryDetailViewModel extends ViewModel {
         });
     }
 
-//    public void deleteExAccidentHistory(AccidentHistory exAccidentHistory) {
-//        accidentRepository.deleteAccidentHistory(exAccidentHistory.getKeyValue(), result -> {
-//            if (result instanceof Result.Success) {
-//                deletedSuccess.postValue(true);
-//            } else {
-//                deletedSuccess.postValue(false);
-//            }
-//        });
-//    }
-//
-//    public void setDeletedSuccess(){
-//        deletedSuccess.postValue(false);
-//    }
-
     public LiveData<Event<Boolean>> isAccidentHistoryUpdateSuccessful() {
         return accidentHistoryUpdateSuccessful;
     }

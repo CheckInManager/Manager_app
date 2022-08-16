@@ -84,9 +84,9 @@ public class WorkerInformationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(!workerInformationViewModel.getMemoText().isEmpty()){
-            et_memo.setText(workerInformationViewModel.getMemoText());
-        }
+
+        et_memo.setText(workerInformationViewModel.getMemoText());
+
 
         //region Observer
         workerInformationViewModel.isAccidentHistoryListLoaded(phoneNumber).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -107,9 +107,8 @@ public class WorkerInformationFragment extends Fragment {
                     tv_name.setText(currUser.getUserName());
                     tv_phoneNumber.setText(currUser.getPhoneNumber());
                     tv_career.setText(currUser.getCareer());
-                    if(workerInformationViewModel.getMemoText().isEmpty()) {
-                        et_memo.setText(currUser.getMemo());
-                    }
+                    et_memo.setText(currUser.getMemo());
+
                 }
             }
         });
@@ -148,7 +147,7 @@ public class WorkerInformationFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState){
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         workerInformationViewModel.updateMemoText(et_memo.getText().toString());
     }

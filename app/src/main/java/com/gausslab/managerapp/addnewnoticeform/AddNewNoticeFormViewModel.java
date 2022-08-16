@@ -40,18 +40,20 @@ public class AddNewNoticeFormViewModel extends ViewModel {
         });
     }
 
-    public void loadNoticeKey(){
+    public void loadNoticeKey() {
         worksiteRepository.getNoticeKey(result -> {
-            if(result instanceof Result.Success){
-                noticeKey =((Result.Success<String>)result).getData();
+            if (result instanceof Result.Success) {
+                noticeKey = ((Result.Success<String>) result).getData();
                 noticeKeyLoaded.postValue(true);
-            }else{
+            } else {
                 noticeKeyLoaded.postValue(false);
             }
         });
     }
 
-    public String getNoticeKey(){return noticeKey;}
+    public String getNoticeKey() {
+        return noticeKey;
+    }
 
     public List<Worksite> getOpenWorksite() {
         return worksiteList;
@@ -65,5 +67,7 @@ public class AddNewNoticeFormViewModel extends ViewModel {
         return openWorksiteListLoaded;
     }
 
-    public LiveData<Boolean> isNoticeKeyLoaded(){return noticeKeyLoaded;}
+    public LiveData<Boolean> isNoticeKeyLoaded() {
+        return noticeKeyLoaded;
+    }
 }

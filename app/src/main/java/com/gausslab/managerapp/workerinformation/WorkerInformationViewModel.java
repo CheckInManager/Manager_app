@@ -28,6 +28,7 @@ public class WorkerInformationViewModel extends ViewModel {
         userRepository.getUserByPhoneNumber(phoneNumber, result -> {
             if (result instanceof Result.Success) {
                 currUser = ((Result.Success<User>) result).getData();
+                memoText = currUser.getMemo();
                 userInformationLoaded.setValue(true);
             }
         });

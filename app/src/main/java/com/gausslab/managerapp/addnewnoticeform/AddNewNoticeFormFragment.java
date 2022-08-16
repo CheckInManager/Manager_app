@@ -74,7 +74,7 @@ public class AddNewNoticeFormFragment extends Fragment {
         addNewNoticeFormViewModel.isNoticeKeyLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
+                if (isLoaded) {
                     noticeKey = addNewNoticeFormViewModel.getNoticeKey();
                 }
             }
@@ -116,7 +116,7 @@ public class AddNewNoticeFormFragment extends Fragment {
                     long mNow = System.currentTimeMillis();
                     Date mDate = new Date(mNow);
                     Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(), sp_worksiteName.getSelectedItem().toString(),
-                            mFormat.format(mDate),noticeKey);
+                            mFormat.format(mDate), noticeKey);
                     addNewNoticeFormViewModel.addNotice(notice);
                     bt_add.setEnabled(false);
                 }

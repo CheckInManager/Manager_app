@@ -29,18 +29,18 @@ public class AddAccidentHistoryFormViewModel extends ViewModel {
         });
     }
 
-    public void loadAccidentHistoryKey(){
-        accidentRepository.getAccidentHistoryKey(result->{
-            if(result instanceof Result.Success){
-                accidentHistoryKey = ((Result.Success<String>)result).getData();
+    public void loadAccidentHistoryKey() {
+        accidentRepository.getAccidentHistoryKey(result -> {
+            if (result instanceof Result.Success) {
+                accidentHistoryKey = ((Result.Success<String>) result).getData();
                 accidentHistoryKeyLoaded.postValue(true);
-            }else{
+            } else {
                 accidentHistoryKeyLoaded.postValue(false);
             }
         });
     }
 
-    public String getAccidentHistoryKey(){
+    public String getAccidentHistoryKey() {
         return accidentHistoryKey;
     }
 
@@ -49,7 +49,7 @@ public class AddAccidentHistoryFormViewModel extends ViewModel {
         return addAccidentHistorySuccess;
     }
 
-    public LiveData<Boolean> isAccidentHistoryKeyLoaded(){
+    public LiveData<Boolean> isAccidentHistoryKeyLoaded() {
         return accidentHistoryKeyLoaded;
     }
 }
