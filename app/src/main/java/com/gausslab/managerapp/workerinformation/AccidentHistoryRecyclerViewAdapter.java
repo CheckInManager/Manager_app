@@ -8,66 +8,71 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.databinding.ObjectAccidenthistoryBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
-import com.gausslab.managerapp.todayworksite.OnItemInteractionListener;
 import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
 import java.util.List;
 
-public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<AccidentHistoryRecyclerViewAdapter.ViewHolder> {
+public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<AccidentHistoryRecyclerViewAdapter.ViewHolder>
+{
+    private final OnAccidentHistoryInteractionListener listener;
     private List<AccidentHistory> accidentHistoryList;
-    private WorkerInformationViewModel workerInformationViewModel;
-    private OnItemInteractionListener listener;
 
-    public AccidentHistoryRecyclerViewAdapter(List<AccidentHistory> accidentHistoryList, WorkerInformationViewModel workerInformationViewModel, OnItemInteractionListener<AccidentHistory> clickListener) {
+    public AccidentHistoryRecyclerViewAdapter(List<AccidentHistory> accidentHistoryList, OnAccidentHistoryInteractionListener interactionListener)
+    {
         this.accidentHistoryList = accidentHistoryList;
-        this.workerInformationViewModel = workerInformationViewModel;
-        listener = clickListener;
+        listener = interactionListener;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         return new ViewHolder(ObjectAccidenthistoryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    {
         AccidentHistory currAccidentHistory = accidentHistoryList.get(position);
         holder.tv_description.setText(currAccidentHistory.getDescription());
         holder.tv_place.setText(currAccidentHistory.getPlace());
         holder.tv_date.setText(currAccidentHistory.getDate());
         holder.tv_time.setText(currAccidentHistory.getTime());
-        holder.bt_delete.setOnClickListener(new View.OnClickListener() {
+        holder.bt_delete.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                workerInformationViewModel.deleteAccidentHistory(currAccidentHistory.getKeyValue());
+            public void onClick(View view)
+            {
+                listener.onDelete(currAccidentHistory);
             }
         });
-        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
-            holder.cv_card.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((OnTodayWorksiteContextMenuInteractionListener<AccidentHistory>) listener).onItemClick(accidentHistoryList.get(holder.getAdapterPosition()));
-                }
-            });
-        }
+        holder.cv_card.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                listener.onClick(accidentHistoryList.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return accidentHistoryList.size();
     }
 
-    public void setAccidentHistoryList(List<AccidentHistory> newAccidentHistoryList) {
+    public void setAccidentHistoryList(List<AccidentHistory> newAccidentHistoryList)
+    {
         accidentHistoryList = newAccidentHistoryList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder
+    {
         public final CardView cv_card;
         public final TextView tv_description;
         public final TextView tv_place;
@@ -75,7 +80,8 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
         public final TextView tv_time;
         public final Button bt_delete;
 
-        public ViewHolder(ObjectAccidenthistoryBinding binding) {
+        public ViewHolder(ObjectAccidenthistoryBinding binding)
+        {
             super(binding.getRoot());
             cv_card = binding.objNoticeCard;
             tv_description = binding.objAccidenthistoryTvDescription;
@@ -86,7 +92,8 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
         }
 
         @Override
-        public String toString() {
+        public String toString()
+        {
             return super.toString() + "";
         }
     }

@@ -174,26 +174,6 @@
         android:label="fragment_accidenthistorydetail"
         tools:layout="@layout/fragment_accidenthistorydetail" >
         <argument
-            android:name="description"
-            android:defaultValue="description"
-            app:argType="string"/>
-        <argument
-            android:name="place"
-            android:defaultValue="place"
-            app:argType="string"/>
-        <argument
-            android:name="date"
-            android:defaultValue="date"
-            app:argType="string"/>
-        <argument
-            android:name="time"
-            android:defaultValue="time"
-            app:argType="string"/>
-        <argument
-            android:name="userPhoneNumber"
-            android:defaultValue="01000000000"
-            app:argType="string"/>
-        <argument
             android:name="keyValue"
             android:defaultValue="key"
             app:argType="string"/>

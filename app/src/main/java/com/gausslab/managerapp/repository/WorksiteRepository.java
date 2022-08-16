@@ -167,10 +167,6 @@ public class WorksiteRepository {
         dataSource.getNoticeDetailByName(keyValue, callback);
     }
 
-    public void getNoticeKey(final CompletedCallback<Result<String>> callback){
-        dataSource.getNewKey("notice", callback);
-    }
-
     public void changeNotice(final Notice notice, final CompletedCallback<Result<String>> callback){
         dataSource.changeNotice(notice, callback);
     }

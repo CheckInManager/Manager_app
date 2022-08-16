@@ -39,7 +39,6 @@ public class AddNewNoticeFormFragment extends Fragment {
     private Button bt_add;
 
     private String todayCal;
-    private String noticeKey;
 
     public AddNewNoticeFormFragment() {
     }
@@ -67,18 +66,6 @@ public class AddNewNoticeFormFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        addNewNoticeFormViewModel.loadNoticeKey();
-
-        //region Observer
-        addNewNoticeFormViewModel.isNoticeKeyLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isLoaded) {
-                if (isLoaded) {
-                    noticeKey = addNewNoticeFormViewModel.getNoticeKey();
-                }
-            }
-        });
 
         addNewNoticeFormViewModel.isAddNoticeFormSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -116,7 +103,7 @@ public class AddNewNoticeFormFragment extends Fragment {
                     long mNow = System.currentTimeMillis();
                     Date mDate = new Date(mNow);
                     Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(), sp_worksiteName.getSelectedItem().toString(),
-                            mFormat.format(mDate), noticeKey);
+                            mFormat.format(mDate), null);
                     addNewNoticeFormViewModel.addNotice(notice);
                     bt_add.setEnabled(false);
                 }

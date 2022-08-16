@@ -46,7 +46,7 @@ public class AddWorkerViewModel extends ViewModel {
     }
 
     public void addUser(User userToAdd) {
-        userRepository.addUser(userToAdd, result -> {
+        userRepository.addOrUpdateUser(userToAdd, result -> {
             if (result instanceof Result.Success) {
 
             } else {
@@ -56,7 +56,7 @@ public class AddWorkerViewModel extends ViewModel {
     }
 
     public void addGuestUser(User userToAdd) {
-        userRepository.addGuestUser(userToAdd, result -> {
+        userRepository.addOrUpdateUser(userToAdd, result -> {
             if (result instanceof Result.Success) {
 
             } else {

@@ -19,13 +19,7 @@ public interface DataSource {
 
     void noPhoneNumberGetUser(String userName, CompletedCallback<Result<User>> callback);
 
-    void changeUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback);
-
-    void changeNoPhoneNumberUserInformation(User changeUserInformation, CompletedCallback<Result<String>> callback);
-
-    void addUser(User addNewUser, CompletedCallback<Result<String>> callback);
-
-    void addGuestUser(User addNewUser, CompletedCallback<Result<String>> callback);
+    void addOrUpdateUser(User user, CompletedCallback<Result<String>> callback);
 
     void getPhoneNumberList(CompletedCallback<Result<List<String>>> callback);
 
@@ -41,11 +35,11 @@ public interface DataSource {
 
     void getAccidentHistoryByUser(String phoneNumber, ListenerCallback<Result<List<AccidentHistory>>> callback);
 
+    void getAccidentHistoryByKey(String key, CompletedCallback<Result<AccidentHistory>> callback);
+
     void deleteAccidentHistory(String keyValue, CompletedCallback<Result<String>> callback);
 
     void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
-
-    void getNewKey(String type, CompletedCallback<Result<String>>callback);
 
     void changeNotice(Notice notice, CompletedCallback<Result<String>> callback);
 

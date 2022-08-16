@@ -1,6 +1,5 @@
 package com.gausslab.managerapp.repository;
 
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -17,69 +16,84 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
-public class AccidentRepository {
+public class AccidentRepository
+{
     private static volatile AccidentRepository INSTANCE = new AccidentRepository();
     protected Executor executor;
+    protected Map<String, MutableLiveData<Boolean>> userAccidentHistoryLoaded = new HashMap<>();
     private DataSource dataSource;
     private FileService fileService;
     private Map<String, List<AccidentHistory>> userAccidentHistoryMap = new HashMap<>();
-    protected Map<String, MutableLiveData<Boolean>> userAccidentHistoryLoaded = new HashMap<>();
+    private Map<String, AccidentHistory> accidentHistoryMap = new HashMap<>();
 
-    public static AccidentRepository getInstance() {
+    public static AccidentRepository getInstance()
+    {
         return INSTANCE;
     }
 
-    public void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
+    public void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback)
+    {
+
         dataSource.addAccidentHistory(accidentHistory, callback);
     }
 
-    public List<AccidentHistory> getAccidentHistoryListByUser(final String phoneNumber) {
+    public List<AccidentHistory> getAccidentHistoryListByUser(final String phoneNumber)
+    {
         return userAccidentHistoryMap.get(phoneNumber);
     }
 
-    public void registerAccidentHistoryListListener(String phoneNumber) {
-        if (userAccidentHistoryMap.containsKey(phoneNumber))
-            return;
+    public void registerAccidentHistoryListListener(String phoneNumber, ListenerCallback<List<AccidentHistory>> callback)
+    {
         userAccidentHistoryMap.put(phoneNumber, new ArrayList<>());
         userAccidentHistoryLoaded.put(phoneNumber, new MutableLiveData<>());
-        dataSource.getAccidentHistoryByUser(phoneNumber, new ListenerCallback<Result<List<AccidentHistory>>>() {
+        dataSource.getAccidentHistoryByUser(phoneNumber, new ListenerCallback<Result<List<AccidentHistory>>>()
+        {
             @Override
-            public void onUpdate(Result<List<AccidentHistory>> result) {
-                if (result instanceof Result.Success) {
-                    userAccidentHistoryMap.put(phoneNumber, ((Result.Success<List<AccidentHistory>>) result).getData());
-                    userAccidentHistoryLoaded.get(phoneNumber).postValue(true);
-                } else {
-
+            public void onUpdate(Result<List<AccidentHistory>> result)
+            {
+                if (result instanceof Result.Success)
+                {
+                    List<AccidentHistory> accidentHistoryList = ((Result.Success<List<AccidentHistory>>) result).getData();
+                    userAccidentHistoryMap.put(phoneNumber, accidentHistoryList);
+                    callback.onUpdate(accidentHistoryList);
                 }
             }
         });
     }
 
-    public void deleteAccidentHistory(final String keyValue, CompletedCallback<Result<String>> callback) {
+    public void deleteAccidentHistory(final String keyValue, CompletedCallback<Result<String>>
+            callback)
+    {
         dataSource.deleteAccidentHistory(keyValue, callback);
     }
 
-    public void changeAccidentHistory(final AccidentHistory accidentHistory, final CompletedCallback<Result<String>> callback) {
+    public void changeAccidentHistory(final AccidentHistory accidentHistory,
+            final CompletedCallback<Result<String>> callback)
+    {
         dataSource.changeAccidentHistory(accidentHistory, callback);
     }
 
-    public void getAccidentHistoryKey(final CompletedCallback<Result<String>> callback){
-        dataSource.getNewKey("accidentHistory",callback);
+    public void getAccidentHistory(String key, CompletedCallback<Result<AccidentHistory>> callback){
+        dataSource.getAccidentHistoryByKey(key, callback);
     }
 
-    public void setExecutor(Executor exec) {
+    public void setExecutor(Executor exec)
+    {
         this.executor = exec;
     }
 
-    public void setDataSource(DataSource ds) {
+    public void setDataSource(DataSource ds)
+    {
         this.dataSource = ds;
     }
 
-    public void setFileService(FileService fs) {
+    public void setFileService(FileService fs)
+    {
         this.fileService = fs;
     }
 
-    public LiveData<Boolean> isAccidentHistoryListLoadedByUser(String phoneNumber) {
+    public LiveData<Boolean> isAccidentHistoryListLoadedByUser(String phoneNumber)
+    {
         return userAccidentHistoryLoaded.get(phoneNumber);
     }
 }
