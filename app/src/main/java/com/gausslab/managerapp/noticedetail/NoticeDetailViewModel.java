@@ -42,20 +42,6 @@ public class NoticeDetailViewModel extends ViewModel {
         });
     }
 
-//    public void deleteExNotice(Notice exNotice){
-//        worksiteRepository.deleteNotice(exNotice.getKeyValue(), result -> {
-//            if(result instanceof Result.Success){
-//                deleteSuccess.postValue(true);
-//            }else{
-//                deleteSuccess.postValue(false);
-//            }
-//        });
-//    }
-
-//    public void setDeletedSuccess(){
-//        noticeUpdateSuccessful.postValue(false);
-//    }
-
     public void changeNotice(Notice notice){
         worksiteRepository.changeNotice(notice, result->{
            if(result instanceof Result.Success){

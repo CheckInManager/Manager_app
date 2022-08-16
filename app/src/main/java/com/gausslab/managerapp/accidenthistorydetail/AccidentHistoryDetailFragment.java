@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.gausslab.managerapp.Event;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAccidenthistorydetailBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
@@ -38,11 +39,11 @@ public class AccidentHistoryDetailFragment extends Fragment {
     private Button bt_ok;
     private String userPhoneNumber;
 
-    private String loadDescription;
-    private String loadPlace;
-    private String loadDate;
-    private String loadTime;
-    private String loadKeyValue;
+    private String loadedDescription;
+    private String loadedPlace;
+    private String loadedDate;
+    private String loadedTime;
+    private String loadedKeyValue;
 
 
     public AccidentHistoryDetailFragment() {
@@ -73,15 +74,14 @@ public class AccidentHistoryDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //region Observer
-        accidentHistoryDetailViewModel.isDeletedSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        accidentHistoryDetailViewModel.isAccidentHistoryUpdateSuccessful().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
             @Override
-            public void onChanged(Boolean isSuccessful) {
-                if (isSuccessful) {
-                    AccidentHistory accidentHistory = new AccidentHistory(et_description.getText().toString(),
-                            et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber,loadKeyValue);
-                    accidentHistoryDetailViewModel.changeAccidentHistory(accidentHistory);
-                    NavHostFragment.findNavController(AccidentHistoryDetailFragment.this).navigateUp();
-                    accidentHistoryDetailViewModel.setDeletedSuccess();
+            public void onChanged(Event<Boolean> booleanEvent) {
+                if(!booleanEvent.isHandled()){
+                    boolean isSuccessful = booleanEvent.consumeData();
+                    if(isSuccessful){
+                        NavHostFragment.findNavController(AccidentHistoryDetailFragment.this).navigateUp();
+                    }
                 }
             }
         });
@@ -94,8 +94,13 @@ public class AccidentHistoryDetailFragment extends Fragment {
                 if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    AccidentHistory exAccidentHistory = new AccidentHistory(loadDescription, loadPlace, loadDate, loadTime, userPhoneNumber,loadKeyValue);
-                    accidentHistoryDetailViewModel.deleteExAccidentHistory(exAccidentHistory);
+                    if((loadedDescription+loadedPlace+loadedDate+loadedTime).equals((et_description.getText().toString()+et_place.getText().toString()+et_date.getText().toString()+et_time.getText().toString()))){
+                        NavHostFragment.findNavController(AccidentHistoryDetailFragment.this).navigateUp();
+                    }else{
+                        AccidentHistory accidentHistory = new AccidentHistory(et_description.getText().toString(),
+                                et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber, loadedKeyValue);
+                        accidentHistoryDetailViewModel.changeAccidentHistory(accidentHistory);
+                    }
                 }
             }
         });
@@ -164,16 +169,16 @@ public class AccidentHistoryDetailFragment extends Fragment {
     }
 
     private void init() {
-        loadDescription = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getDescription();
-        loadPlace = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getPlace();
-        loadDate = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getDate();
-        loadTime = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getTime();
+        loadedDescription = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getDescription();
+        loadedPlace = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getPlace();
+        loadedDate = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getDate();
+        loadedTime = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getTime();
         userPhoneNumber = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getUserPhoneNumber();
-        loadKeyValue = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
+        loadedKeyValue = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
         //accidentHistoryDetailViewModel.loadAccidentHistoryDetail(description,place,date,time);
-        et_description.setText(loadDescription);
-        et_place.setText(loadPlace);
-        et_date.setText(loadDate);
-        et_time.setText(loadTime);
+        et_description.setText(loadedDescription);
+        et_place.setText(loadedPlace);
+        et_date.setText(loadedDate);
+        et_time.setText(loadedTime);
     }
 }

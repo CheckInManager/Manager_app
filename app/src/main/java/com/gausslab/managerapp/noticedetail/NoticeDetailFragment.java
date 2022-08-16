@@ -72,6 +72,7 @@ public class NoticeDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //region Observer
         noticeDetailViewModel.openWorksiteListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
@@ -87,22 +88,6 @@ public class NoticeDetailFragment extends Fragment {
             }
         });
 
-//        noticeDetailViewModel.isNoticeUpdateSuccessful().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean isSuccessful) {
-//                if (isSuccessful) {
-//                    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//                    long mNow = System.currentTimeMillis();
-//                    Date mDate = new Date(mNow);
-//                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),
-//                            sp_worksiteName.getSelectedItem().toString(),mFormat.format(mDate), loadedKeyValue);
-//                    noticeDetailViewModel.changeNotice(notice);
-//                    NavHostFragment.findNavController(NoticeDetailFragment.this).navigate(R.id.action_noticeDetailFragment_to_noticeFragment);
-//                    noticeDetailViewModel.setDeletedSuccess();
-//                }
-//            }
-//        });
-
         noticeDetailViewModel.isNoticeUpdateSuccessful().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
             @Override
             public void onChanged(Event<Boolean> booleanEvent) {
@@ -114,6 +99,7 @@ public class NoticeDetailFragment extends Fragment {
                 }
             }
         });
+        //endregion
 
         //region Listener
         bt_ok.setOnClickListener(new View.OnClickListener() {
