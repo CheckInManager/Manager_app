@@ -188,6 +188,24 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
+    public void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>> callback) {
+        db.collection("worksite")
+                .whereEqualTo("worksiteName", worksiteName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                            callback.onComplete(new Result.Success<String>(snaps.get(0).getString("keyValue")));
+                        }else{
+                            callback.onComplete(new Result.Error(new Exception()));
+                        }
+                    }
+                });
+    }
+
+    @Override
     public void getUserListByWorksite(String keyValue, ListenerCallback<Result<List<User>>> callback) {
         db.collection("user")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

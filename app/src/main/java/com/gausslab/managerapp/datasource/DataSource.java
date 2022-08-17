@@ -45,4 +45,6 @@ public interface DataSource {
 
     void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback);
 
+    void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>> callback);
+
 }

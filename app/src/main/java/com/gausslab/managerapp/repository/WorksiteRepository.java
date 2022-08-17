@@ -159,6 +159,10 @@ public class WorksiteRepository {
         });
     }
 
+    public void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>>callback){
+        dataSource.changeSpinnerStringToKeyValue(worksiteName, callback);
+    }
+
     public List<Notice> getNoticeList() {
         return noticeList;
     }
