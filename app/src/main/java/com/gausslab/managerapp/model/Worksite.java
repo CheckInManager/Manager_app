@@ -7,6 +7,10 @@ public class Worksite {
     private String location;
     private String keyValue;
 
+    public Worksite() {
+
+    }
+
     public Worksite(String worksiteName, String startDate, String endDate, String location, String keyValue) {
         this.worksiteName = worksiteName;
         this.startDate = startDate;

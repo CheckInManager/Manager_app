@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:backgroundTint="#F1FDFF"
-            android:text="@string/bt_formAdd"
+            android:text="Update"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -43,4 +43,6 @@ public interface DataSource {
 
     void changeNotice(Notice notice, CompletedCallback<Result<String>> callback);
 
+    void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback);
+
 }

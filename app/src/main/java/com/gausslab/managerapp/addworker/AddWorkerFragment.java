@@ -50,7 +50,6 @@ import java.util.List;
 public class AddWorkerFragment extends Fragment {
     private FragmentAddworkerBinding binding;
     private AddWorkerViewModel addWorkerViewModel;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private ImageView iv_image;
     private EditText et_name;
@@ -70,7 +69,6 @@ public class AddWorkerFragment extends Fragment {
     private String todayCal;
     private User userToAdd;
 
-    private FileService fileService;
     private File imageFile;
     private Bitmap changeBitmap;
 

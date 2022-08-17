@@ -21,12 +21,8 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
     private List<User> userList;
     private OnItemInteractionListener<User> listener;
 
-    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> items) {
-        userList = items;
-    }
-
-    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> items, OnItemInteractionListener<User> clickListener) {
-        userList = items;
+    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> userList, OnItemInteractionListener<User> clickListener) {
+        this.userList = userList;
         listener = clickListener;
     }
 
@@ -47,14 +43,13 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
             holder.cv_card.setBackgroundColor(Color.WHITE);
         }
 
-        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
-            holder.cv_card.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((OnTodayWorksiteContextMenuInteractionListener<User>) listener).onItemClick(userList.get(holder.getAdapterPosition()));
-                }
-            });
-        }
+        holder.cv_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((OnTodayWorksiteContextMenuInteractionListener<User>) listener).onItemClick(userList.get(holder.getAdapterPosition()));
+            }
+        });
+
     }
 
     @Override

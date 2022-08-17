@@ -85,9 +85,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
             public void onChanged(Boolean isAdditionSuccessful) {
                 if (isAdditionSuccessful) {
                     AddNewWorksiteFormFragmentDirections.ActionWorksiteFormFragmentToQrEmailFragment action = AddNewWorksiteFormFragmentDirections.actionWorksiteFormFragmentToQrEmailFragment();
-                    action.setWorksiteName(et_worksiteName.getText().toString());
-                    action.setWorksiteLocation(et_location.getText().toString());
-                    action.setWorksiteStartDate(et_startDate.getText().toString());
+                    action.setKeyValue(worksite.getKeyValue());
                     NavHostFragment.findNavController(AddNewWorksiteFormFragment.this).navigate(action);
                 }
             }
@@ -160,7 +158,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(), et_endDate.getText().toString())) {
-                    worksite = new Worksite(et_worksiteName.getText().toString(), et_startDate.getText().toString(), et_endDate.getText().toString(), et_location.getText().toString());
+                    worksite = new Worksite(et_worksiteName.getText().toString(), et_startDate.getText().toString(), et_endDate.getText().toString(), et_location.getText().toString(), null);
                     addNewWorksiteFormViewModel.addWorksite(worksite);
                     bt_add.setEnabled(false);
                 } else {

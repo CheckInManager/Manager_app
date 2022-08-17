@@ -66,8 +66,8 @@ public class WorksiteRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorksiteName() + worksite.getLocation() + worksite.getStartDate();
-                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorksiteName() + worksite.getLocation() + worksite.getStartDate()), new CompletedCallback<Result<Uri>>() {
+                String toEncode = "gausslab.managerapp.worksite_" + worksite.getKeyValue();
+                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getKeyValue()), new CompletedCallback<Result<Uri>>() {
                     @Override
                     public void onComplete(Result result) {
                         callback.onComplete(result);
@@ -118,6 +118,10 @@ public class WorksiteRepository {
         if (worksiteMap.containsKey(worksiteName))
             return worksiteMap.get(worksiteName);
         return null;
+    }
+
+    public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback){
+        dataSource.getWorksiteByKey(key, callback);
     }
 
     public Drawable getQrDrawable(String workName) {

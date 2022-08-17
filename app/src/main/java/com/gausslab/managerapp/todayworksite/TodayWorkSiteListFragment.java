@@ -71,22 +71,20 @@ public class TodayWorkSiteListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter = new TodayWorkSiteRecyclerViewAdapter(worksiteList, new OnTodayWorksiteContextMenuInteractionListener<Worksite>() {
-                @Override
-                public void onItemClick(Worksite obj) {
-                    String worksiteName = obj.getWorksiteName();
-                    TodayWorkSiteFragmentDirections.ActionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment action = TodayWorkSiteFragmentDirections.actionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment();
-                    action.setWorksiteName(worksiteName);
-                    action.setWorksiteLocation(obj.getLocation());
-                    action.setWorksiteStartDate(obj.getStartDate());
-                    NavHostFragment.findNavController(TodayWorkSiteListFragment.this).navigate(action);
-                }
+            adapter = new TodayWorkSiteRecyclerViewAdapter(worksiteList,
+                    new OnTodayWorksiteContextMenuInteractionListener<Worksite>() {
+                        @Override
+                        public void onItemClick(Worksite obj) {
+                            TodayWorkSiteFragmentDirections.ActionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment action = TodayWorkSiteFragmentDirections.actionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment();
+                            action.setKeyValue(obj.getKeyValue());
+                            NavHostFragment.findNavController(TodayWorkSiteListFragment.this).navigate(action);
+                        }
 
-                @Override
-                public void onContextReturnWorksite(Worksite obj) {
+                        @Override
+                        public void onContextReturnWorksite(Worksite obj) {
 
-                }
-            });
+                        }
+                    });
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
         }

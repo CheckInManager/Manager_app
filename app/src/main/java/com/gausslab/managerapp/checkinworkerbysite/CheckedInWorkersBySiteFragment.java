@@ -28,6 +28,9 @@ import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CheckedInWorkersBySiteFragment extends Fragment {
 
     private FragmentCheckedinworkersbysiteBinding binding;
@@ -43,12 +46,33 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     private RecyclerView rv_userList;
     private CheckedInWorkersBySiteRecyclerViewAdapter adapter;
 
-    private String worksiteName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkedInWorkersBySiteViewModel = new ViewModelProvider(requireActivity()).get(CheckedInWorkersBySiteViewModel.class);
+        String key = CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getKeyValue();
+
+        checkedInWorkersBySiteViewModel.loadWorksite(key);
+        checkedInWorkersBySiteViewModel.setWorksite(key);
+
+        adapter = new CheckedInWorkersBySiteRecyclerViewAdapter(
+                new ArrayList<>(),
+                new OnTodayWorksiteContextMenuInteractionListener<User>() {
+                    @Override
+                    public void onItemClick(User obj) {
+                        String phoneNumber = obj.getPhoneNumber();
+                        CheckedInWorkersBySiteFragmentDirections.ActionCheckInWorkdersBySiteFragmentToUserInformationFragment action = CheckedInWorkersBySiteFragmentDirections.actionCheckInWorkdersBySiteFragmentToUserInformationFragment();
+                        action.setPhoneNumber(phoneNumber);
+                        action.setUserName(obj.getUserName());
+                        NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(action);
+                    }
+
+                    @Override
+                    public void onContextReturnWorksite(User obj) {
+
+                    }
+                });
     }
 
     @Override
@@ -66,8 +90,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
         rv_userList.setLayoutManager(new LinearLayoutManager(requireContext()));
         rv_userList.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
 
-        init();
-
+        rv_userList.setAdapter(adapter);
         return binding.getRoot();
     }
 
@@ -75,21 +98,26 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tv_worksiteName.setText(worksiteName);
-
         //region Observer
-        checkedInWorkersBySiteViewModel.isUserListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        checkedInWorkersBySiteViewModel.getUserList().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
-            public void onChanged(Boolean isLoaded) {
-                if (isLoaded) {
-                    adapter.setUserList(checkedInWorkersBySiteViewModel.getUserList());
-                }
+            public void onChanged(List<User> users) {
+                adapter.setUserList(users);
             }
         });
 
         checkedInWorkersBySiteViewModel.isQrImageLoaded().observe(getViewLifecycleOwner(), isQrLoaded -> {
             if (isQrLoaded) {
                 iv_qr.setImageDrawable(checkedInWorkersBySiteViewModel.getQrImage());
+            }
+        });
+
+        checkedInWorkersBySiteViewModel.isWorksiteLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
+                    tv_worksiteName.setText(checkedInWorkersBySiteViewModel.getWorksiteName());
+                }
             }
         });
         //endregion
@@ -129,33 +157,5 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
             }
         });
         //endregion
-    }
-
-    private void init() {
-        worksiteName = CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName();
-        checkedInWorkersBySiteViewModel.setWorksite(CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName(),
-                CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteName() + CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteLocation() + CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getWorksiteStartDate());
-        checkedInWorkersBySiteViewModel.loadUserListByWorksite(worksiteName);
-        setupAdapter();
-    }
-
-    private void setupAdapter() {
-        adapter = new CheckedInWorkersBySiteRecyclerViewAdapter(checkedInWorkersBySiteViewModel.getUserList(),
-                new OnTodayWorksiteContextMenuInteractionListener<User>() {
-                    @Override
-                    public void onItemClick(User obj) {
-                        String phoneNumber = obj.getPhoneNumber();
-                        CheckedInWorkersBySiteFragmentDirections.ActionCheckInWorkdersBySiteFragmentToUserInformationFragment action = CheckedInWorkersBySiteFragmentDirections.actionCheckInWorkdersBySiteFragmentToUserInformationFragment();
-                        action.setPhoneNumber(phoneNumber);
-                        action.setUserName(obj.getUserName());
-                        NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(action);
-                    }
-
-                    @Override
-                    public void onContextReturnWorksite(User obj) {
-
-                    }
-                });
-        rv_userList.setAdapter(adapter);
     }
 }

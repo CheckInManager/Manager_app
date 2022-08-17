@@ -7,31 +7,36 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.gausslab.managerapp.datasource.CompletedCallback;
+import com.gausslab.managerapp.datasource.ListenerCallback;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CheckedInWorkersBySiteViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private MutableLiveData<Boolean> isQrLoaded = new MutableLiveData<>(false);
-    private String myWorksiteName;
-    private Worksite currWorksite;
+    private final MutableLiveData<List<User>> userList = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isWorksiteLoaded = new MutableLiveData<>(false);
     private Drawable qrImage;
+    private Worksite worksite;
 
-    public void loadUserListByWorksite(String worksiteName) {
-        myWorksiteName = worksiteName;
-        userRepository.registerWorksiteUserListListener(worksiteName);
+    public void loadUserListByWorksite(String keyValue) {
+        userRepository.registerWorksiteUserListListener(keyValue, new ListenerCallback<List<User>>() {
+            @Override
+            public void onUpdate(List<User> result) {
+                userList.postValue(result);
+            }
+        });
     }
 
-    public void setWorksite(String worksiteName, String worksiteQrImagePath) {
-        currWorksite = worksiteRepository.getWorksite(worksiteName);
-
-        worksiteRepository.loadQrDrawableForWorksite(worksiteQrImagePath, new CompletedCallback<Result<Drawable>>() {
+    public void setWorksite(String keyValue) {
+        worksiteRepository.loadQrDrawableForWorksite(keyValue, new CompletedCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result<Drawable> drawableResult) {
                 if (drawableResult instanceof Result.Success) {
@@ -44,12 +49,30 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         });
     }
 
-    public List<User> getUserList() {
-        return userRepository.getUserListByWorksite(myWorksiteName);
+    public void loadWorksite(String key) {
+        loadUserListByWorksite(key);
+        worksiteRepository.getWorksiteByKey(key, new CompletedCallback<Result<Worksite>>() {
+            @Override
+            public void onComplete(Result<Worksite> result) {
+                if (result instanceof Result.Success) {
+                    worksite = ((Result.Success<Worksite>) result).getData();
+                    isWorksiteLoaded.postValue(true);
+                } else {
+                    isWorksiteLoaded.postValue(false);
+                }
+            }
+        });
     }
 
-    public LiveData<Boolean> isUserListLoaded() {
-        return userRepository.isUserListLoadedForWorksite(myWorksiteName);
+    public String getWorksiteName() {
+        return worksite.getWorksiteName();
+    }
+
+    public LiveData<List<User>> getUserList() {
+        if (userList.getValue() == null) {
+            userList.postValue(new ArrayList<>());
+        }
+        return userList;
     }
 
     public LiveData<Boolean> isQrImageLoaded() {
@@ -59,4 +82,10 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
     public Drawable getQrImage() {
         return qrImage;
     }
+
+    public LiveData<Boolean> isWorksiteLoaded() {
+        return isWorksiteLoaded;
+    }
+
+
 }

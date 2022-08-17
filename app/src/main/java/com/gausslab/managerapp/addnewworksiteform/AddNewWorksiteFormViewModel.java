@@ -8,6 +8,9 @@ import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddNewWorksiteFormViewModel extends ViewModel {
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private MutableLiveData<Boolean> addWorksiteFormSuccess = new MutableLiveData<>(false);
@@ -29,6 +32,7 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
             }
         });
     }
+
 
     public void createQrForWorksite(Worksite toCreate) {
         worksiteRepository.createQrForWorksite(toCreate, result ->

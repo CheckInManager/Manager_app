@@ -29,8 +29,7 @@ import com.gausslab.managerapp.workerinformation.WorkerInformationViewModel;
 
 import java.util.Calendar;
 
-public class AddAccidentHistoryFormFragment extends Fragment
-{
+public class AddAccidentHistoryFormFragment extends Fragment {
     private FragmentAddaccidenthistoryformBinding binding;
     private WorkerInformationViewModel workerInformationViewModel;
     private DialogInterface.OnCancelListener dateCancelListener;
@@ -46,14 +45,12 @@ public class AddAccidentHistoryFormFragment extends Fragment
     private String userName;
     private AccidentHistory accidentHistory;
 
-    public AddAccidentHistoryFormFragment()
-    {
+    public AddAccidentHistoryFormFragment() {
 
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(AddAccidentHistoryFormFragment.this);
         workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
@@ -61,8 +58,7 @@ public class AddAccidentHistoryFormFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         binding = FragmentAddaccidenthistoryformBinding.inflate(inflater, container, false);
         et_description = binding.addaccidenthistoryEtDescription;
         et_place = binding.addaccidenthistoryEtPlace;
@@ -71,23 +67,18 @@ public class AddAccidentHistoryFormFragment extends Fragment
         bt_add = binding.addaccidenthistoryBtAdd;
         userPhoneNumber = AddAccidentHistoryFormFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         userName = AddAccidentHistoryFormFragmentArgs.fromBundle(getArguments()).getUserName();
-
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //region Observer
-        workerInformationViewModel.isAddAccidentHistorySuccess().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>()
-        {
+        workerInformationViewModel.isAddAccidentHistorySuccess().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
             @Override
-            public void onChanged(Event<Boolean> booleanEvent)
-            {
-                if (!booleanEvent.isHandled())
-                {
+            public void onChanged(Event<Boolean> booleanEvent) {
+                if (!booleanEvent.isHandled()) {
                     boolean isAdded = booleanEvent.consumeData();
                     if (isAdded)
                         NavHostFragment.findNavController(AddAccidentHistoryFormFragment.this).navigateUp();
@@ -97,23 +88,15 @@ public class AddAccidentHistoryFormFragment extends Fragment
         //endregion
 
         //region Listener
-        bt_add.setOnClickListener(new View.OnClickListener()
-        {
+        bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                if (et_description.getText().toString().length() < 1)
-                {
+            public void onClick(View view) {
+                if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    if (userPhoneNumber.length() > 1)
-                    {
+                } else {
+                    if (userPhoneNumber.length() > 1) {
                         accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber, null);
-                    }
-                    else
-                    {
+                    } else {
                         accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userName, null);
                     }
                     workerInformationViewModel.addAccidentHistory(accidentHistory);
@@ -122,55 +105,43 @@ public class AddAccidentHistoryFormFragment extends Fragment
             }
         });
 
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
-        {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth)
-            {
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 String s = "" + year + "." + (month + 1) + "." + dayOfMonth;
                 et_date.setText(s);
             }
         };
 
-        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener()
-        {
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onTimeSet(TimePicker timePicker, int hour, int min)
-            {
+            public void onTimeSet(TimePicker timePicker, int hour, int min) {
                 String s = "h" + hour + "m" + min;
                 et_time.setText(s);
             }
         };
 
-        dateCancelListener = new DialogInterface.OnCancelListener()
-        {
+        dateCancelListener = new DialogInterface.OnCancelListener() {
             @Override
-            public void onCancel(DialogInterface dialog)
-            {
+            public void onCancel(DialogInterface dialog) {
                 et_date.clearFocus();
                 et_time.clearFocus();
             }
         };
 
-        et_date.setOnFocusChangeListener(new View.OnFocusChangeListener()
-        {
+        et_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus)
-            {
-                if (hasFocus)
-                {
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
                     showDatePicker(dateSetListener);
                 }
             }
         });
 
-        et_time.setOnFocusChangeListener(new View.OnFocusChangeListener()
-        {
+        et_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus)
-            {
-                if (hasFocus)
-                {
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
                     showTimePicker(timeSetListener);
                 }
             }
@@ -178,8 +149,7 @@ public class AddAccidentHistoryFormFragment extends Fragment
         //endregion
     }
 
-    private void showDatePicker(DatePickerDialog.OnDateSetListener listener)
-    {
+    private void showDatePicker(DatePickerDialog.OnDateSetListener listener) {
         Calendar c = Calendar.getInstance();
         int y = c.get(Calendar.YEAR);
         int m = c.get(Calendar.MONTH);
@@ -189,8 +159,7 @@ public class AddAccidentHistoryFormFragment extends Fragment
         dpd.show();
     }
 
-    private void showTimePicker(TimePickerDialog.OnTimeSetListener listener)
-    {
+    private void showTimePicker(TimePickerDialog.OnTimeSetListener listener) {
         Calendar c = Calendar.getInstance();
         int h = c.get(Calendar.HOUR_OF_DAY);
         int m = c.get(Calendar.MINUTE);

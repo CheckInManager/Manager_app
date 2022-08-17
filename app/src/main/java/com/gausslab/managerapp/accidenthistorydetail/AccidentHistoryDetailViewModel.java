@@ -17,10 +17,10 @@ public class AccidentHistoryDetailViewModel extends ViewModel {
     private AccidentHistory accidentHistory;
 
     public void changeAccidentHistory(String description, String place, String date, String time) {
-        if(accidentHistory.getDescription().equals(description) &&
-           accidentHistory.getPlace().equals(place) &&
-           accidentHistory.getDate().equals(date) &&
-           accidentHistory.getTime().equals(time))
+        if (accidentHistory.getDescription().equals(description) &&
+                accidentHistory.getPlace().equals(place) &&
+                accidentHistory.getDate().equals(date) &&
+                accidentHistory.getTime().equals(time))
             return;
 
         accidentHistory.setDescription(description);
@@ -35,26 +35,21 @@ public class AccidentHistoryDetailViewModel extends ViewModel {
         });
     }
 
-    public void loadAccidentHistory(String key){
-        accidentRepository.getAccidentHistory(key, new CompletedCallback<Result<AccidentHistory>>()
-        {
+    public void loadAccidentHistory(String key) {
+        accidentRepository.getAccidentHistory(key, new CompletedCallback<Result<AccidentHistory>>() {
             @Override
-            public void onComplete(Result<AccidentHistory> result)
-            {
-                if(result instanceof Result.Success)
-                {
-                    accidentHistory = ((Result.Success<AccidentHistory>)result).getData();
+            public void onComplete(Result<AccidentHistory> result) {
+                if (result instanceof Result.Success) {
+                    accidentHistory = ((Result.Success<AccidentHistory>) result).getData();
                     accidentHistoryLoaded.postValue(true);
-                }
-                else
-                {
+                } else {
                     //Error
                 }
             }
         });
     }
 
-    public AccidentHistory getAccidentHistory(){
+    public AccidentHistory getAccidentHistory() {
         return accidentHistory;
     }
 
@@ -62,7 +57,7 @@ public class AccidentHistoryDetailViewModel extends ViewModel {
         return accidentHistoryUpdateSuccessful;
     }
 
-    public LiveData<Boolean> isAccidentHistoryLoaded(){
+    public LiveData<Boolean> isAccidentHistoryLoaded() {
         return accidentHistoryLoaded;
     }
 }

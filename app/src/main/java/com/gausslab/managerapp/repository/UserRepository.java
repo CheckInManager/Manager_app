@@ -28,7 +28,7 @@ public class UserRepository {
     protected Executor executor;
     private DataSource dataSource;
     private FileService fileService;
-    private Map<String, List<User>> worksiteUsersMap = new HashMap<>();
+    private Map<String, List<User>> worksiteUsersMap = new HashMap<>(); // keyValue, userList
     private Map<String, MutableLiveData<Boolean>> worksiteUsersLoaded = new HashMap<>();
 
     private Map<String, Drawable> userImageDrawableMap = new HashMap<String, Drawable>();
@@ -37,24 +37,16 @@ public class UserRepository {
         return INSTANCE;
     }
 
-    public List<User> getUserListByWorksite(final String worksiteName) {
-        return worksiteUsersMap.get(worksiteName);
-    }
-
-    public void registerWorksiteUserListListener(String worksiteName) {
-        if (worksiteUsersMap.containsKey(worksiteName))
-            return;
-
-        worksiteUsersMap.put(worksiteName, new ArrayList<>());
-        worksiteUsersLoaded.put(worksiteName, new MutableLiveData<>());
-        dataSource.getUserListByWorksite(worksiteName, new ListenerCallback<Result<List<User>>>() {
+    public void registerWorksiteUserListListener(String keyValue, ListenerCallback<List<User>> callback) {
+        worksiteUsersMap.put(keyValue, new ArrayList<>());
+        worksiteUsersLoaded.put(keyValue, new MutableLiveData<>());
+        dataSource.getUserListByWorksite(keyValue, new ListenerCallback<Result<List<User>>>() {
             @Override
             public void onUpdate(Result<List<User>> result) {
                 if (result instanceof Result.Success) {
-                    worksiteUsersMap.put(worksiteName, ((Result.Success<List<User>>) result).getData());
-                    worksiteUsersLoaded.get(worksiteName).postValue(true);
-                } else {
-
+                    List<User> userList = ((Result.Success<List<User>>)result).getData();
+                    worksiteUsersMap.put(keyValue,userList);
+                    callback.onUpdate(userList);
                 }
             }
         });
@@ -141,9 +133,4 @@ public class UserRepository {
     public void setFileService(FileService fs) {
         this.fileService = fs;
     }
-
-    public LiveData<Boolean> isUserListLoadedForWorksite(String worksite) {
-        return worksiteUsersLoaded.get(worksite);
-    }
-
 }
