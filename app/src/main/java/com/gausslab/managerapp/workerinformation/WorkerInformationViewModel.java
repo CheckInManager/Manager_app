@@ -1,6 +1,7 @@
 package com.gausslab.managerapp.workerinformation;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -29,8 +30,12 @@ public class WorkerInformationViewModel extends ViewModel {
     private User currUser;
     private Drawable userImage;
 
+    private AccidentHistory accidentHistory;
+    private final MutableLiveData<Boolean> accidentHistoryLoaded = new MutableLiveData<>(false);
+
     private List<AccidentHistory> deletedAccidentHistoryList = new ArrayList<>();
     private List<AccidentHistory> addedAccidentHistoryList = new ArrayList<>();
+    private List<AccidentHistory> changedAccidentHistoryList = new ArrayList<>();
 
     public void saveUser() {
         userRepository.addOrUpdateUser(currUser, new CompletedCallback<Result<String>>() {
@@ -52,8 +57,17 @@ public class WorkerInformationViewModel extends ViewModel {
                         }
                     });
                 }
+                for(AccidentHistory changed :changedAccidentHistoryList){
+                    accidentRepository.changeAccidentHistory(changed, new CompletedCallback<Result<String>>() {
+                        @Override
+                        public void onComplete(Result<String> result) {
+
+                        }
+                    });
+                }
                 addedAccidentHistoryList.clear();
                 deletedAccidentHistoryList.clear();
+                changedAccidentHistoryList.clear();
             }
         });
     }
@@ -75,6 +89,30 @@ public class WorkerInformationViewModel extends ViewModel {
         updatedList.remove(toRemove);
         deletedAccidentHistoryList.add(toRemove);
         accidentHistoryList.postValue(updatedList);
+    }
+
+    public void changeAccidentHistory(String description, String place, String date, String time) {
+        if (accidentHistory.getDescription().equals(description) &&
+                accidentHistory.getPlace().equals(place) &&
+                accidentHistory.getDate().equals(date) &&
+                accidentHistory.getTime().equals(time)){
+            addAccidentHistorySuccess.postValue(new Event<>(true));
+            return;
+        }
+        AccidentHistory newAccidentHistory = accidentHistory;
+        List<AccidentHistory> updatedList = new ArrayList<>(accidentHistoryList.getValue());
+        updatedList.remove(newAccidentHistory);
+
+        accidentHistory.setDescription(description);
+        accidentHistory.setPlace(place);
+        accidentHistory.setDate(date);
+        accidentHistory.setTime(time);
+
+
+        updatedList.add(accidentHistory);
+        changedAccidentHistoryList.add(accidentHistory);
+        accidentHistoryList.postValue(updatedList);
+        addAccidentHistorySuccess.postValue(new Event<>(true));
     }
 
     public void loadAllUserInformation(String phoneNumberOrUserName, boolean userHasPhoneNumber) {
@@ -158,6 +196,28 @@ public class WorkerInformationViewModel extends ViewModel {
                 accidentHistoryList.postValue(result);
             }
         });
+    }
+
+    public void loadAccidentHistory(String key) {
+        accidentRepository.getAccidentHistory(key, new CompletedCallback<Result<AccidentHistory>>() {
+            @Override
+            public void onComplete(Result<AccidentHistory> result) {
+                if (result instanceof Result.Success) {
+                    accidentHistory = ((Result.Success<AccidentHistory>) result).getData();
+                    accidentHistoryLoaded.postValue(true);
+                } else {
+                    //Error
+                }
+            }
+        });
+    }
+
+    public LiveData<Boolean> isAccidentHistoryLoaded() {
+        return accidentHistoryLoaded;
+    }
+
+    public AccidentHistory getAccidentHistory() {
+        return accidentHistory;
     }
 
 }

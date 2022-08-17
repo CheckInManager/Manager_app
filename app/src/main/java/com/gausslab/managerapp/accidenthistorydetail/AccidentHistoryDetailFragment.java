@@ -21,14 +21,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.gausslab.managerapp.Event;
+import com.gausslab.managerapp.addaccidenthistoryform.AddAccidentHistoryFormFragment;
 import com.gausslab.managerapp.databinding.FragmentAccidenthistorydetailBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
+import com.gausslab.managerapp.workerinformation.WorkerInformationViewModel;
 
 import java.util.Calendar;
 
 public class AccidentHistoryDetailFragment extends Fragment {
     private FragmentAccidenthistorydetailBinding binding;
-    private AccidentHistoryDetailViewModel accidentHistoryDetailViewModel;
+    //    private AccidentHistoryDetailViewModel accidentHistoryDetailViewModel;
+    private WorkerInformationViewModel workerInformationViewModel;
     private DialogInterface.OnCancelListener dateCancelListener;
     private EditText et_description;
     private EditText et_place;
@@ -43,7 +46,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        accidentHistoryDetailViewModel = new ViewModelProvider(requireActivity()).get(AccidentHistoryDetailViewModel.class);
+        workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
     }
 
     @Override
@@ -64,23 +67,22 @@ public class AccidentHistoryDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //region Observer
-        accidentHistoryDetailViewModel.isAccidentHistoryUpdateSuccessful().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
+        workerInformationViewModel.isAddAccidentHistorySuccess().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
             @Override
             public void onChanged(Event<Boolean> booleanEvent) {
                 if (!booleanEvent.isHandled()) {
-                    boolean isSuccessful = booleanEvent.consumeData();
-                    if (isSuccessful) {
+                    boolean isAdded = booleanEvent.consumeData();
+                    if (isAdded)
                         NavHostFragment.findNavController(AccidentHistoryDetailFragment.this).navigateUp();
-                    }
                 }
             }
         });
 
-        accidentHistoryDetailViewModel.isAccidentHistoryLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        workerInformationViewModel.isAccidentHistoryLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
                 if (isLoaded) {
-                    AccidentHistory mAccidentHistory = accidentHistoryDetailViewModel.getAccidentHistory();
+                    AccidentHistory mAccidentHistory = workerInformationViewModel.getAccidentHistory();
                     et_description.setText(mAccidentHistory.getDescription());
                     et_place.setText(mAccidentHistory.getPlace());
                     et_date.setText(mAccidentHistory.getDate());
@@ -97,7 +99,7 @@ public class AccidentHistoryDetailFragment extends Fragment {
                 if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    accidentHistoryDetailViewModel.changeAccidentHistory(et_description.getText().toString(),
+                    workerInformationViewModel.changeAccidentHistory(et_description.getText().toString(),
                             et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString());
 
                 }
@@ -169,6 +171,6 @@ public class AccidentHistoryDetailFragment extends Fragment {
 
     private void init() {
         loadedKeyValue = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
-        accidentHistoryDetailViewModel.loadAccidentHistory(loadedKeyValue);
+        workerInformationViewModel.loadAccidentHistory(loadedKeyValue);
     }
 }
