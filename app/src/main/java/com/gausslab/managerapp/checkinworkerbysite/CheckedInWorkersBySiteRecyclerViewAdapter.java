@@ -39,11 +39,8 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
         holder.tv_userName.setText(currUser.getUserName());
         holder.tv_phoneNum.setText(currUser.getPhoneNumber());
 
-
-        if (!currUser.getAccidentHistory()) {
+        if(currUser.getAccidentHistory() != null){
             holder.cv_card.setBackgroundColor(Color.RED);
-        } else {
-            holder.cv_card.setBackgroundColor(Color.WHITE);
         }
 
         holder.cv_card.setOnClickListener(new View.OnClickListener() {
