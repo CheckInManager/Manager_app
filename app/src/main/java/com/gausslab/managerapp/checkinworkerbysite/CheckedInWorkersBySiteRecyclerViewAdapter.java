@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.databinding.ObjectCheckedinworkersbysiteBinding;
+import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.todayworksite.OnItemInteractionListener;
 import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
@@ -19,10 +21,12 @@ import java.util.List;
 
 public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapter<CheckedInWorkersBySiteRecyclerViewAdapter.ViewHolder> {
     private List<User> userList;
+    private List<Boolean> booleanList;
     private OnItemInteractionListener<User> listener;
 
-    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> userList, OnItemInteractionListener<User> clickListener) {
+    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> userList,List<Boolean> booleanList, OnItemInteractionListener<User> clickListener) {
         this.userList = userList;
+        this.booleanList = booleanList;
         listener = clickListener;
     }
 
@@ -37,10 +41,10 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
         holder.tv_userName.setText(currUser.getUserName());
         holder.tv_phoneNum.setText(currUser.getPhoneNumber());
 
-        if (currUser.getAccidentHistory().length() != 0) {
+        Boolean currBoolean = booleanList.get(position);
+
+        if(currBoolean.booleanValue()){
             holder.cv_card.setBackgroundColor(Color.RED);
-        } else {
-            holder.cv_card.setBackgroundColor(Color.WHITE);
         }
 
         holder.cv_card.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +63,11 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
 
     public void setUserList(List<User> newUserList) {
         userList = newUserList;
+        notifyDataSetChanged();
+    }
+
+    public void setAccidentHistoryBooleanList(List<Boolean> accidentHistoryBooleanList){
+        booleanList = accidentHistoryBooleanList;
         notifyDataSetChanged();
     }
 

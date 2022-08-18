@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.ListenerCallback;
+import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
+import com.gausslab.managerapp.repository.AccidentRepository;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.repository.WorksiteRepository;
@@ -20,9 +22,13 @@ import java.util.List;
 public class CheckedInWorkersBySiteViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
+    private final AccidentRepository accidentRepository = AccidentRepository.getInstance();
     private MutableLiveData<Boolean> isQrLoaded = new MutableLiveData<>(false);
     private final MutableLiveData<List<User>> userList = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isWorksiteLoaded = new MutableLiveData<>(false);
+    private MutableLiveData<List<AccidentHistory>> accidentHistoryList = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isAccidentHistoryLoaded = new MutableLiveData<>(false);
+    private List<Boolean> booleanList = new ArrayList<>();
     private Drawable qrImage;
     private Worksite worksite;
 
@@ -64,6 +70,28 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         });
     }
 
+    public void loadAccidentHistory(String userPhoneNumber){
+        accidentRepository.registerAccidentHistoryListListener(userPhoneNumber, new ListenerCallback<List<AccidentHistory>>() {
+            @Override
+            public void onUpdate(List<AccidentHistory> result) {
+                accidentHistoryList.postValue(result);
+                if(accidentHistoryList.getValue() !=null){
+                    booleanList.add(true);
+                }else{
+                    booleanList.add(false);
+                }
+                if(booleanList!=null){
+                    isAccidentHistoryLoaded.postValue(true);
+                }
+            }
+        });
+    }
+
+    public List<Boolean> accidentHistoryBooleanList(){
+        return booleanList;
+    }
+
+
     public String getWorksiteName() {
         return worksite.getWorksiteName();
     }
@@ -87,5 +115,8 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         return isWorksiteLoaded;
     }
 
+    public LiveData<Boolean> isAccidentHistoryLoaded(){
+        return isAccidentHistoryLoaded;
+    }
 
 }
