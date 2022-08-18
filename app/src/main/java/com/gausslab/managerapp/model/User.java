@@ -7,6 +7,7 @@ public class User {
     private String career;
     private String worksiteName;
     private String accidentHistory;
+    private boolean hasAccidentHistory;
     private String memo;
 
     public User() {

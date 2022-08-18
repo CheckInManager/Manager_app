@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.gausslab.managerapp.Event;
-import com.gausslab.managerapp.addaccidenthistoryform.AddAccidentHistoryFormFragment;
 import com.gausslab.managerapp.databinding.FragmentAccidenthistorydetailBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.workerinformation.WorkerInformationViewModel;
@@ -66,6 +65,12 @@ public class AccidentHistoryDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        AccidentHistory mAccidentHistory = workerInformationViewModel.getCurrEditingAccidentHistory();
+        et_description.setText(mAccidentHistory.getDescription());
+        et_place.setText(mAccidentHistory.getPlace());
+        et_date.setText(mAccidentHistory.getDate());
+        et_time.setText(mAccidentHistory.getTime());
+
         //region Observer
         workerInformationViewModel.isAddAccidentHistorySuccess().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
             @Override
@@ -74,19 +79,6 @@ public class AccidentHistoryDetailFragment extends Fragment {
                     boolean isAdded = booleanEvent.consumeData();
                     if (isAdded)
                         NavHostFragment.findNavController(AccidentHistoryDetailFragment.this).navigateUp();
-                }
-            }
-        });
-
-        workerInformationViewModel.isAccidentHistoryLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isLoaded) {
-                if (isLoaded) {
-                    AccidentHistory mAccidentHistory = workerInformationViewModel.getAccidentHistory();
-                    et_description.setText(mAccidentHistory.getDescription());
-                    et_place.setText(mAccidentHistory.getPlace());
-                    et_date.setText(mAccidentHistory.getDate());
-                    et_time.setText(mAccidentHistory.getTime());
                 }
             }
         });
@@ -171,6 +163,6 @@ public class AccidentHistoryDetailFragment extends Fragment {
 
     private void init() {
         loadedKeyValue = AccidentHistoryDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
-        workerInformationViewModel.loadAccidentHistory(loadedKeyValue);
+        workerInformationViewModel.setCurrEditingAccidentHistoryByKey(loadedKeyValue);
     }
 }

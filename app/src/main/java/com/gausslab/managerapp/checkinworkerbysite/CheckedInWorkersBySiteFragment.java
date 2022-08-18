@@ -58,7 +58,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
         checkedInWorkersBySiteViewModel.setWorksite(key);
 
         adapter = new CheckedInWorkersBySiteRecyclerViewAdapter(
-                new ArrayList<>(), new ArrayList<>(),
+                new ArrayList<>(),
                 new OnTodayWorksiteContextMenuInteractionListener<User>() {
                     @Override
                     public void onItemClick(User obj) {
@@ -104,18 +104,6 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
             @Override
             public void onChanged(List<User> users) {
                 adapter.setUserList(users);
-                for(User user:users){
-                    checkedInWorkersBySiteViewModel.loadAccidentHistory(user.getPhoneNumber());
-                }
-            }
-        });
-
-        checkedInWorkersBySiteViewModel.isAccidentHistoryLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isLoaded) {
-                if(isLoaded){
-                    adapter.setAccidentHistoryBooleanList(checkedInWorkersBySiteViewModel.accidentHistoryBooleanList());
-                }
             }
         });
 
