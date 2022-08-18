@@ -43,6 +43,7 @@ public class WorkerInformationFragment extends Fragment
     private Button bt_accidentHistoryAdd;
     private EditText et_memo;
     private Button bt_complete;
+    private List<AccidentHistory> accidentHistoryList;
 
     private User currUser;
 
@@ -122,6 +123,8 @@ public class WorkerInformationFragment extends Fragment
             public void onChanged(List<AccidentHistory> accidentHistories)
             {
                 adapter.setAccidentHistoryList(accidentHistories);
+                accidentHistoryList = accidentHistories;
+
             }
         });
 

@@ -63,12 +63,12 @@ public class User {
         this.worksiteName = worksiteName;
     }
 
-    public boolean getAccidentHistory() {
-        return accidentHistory;
-    }
-
     public void setAccidentHistory(boolean accidentHistory) {
         this.accidentHistory = accidentHistory;
+    }
+
+    public boolean isAccidentHistory() {
+        return accidentHistory;
     }
 
     public String getMemo() {

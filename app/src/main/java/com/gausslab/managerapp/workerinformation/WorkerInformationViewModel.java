@@ -21,8 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WorkerInformationViewModel extends ViewModel
-{
+public class WorkerInformationViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
     private final AccidentRepository accidentRepository = AccidentRepository.getInstance();
 
@@ -38,45 +37,37 @@ public class WorkerInformationViewModel extends ViewModel
 
     private Map<String, AccidentHistory> accidentHistoryMap = new HashMap<>();
 
-    public void saveUser()
-    {
-        userRepository.addOrUpdateUser(currUser, new CompletedCallback<Result<String>>()
-        {
+    public void saveUser() {
+        if (accidentHistoryList.getValue().size() < 1) {
+            currUser.setAccidentHistory(false);
+        }else{
+            currUser.setAccidentHistory(true);
+        }
+        userRepository.addOrUpdateUser(currUser, new CompletedCallback<Result<String>>() {
             @Override
-            public void onComplete(Result<String> result)
-            {
-                for (AccidentHistory newAdd : addedAccidentHistoryList)
-                {
-                    accidentRepository.addAccidentHistory(newAdd, new CompletedCallback<Result<String>>()
-                    {
+            public void onComplete(Result<String> result) {
+                for (AccidentHistory newAdd : addedAccidentHistoryList) {
+                    accidentRepository.addAccidentHistory(newAdd, new CompletedCallback<Result<String>>() {
                         @Override
-                        public void onComplete(Result<String> result)
-                        {
+                        public void onComplete(Result<String> result) {
 
                         }
                     });
                 }
-                for (AccidentHistory del : deletedAccidentHistoryList)
-                {
-                    if (del.getKeyValue() != null)
-                    {
-                        accidentRepository.deleteAccidentHistory(del.getKeyValue(), new CompletedCallback<Result<String>>()
-                        {
+                for (AccidentHistory del : deletedAccidentHistoryList) {
+                    if (del.getKeyValue() != null) {
+                        accidentRepository.deleteAccidentHistory(del.getKeyValue(), new CompletedCallback<Result<String>>() {
                             @Override
-                            public void onComplete(Result<String> result)
-                            {
+                            public void onComplete(Result<String> result) {
 
                             }
                         });
                     }
                 }
-                for (AccidentHistory changed : changedAccidentHistoryList)
-                {
-                    accidentRepository.changeAccidentHistory(changed, new CompletedCallback<Result<String>>()
-                    {
+                for (AccidentHistory changed : changedAccidentHistoryList) {
+                    accidentRepository.changeAccidentHistory(changed, new CompletedCallback<Result<String>>() {
                         @Override
-                        public void onComplete(Result<String> result)
-                        {
+                        public void onComplete(Result<String> result) {
 
                         }
                     });
@@ -88,8 +79,7 @@ public class WorkerInformationViewModel extends ViewModel
         });
     }
 
-    public void addAccidentHistory(AccidentHistory toAdd)
-    {
+    public void addAccidentHistory(AccidentHistory toAdd) {
         List<AccidentHistory> updatedList = new ArrayList<>(accidentHistoryList.getValue());
         updatedList.add(toAdd);
         addedAccidentHistoryList.add(toAdd);
@@ -97,13 +87,11 @@ public class WorkerInformationViewModel extends ViewModel
         addAccidentHistorySuccess.postValue(new Event<>(true));
     }
 
-    public void updateMemoText(String newMemoText)
-    {
+    public void updateMemoText(String newMemoText) {
         currUser.setMemo(newMemoText);
     }
 
-    public void deleteAccidentHistory(AccidentHistory toRemove)
-    {
+    public void deleteAccidentHistory(AccidentHistory toRemove) {
         List<AccidentHistory> updatedList = new ArrayList<>(accidentHistoryList.getValue());
         updatedList.remove(toRemove);
         deletedAccidentHistoryList.add(toRemove);
@@ -111,19 +99,14 @@ public class WorkerInformationViewModel extends ViewModel
         accidentHistoryList.postValue(updatedList);
     }
 
-    public void changeAccidentHistory(String description, String place, String date, String time)
-    {
+    public void changeAccidentHistory(String description, String place, String date, String time) {
         if (currEditingAccidentHistory.getDescription().equals(description) &&
-            currEditingAccidentHistory.getPlace().equals(place) &&
-            currEditingAccidentHistory.getDate().equals(date) &&
-            currEditingAccidentHistory.getTime().equals(time))
-        {
+                currEditingAccidentHistory.getPlace().equals(place) &&
+                currEditingAccidentHistory.getDate().equals(date) &&
+                currEditingAccidentHistory.getTime().equals(time)) {
             addAccidentHistorySuccess.postValue(new Event<>(true));
             return;
         }
-
-        //boolean result = accidentHistoryList.getValue().remove(currEditingAccidentHistory);
-        //Log.d("DEBUG", "REMOVE RESULT - " + result);
 
         currEditingAccidentHistory.setDescription(description);
         currEditingAccidentHistory.setPlace(place);
@@ -137,11 +120,9 @@ public class WorkerInformationViewModel extends ViewModel
         addAccidentHistorySuccess.postValue(new Event<>(true));
     }
 
-    public void loadAllUserInformation(String phoneNumberOrUserName, boolean userHasPhoneNumber)
-    {
+    public void loadAllUserInformation(String phoneNumberOrUserName, boolean userHasPhoneNumber) {
         //로딩 안해도되는 조건
-        if (currUser != null)
-        {
+        if (currUser != null) {
             if (userHasPhoneNumber && currUser.getPhoneNumber().equals(phoneNumberOrUserName))
                 return;
             else if (!userHasPhoneNumber && currUser.getUserName().equals(phoneNumberOrUserName))
@@ -158,41 +139,33 @@ public class WorkerInformationViewModel extends ViewModel
         loadAccidentHistoryListByUser(phoneNumberOrUserName);
     }
 
-    public LiveData<List<AccidentHistory>> getAccidentHistoryList()
-    {
-        if (accidentHistoryList.getValue() == null)
-        {
+    public LiveData<List<AccidentHistory>> getAccidentHistoryList() {
+        if (accidentHistoryList.getValue() == null) {
             accidentHistoryList.postValue(new ArrayList<>());
         }
         return accidentHistoryList;
     }
 
-    public Drawable getUserImage()
-    {
+    public Drawable getUserImage() {
         return userImage;
     }
 
-    public User getCurrUser()
-    {
+    public User getCurrUser() {
         return currUser;
     }
 
-    public LiveData<Boolean> isUserInformationLoaded()
-    {
+    public LiveData<Boolean> isUserInformationLoaded() {
         return userInformationLoaded;
     }
 
-    public LiveData<Event<Boolean>> isAddAccidentHistorySuccess()
-    {
+    public LiveData<Event<Boolean>> isAddAccidentHistorySuccess() {
         return addAccidentHistorySuccess;
     }
 
-    private void loadUserInformation(String phoneNumber)
-    {
+    private void loadUserInformation(String phoneNumber) {
         userRepository.getUserByPhoneNumber(phoneNumber, result ->
         {
-            if (result instanceof Result.Success)
-            {
+            if (result instanceof Result.Success) {
                 currUser = ((Result.Success<User>) result).getData();
 
                 userInformationLoaded.setValue(true);
@@ -200,46 +173,34 @@ public class WorkerInformationViewModel extends ViewModel
         });
     }
 
-    private void loadNoPhoneNumberUserInformation(String userName)
-    {
+    private void loadNoPhoneNumberUserInformation(String userName) {
         userRepository.noPhoneNumberGetUser(userName, result ->
         {
-            if (result instanceof Result.Success)
-            {
+            if (result instanceof Result.Success) {
                 currUser = ((Result.Success<User>) result).getData();
                 userInformationLoaded.setValue(true);
             }
         });
     }
 
-    private void loadUserImage(String phoneNumber)
-    {
-        userRepository.loadUserImageDrawable(phoneNumber, new CompletedCallback<Result<Drawable>>()
-        {
+    private void loadUserImage(String phoneNumber) {
+        userRepository.loadUserImageDrawable(phoneNumber, new CompletedCallback<Result<Drawable>>() {
             @Override
-            public void onComplete(Result<Drawable> drawableResult)
-            {
-                if (drawableResult instanceof Result.Success)
-                {
+            public void onComplete(Result<Drawable> drawableResult) {
+                if (drawableResult instanceof Result.Success) {
                     userImage = ((Result.Success<Drawable>) drawableResult).getData();
-                }
-                else
-                {
+                } else {
 
                 }
             }
         });
     }
 
-    private void loadAccidentHistoryListByUser(String phoneNumber)
-    {
-        accidentRepository.registerAccidentHistoryListListener(phoneNumber, new ListenerCallback<List<AccidentHistory>>()
-        {
+    private void loadAccidentHistoryListByUser(String phoneNumber) {
+        accidentRepository.registerAccidentHistoryListListener(phoneNumber, new ListenerCallback<List<AccidentHistory>>() {
             @Override
-            public void onUpdate(List<AccidentHistory> result)
-            {
-                for (AccidentHistory ah : result)
-                {
+            public void onUpdate(List<AccidentHistory> result) {
+                for (AccidentHistory ah : result) {
                     accidentHistoryMap.put(ah.getKeyValue(), ah);
                 }
                 accidentHistoryList.postValue(result);
@@ -247,22 +208,18 @@ public class WorkerInformationViewModel extends ViewModel
         });
     }
 
-    public void setCurrEditingAccidentHistoryByKey(String key)
-    {
+    public void setCurrEditingAccidentHistoryByKey(String key) {
         currEditingAccidentHistory = getAccidentHistoryByKey(key);
     }
 
-    private AccidentHistory getAccidentHistoryByKey(String key)
-    {
-        if (accidentHistoryMap.containsKey(key))
-        {
+    private AccidentHistory getAccidentHistoryByKey(String key) {
+        if (accidentHistoryMap.containsKey(key)) {
             return accidentHistoryMap.get(key);
         }
         return null;
     }
 
-    public AccidentHistory getCurrEditingAccidentHistory()
-    {
+    public AccidentHistory getCurrEditingAccidentHistory() {
         return currEditingAccidentHistory;
     }
 

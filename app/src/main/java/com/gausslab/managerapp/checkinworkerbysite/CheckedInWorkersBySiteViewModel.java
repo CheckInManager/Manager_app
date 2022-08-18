@@ -22,13 +22,9 @@ import java.util.List;
 public class CheckedInWorkersBySiteViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
-    private final AccidentRepository accidentRepository = AccidentRepository.getInstance();
     private MutableLiveData<Boolean> isQrLoaded = new MutableLiveData<>(false);
     private final MutableLiveData<List<User>> userList = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isWorksiteLoaded = new MutableLiveData<>(false);
-    private MutableLiveData<List<AccidentHistory>> accidentHistoryList = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isAccidentHistoryLoaded = new MutableLiveData<>(false);
-    private List<Boolean> booleanList = new ArrayList<>();
     private Drawable qrImage;
     private Worksite worksite;
 
