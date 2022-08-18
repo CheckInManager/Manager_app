@@ -21,12 +21,10 @@ import java.util.List;
 
 public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapter<CheckedInWorkersBySiteRecyclerViewAdapter.ViewHolder> {
     private List<User> userList;
-    private List<Boolean> booleanList;
     private OnItemInteractionListener<User> listener;
 
-    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> userList,List<Boolean> booleanList, OnItemInteractionListener<User> clickListener) {
+    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> userList, OnItemInteractionListener<User> clickListener) {
         this.userList = userList;
-        this.booleanList = booleanList;
         listener = clickListener;
     }
 
@@ -41,10 +39,11 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
         holder.tv_userName.setText(currUser.getUserName());
         holder.tv_phoneNum.setText(currUser.getPhoneNumber());
 
-        Boolean currBoolean = booleanList.get(position);
 
-        if(currBoolean.booleanValue()){
+        if (!currUser.getAccidentHistory()) {
             holder.cv_card.setBackgroundColor(Color.RED);
+        } else {
+            holder.cv_card.setBackgroundColor(Color.WHITE);
         }
 
         holder.cv_card.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +62,6 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
 
     public void setUserList(List<User> newUserList) {
         userList = newUserList;
-        notifyDataSetChanged();
-    }
-
-    public void setAccidentHistoryBooleanList(List<Boolean> accidentHistoryBooleanList){
-        booleanList = accidentHistoryBooleanList;
         notifyDataSetChanged();
     }
 

@@ -70,28 +70,6 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         });
     }
 
-    public void loadAccidentHistory(String userPhoneNumber){
-        accidentRepository.registerAccidentHistoryListListener(userPhoneNumber, new ListenerCallback<List<AccidentHistory>>() {
-            @Override
-            public void onUpdate(List<AccidentHistory> result) {
-                accidentHistoryList.postValue(result);
-                if(accidentHistoryList.getValue() !=null){
-                    booleanList.add(true);
-                }else{
-                    booleanList.add(false);
-                }
-                if(booleanList!=null){
-                    isAccidentHistoryLoaded.postValue(true);
-                }
-            }
-        });
-    }
-
-    public List<Boolean> accidentHistoryBooleanList(){
-        return booleanList;
-    }
-
-
     public String getWorksiteName() {
         return worksite.getWorksiteName();
     }
@@ -113,10 +91,6 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
 
     public LiveData<Boolean> isWorksiteLoaded() {
         return isWorksiteLoaded;
-    }
-
-    public LiveData<Boolean> isAccidentHistoryLoaded(){
-        return isAccidentHistoryLoaded;
     }
 
 }
