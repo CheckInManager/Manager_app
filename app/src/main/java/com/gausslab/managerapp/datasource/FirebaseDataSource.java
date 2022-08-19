@@ -195,10 +195,10 @@ public class FirebaseDataSource implements DataSource {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             List<DocumentSnapshot> snaps = task.getResult().getDocuments();
                             callback.onComplete(new Result.Success<String>(snaps.get(0).getString("keyValue")));
-                        }else{
+                        } else {
                             callback.onComplete(new Result.Error(new Exception()));
                         }
                     }
@@ -412,6 +412,27 @@ public class FirebaseDataSource implements DataSource {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         callback.onComplete(new Result.Error(new Exception("Failed")));
+                    }
+                });
+    }
+
+    @Override
+    public void getAllWorksite(CompletedCallback<Result<List<Worksite>>> callback) {
+        db.collection("worksite")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
+                            List<Worksite> toReturn = new ArrayList<>();
+                            List<DocumentSnapshot> snaps = value.getDocuments();
+                            for (DocumentSnapshot snap : snaps) {
+                                Worksite toAdd = snap.toObject(Worksite.class);
+                                toReturn.add(toAdd);
+                            }
+                            callback.onComplete(new Result.Success<List<Worksite>>(toReturn));
+                        } else {
+                            callback.onComplete(new Result.Error(new Exception("error")));
+                        }
                     }
                 });
     }

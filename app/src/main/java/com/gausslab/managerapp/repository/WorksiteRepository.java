@@ -36,7 +36,6 @@ public class WorksiteRepository {
     protected Executor executor;
 
     private Map<String, Drawable> worksiteQrDrawableMap = new HashMap<String, Drawable>();
-    private Map<String, Worksite> worksiteMap = new HashMap<>();
     private MutableLiveData<Boolean> noticeListLoaded = new MutableLiveData<>(false);
     public List<Notice> noticeList = new ArrayList<>();
     public File localFile;
@@ -110,16 +109,6 @@ public class WorksiteRepository {
         }
     }
 
-    public List<Worksite> getWorksiteList() {
-        return new ArrayList<Worksite>(worksiteMap.values());
-    }
-
-    public Worksite getWorksite(String worksiteName) {
-        if (worksiteMap.containsKey(worksiteName))
-            return worksiteMap.get(worksiteName);
-        return null;
-    }
-
     public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback) {
         dataSource.getWorksiteByKey(key, callback);
     }
@@ -181,6 +170,10 @@ public class WorksiteRepository {
 
     public void changeNotice(final Notice notice, final CompletedCallback<Result<String>> callback) {
         dataSource.changeNotice(notice, callback);
+    }
+
+    public void getAllWorksite(final CompletedCallback<Result<List<Worksite>>> callback){
+        dataSource.getAllWorksite(callback);
     }
 
     public void setExecutor(Executor exec) {

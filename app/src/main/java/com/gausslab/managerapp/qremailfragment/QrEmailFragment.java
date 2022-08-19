@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
@@ -20,6 +21,7 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.R;
@@ -28,7 +30,7 @@ import com.gausslab.managerapp.repository.WorksiteRepository;
 
 import java.io.File;
 
-public class QrEmailFragment extends Fragment {
+public class QrEmailFragment extends Fragment implements IOnBackPressed{
     private FragmentQremailBinding binding;
     private QrEmailViewModel qrEmailViewModel;
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
@@ -36,6 +38,7 @@ public class QrEmailFragment extends Fragment {
     private ImageView iv_qr;
     private Button bt_sendEmail;
     private Button bt_home;
+    private long pressedTime = 0;
 
     public QrEmailFragment() {
     }
@@ -91,5 +94,9 @@ public class QrEmailFragment extends Fragment {
             }
         });
         //endregion
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

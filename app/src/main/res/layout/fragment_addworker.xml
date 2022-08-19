@@ -9,13 +9,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline22"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/guideline22"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/hint_phoneNumber"
-                android:inputType="phone"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@+id/addworker_tv_phoneNumberLabel"
                 app:layout_constraintStart_toStartOf="@+id/addworker_et_name"
                 app:layout_constraintTop_toTopOf="@+id/addworker_tv_phoneNumberLabel" />
@@ -124,10 +124,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="32dp"
                 android:text="@string/bt_formAdd"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
@@ -139,20 +137,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="@string/bt_takePicture"
+                android:textColor="@color/white"
                 android:textSize="10sp"
+                app:layout_constraintBottom_toTopOf="@+id/addworker_bt_importPicture"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/addworker_bt_importPicture"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/addworker_iv_image" />
 
             <Button
                 android:id="@+id/addworker_bt_importPicture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/bt_importPicture"
+                android:textColor="@color/white"
                 android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addworker_bt_takePicture" />
+                app:layout_constraintBottom_toTopOf="@+id/guideline8"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

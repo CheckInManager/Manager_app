@@ -16,6 +16,7 @@ import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.repository.AccidentRepository;
 import com.gausslab.managerapp.repository.UserRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -217,6 +218,28 @@ public class WorkerInformationViewModel extends ViewModel {
             return accidentHistoryMap.get(key);
         }
         return null;
+    }
+
+    public boolean checkDate(String date){
+        try{
+            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy.MM.dd");
+            dateFormatParser.setLenient(false);
+            dateFormatParser.parse(date);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public boolean checkTime(String time){
+        try {
+            SimpleDateFormat timeFormatParser = new SimpleDateFormat("HH:mm");
+            timeFormatParser.setLenient(false);
+            timeFormatParser.parse(time);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public AccidentHistory getCurrEditingAccidentHistory() {

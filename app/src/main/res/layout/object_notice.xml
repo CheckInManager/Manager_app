@@ -27,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:ems="12"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:text="Notice Name Here"
@@ -51,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:ems="7"
                 android:text="@string/tv_worksiteNameLabel"
                 app:layout_constraintStart_toStartOf="@+id/obj_notice_tv_noticeName"
                 app:layout_constraintTop_toBottomOf="@+id/obj_notice_tv_noticeName" />
@@ -61,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
+                android:ems="9"
                 android:text="time"
                 app:layout_constraintStart_toEndOf="@+id/obj_notice_tv_worksiteName"
                 app:layout_constraintTop_toBottomOf="@+id/obj_notice_tv_noticeName" />

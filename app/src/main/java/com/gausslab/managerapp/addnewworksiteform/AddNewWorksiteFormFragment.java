@@ -1,5 +1,6 @@
 package com.gausslab.managerapp.addnewworksiteform;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,21 +12,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddnewworksiteformBinding;
 import com.gausslab.managerapp.model.Worksite;
 
@@ -61,6 +57,9 @@ public class AddNewWorksiteFormFragment extends Fragment {
         et_endDate = binding.worksiteformEtEndDate;
         et_location = binding.worksiteformEtLocation;
         bt_add = binding.worksitrformBtAdd;
+
+        addNewWorksiteFormViewModel.loadAllWorksite();
+
         return binding.getRoot();
     }
 
@@ -155,15 +154,20 @@ public class AddNewWorksiteFormFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(), et_endDate.getText().toString())) {
-                    worksite = new Worksite(et_worksiteName.getText().toString(), et_startDate.getText().toString(), et_endDate.getText().toString(), et_location.getText().toString(), null);
-                    addNewWorksiteFormViewModel.addWorksite(worksite);
-                    bt_add.setEnabled(false);
+                if (addNewWorksiteFormViewModel.checkDate(et_startDate.getText().toString()) && addNewWorksiteFormViewModel.checkDate(et_endDate.getText().toString())) {
+                    if (addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(), et_endDate.getText().toString())) {
+                        worksite = new Worksite(et_worksiteName.getText().toString(), et_startDate.getText().toString(), et_endDate.getText().toString(), et_location.getText().toString(), null);
+                        if(addNewWorksiteFormViewModel.checkSameWorksiteName(et_worksiteName.getText().toString())){
+                            addNewWorksiteFormViewModel.addWorksite(worksite);
+                            bt_add.setEnabled(false);
+                        }else{
+                            showDialog();
+                        }
+                    }
                 } else {
-                    Toast.makeText(requireContext(), R.string.toast_changeDate, Toast.LENGTH_SHORT).show();
-                    et_startDate.setText(null);
-                    et_endDate.setText(null);
+                    Toast.makeText(requireContext(), "Date Format is Wrong", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -245,6 +249,29 @@ public class AddNewWorksiteFormFragment extends Fragment {
         DatePickerDialog dpd = new DatePickerDialog(getContext(), listener, y, m, d);
         dpd.setOnCancelListener(dateCancelListener);
         dpd.show();
+    }
+
+    private void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("caution").setMessage("choose");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                addNewWorksiteFormViewModel.addWorksite(worksite);
+                bt_add.setEnabled(false);
+            }
+        });
+
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                et_worksiteName.setText(null);
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

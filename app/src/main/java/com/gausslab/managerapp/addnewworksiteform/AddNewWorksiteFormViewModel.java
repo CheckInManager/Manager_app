@@ -8,6 +8,7 @@ import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,9 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
     private String startDate = "";
     private String endDate = "";
     private String location = "";
+
+    private List<Worksite> allWorksite = new ArrayList<>();
+    private List<String> allWorksiteName = new ArrayList<>();
 
     public void addWorksite(Worksite worksite) {
         worksiteRepository.addWorksite(worksite, result ->
@@ -122,6 +126,34 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
             return false;
         } else {
             return true;
+        }
+    }
+
+    public boolean checkDate(String date){
+        try{
+            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy/MM/dd");
+            dateFormatParser.setLenient(false);
+            dateFormatParser.parse(date);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public void loadAllWorksite(){
+        worksiteRepository.getAllWorksite(result->{
+            allWorksite =((Result.Success<List<Worksite>>)result).getData();
+            allWorksiteName = new ArrayList<>();
+            for(int i=0;i<allWorksite.size();i++){
+                allWorksiteName.add(allWorksite.get(i).getWorksiteName());
+            }
+        });
+    }
+    public boolean checkSameWorksiteName(String newWorksiteName){
+        if(!allWorksiteName.contains(newWorksiteName)){
+            return true;
+        }else{
+            return false;
         }
     }
 

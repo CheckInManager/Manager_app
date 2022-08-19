@@ -94,13 +94,19 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                 if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (userPhoneNumber.length() > 1) {
-                        accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber, null);
-                    } else {
-                        accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userName, null);
+                    if(workerInformationViewModel.checkDate(et_date.getText().toString()) &&workerInformationViewModel.checkTime(et_time.getText().toString())){
+                        if (userPhoneNumber.length() > 1) {
+                            accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber, null);
+                        } else {
+                            accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userName, null);
+                        }
+                        workerInformationViewModel.addAccidentHistory(accidentHistory);
+                        bt_add.setEnabled(false);
+                    }else{
+                        Toast.makeText(requireContext(), "Date or Time Format is Wrong", Toast.LENGTH_SHORT).show();
+                        et_date.setText(null);
+                        et_time.setText(null);
                     }
-                    workerInformationViewModel.addAccidentHistory(accidentHistory);
-                    bt_add.setEnabled(false);
                 }
             }
         });
@@ -116,7 +122,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int min) {
-                String s = "h" + hour + "m" + min;
+                String s = "" + hour + ":" + min;
                 et_time.setText(s);
             }
         };
