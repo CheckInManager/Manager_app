@@ -23,6 +23,9 @@ public class NoticeDetailViewModel extends ViewModel {
     private Notice currNotice;
 
     public void loadNoticeDetail(String keyValue) {
+        if(currNotice != null){
+            return;
+        }
         worksiteRepository.getNoticeDetailByName(keyValue, result -> {
             if (result instanceof Result.Success) {
                 currNotice = ((Result.Success<Notice>) result).getData();
@@ -48,6 +51,14 @@ public class NoticeDetailViewModel extends ViewModel {
                 noticeUpdateSuccessful.postValue(new Event<Boolean>(true));
             }
         });
+    }
+
+    public void updateMemoText(String newMemoText){
+        currNotice.setMemo(newMemoText);
+    }
+
+    public void updateNoticeNameText(String newNoticeNameText){
+        currNotice.setNoticeName(newNoticeNameText);
     }
 
     public List<Worksite> getOpenWorksite() {

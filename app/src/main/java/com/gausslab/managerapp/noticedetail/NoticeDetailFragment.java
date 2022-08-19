@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,9 @@ public class NoticeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         noticeDetailViewModel = new ViewModelProvider(requireActivity()).get(NoticeDetailViewModel.class);
+
+        loadedKeyValue = NoticeDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
+        noticeDetailViewModel.loadNoticeDetail(loadedKeyValue);
     }
 
     @Override
@@ -73,6 +78,22 @@ public class NoticeDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //region Observer
+        noticeDetailViewModel.isNoticeDetailLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
+                    Notice currNotice = noticeDetailViewModel.getNoticeDetail();
+                    loadedNoticeName = currNotice.getNoticeName();
+                    loadedMemo = currNotice.getMemo();
+                    loadedWorksiteName = currNotice.getWorksiteName();
+                    loadedTime = currNotice.getTime();
+                    et_noticeName.setText(currNotice.getNoticeName());
+                    et_memo.setText(currNotice.getMemo());
+                    sp_worksiteName.setSelection(getIndex(sp_worksiteName, currNotice.getWorksiteName()));
+                }
+            }
+        });
+
         noticeDetailViewModel.openWorksiteListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
@@ -122,29 +143,47 @@ public class NoticeDetailFragment extends Fragment {
                 }
             }
         });
+
+        et_noticeName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                noticeDetailViewModel.updateNoticeNameText(s.toString());
+            }
+        });
+
+        et_memo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                noticeDetailViewModel.updateMemoText(s.toString());
+            }
+        });
         //endregion
     }
 
     private void init() {
         convertDateFormat();
         noticeDetailViewModel.loadOpenWorksite(todayCal);
-        loadedKeyValue = NoticeDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
-        noticeDetailViewModel.loadNoticeDetail(loadedKeyValue);
-        noticeDetailViewModel.isNoticeDetailLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isLoaded) {
-                if (isLoaded) {
-                    Notice currNotice = noticeDetailViewModel.getNoticeDetail();
-                    loadedNoticeName = currNotice.getNoticeName();
-                    loadedMemo = currNotice.getMemo();
-                    loadedWorksiteName = currNotice.getWorksiteName();
-                    loadedTime = currNotice.getTime();
-                    et_noticeName.setText(currNotice.getNoticeName());
-                    et_memo.setText(currNotice.getMemo());
-                    sp_worksiteName.setSelection(getIndex(sp_worksiteName, currNotice.getWorksiteName()));
-                }
-            }
-        });
+
     }
 
     private void convertDateFormat() {

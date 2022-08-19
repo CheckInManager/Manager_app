@@ -53,7 +53,6 @@ public class WorkerInformationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("DEBUG", "WorkerInformationFragment : " + this);
         workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
         String phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         String userName = WorkerInformationFragmentArgs.fromBundle(getArguments()).getUserName();
@@ -150,7 +149,6 @@ public class WorkerInformationFragment extends Fragment {
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
             }
         });
-        //endregion
 
         et_memo.addTextChangedListener(new TextWatcher() {
             @Override
@@ -168,5 +166,6 @@ public class WorkerInformationFragment extends Fragment {
                 workerInformationViewModel.updateMemoText(s.toString());
             }
         });
+        //endregion
     }
 }
