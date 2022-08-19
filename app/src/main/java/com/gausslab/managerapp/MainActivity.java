@@ -1,7 +1,6 @@
 package com.gausslab.managerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,13 +9,11 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 
-import com.gausslab.managerapp.qremailfragment.IOnBackPressed;
 import com.gausslab.managerapp.repository.AccidentRepository;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.datasource.FirebaseDataSource;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -67,16 +64,4 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
     }
-
-//    @Override
-//    public void onBackPressed(){
-//        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-//        if(fragmentList !=null){
-//            for(Fragment fragment: fragmentList){
-//                if(fragment instanceof IOnBackPressed){
-//                    ((IOnBackPressed)fragment).onBackPressed();
-//                }
-//            }
-//        }
-//    }
 }

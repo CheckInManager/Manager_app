@@ -30,7 +30,7 @@ import com.gausslab.managerapp.repository.WorksiteRepository;
 
 import java.io.File;
 
-public class QrEmailFragment extends Fragment implements IOnBackPressed{
+public class QrEmailFragment extends Fragment{
     private FragmentQremailBinding binding;
     private QrEmailViewModel qrEmailViewModel;
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
@@ -48,6 +48,20 @@ public class QrEmailFragment extends Fragment implements IOnBackPressed{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         qrEmailViewModel = new ViewModelProvider(this).get(QrEmailViewModel.class);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (System.currentTimeMillis() > pressedTime + 2000) {
+                    pressedTime = System.currentTimeMillis();
+                    Toast.makeText(requireContext(), R.string.toast_beforeExit, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), R.string.toast_exit, Toast.LENGTH_SHORT).show();
+                    requireActivity().finish();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -96,7 +110,4 @@ public class QrEmailFragment extends Fragment implements IOnBackPressed{
         //endregion
     }
 
-    @Override
-    public void onBackPressed() {
-    }
 }

@@ -35,6 +35,7 @@ public class WorkerInformationViewModel extends ViewModel {
     private List<AccidentHistory> deletedAccidentHistoryList = new ArrayList<>();
     private List<AccidentHistory> addedAccidentHistoryList = new ArrayList<>();
     private List<AccidentHistory> changedAccidentHistoryList = new ArrayList<>();
+    private boolean isClickButton = false;
 
     private Map<String, AccidentHistory> accidentHistoryMap = new HashMap<>();
 
@@ -44,6 +45,8 @@ public class WorkerInformationViewModel extends ViewModel {
         } else {
             currUser.setAccidentHistory(true);
         }
+        isClickButton = true;
+
         userRepository.addOrUpdateUser(currUser, new CompletedCallback<Result<String>>() {
             @Override
             public void onComplete(Result<String> result) {
@@ -78,6 +81,10 @@ public class WorkerInformationViewModel extends ViewModel {
                 changedAccidentHistoryList.clear();
             }
         });
+    }
+
+    public boolean isClickComplete(){
+        return isClickButton;
     }
 
     public void addAccidentHistory(AccidentHistory toAdd) {

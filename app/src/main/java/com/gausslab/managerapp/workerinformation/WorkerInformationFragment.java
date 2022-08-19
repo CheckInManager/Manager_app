@@ -1,5 +1,7 @@
 package com.gausslab.managerapp.workerinformation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,6 +26,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentWorkerinformationBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.User;
@@ -54,6 +59,19 @@ public class WorkerInformationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(!workerInformationViewModel.isClickComplete()){
+//                    showDialog();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+
+
         String phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         String userName = WorkerInformationFragmentArgs.fromBundle(getArguments()).getUserName();
 
@@ -105,6 +123,8 @@ public class WorkerInformationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         //region Observer
         workerInformationViewModel.getAccidentHistoryList().observe(getViewLifecycleOwner(), new Observer<List<AccidentHistory>>() {
@@ -167,5 +187,27 @@ public class WorkerInformationFragment extends Fragment {
             }
         });
         //endregion
+    }
+
+    private void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("caution").setMessage("You haven't updated this content, are you going to leave this screen?");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
+            }
+        });
+
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
