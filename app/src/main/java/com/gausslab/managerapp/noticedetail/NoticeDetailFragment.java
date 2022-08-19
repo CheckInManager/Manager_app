@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,6 +132,8 @@ public class NoticeDetailFragment extends Fragment {
                 } else {
                     if ((loadedNoticeName + loadedMemo + loadedWorksiteName).equals(
                             (et_noticeName.getText().toString() + et_memo.getText().toString() + sp_worksiteName.getSelectedItem().toString()))) {
+                        Log.d("DEBUG", "onClick: "+loadedNoticeName + loadedMemo + loadedWorksiteName);
+                        Log.d("DEBUG", "onClick: "+et_noticeName.getText().toString() + et_memo.getText().toString() + sp_worksiteName.getSelectedItem().toString());
                         NavHostFragment.findNavController(NoticeDetailFragment.this).navigateUp();
                     } else {
                         SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
