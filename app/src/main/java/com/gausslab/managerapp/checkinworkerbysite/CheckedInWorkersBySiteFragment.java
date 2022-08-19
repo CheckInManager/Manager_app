@@ -36,8 +36,6 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
 
     private FragmentCheckedinworkersbysiteBinding binding;
     private CheckedInWorkersBySiteViewModel checkedInWorkersBySiteViewModel;
-    private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
-
     private Button bt_worksite;
     private Button bt_addWorker;
     private Button bt_notice;
@@ -46,12 +44,13 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     private TextView tv_worksiteName;
     private RecyclerView rv_userList;
     private CheckedInWorkersBySiteRecyclerViewAdapter adapter;
+    private String key;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkedInWorkersBySiteViewModel = new ViewModelProvider(requireActivity()).get(CheckedInWorkersBySiteViewModel.class);
-        String key = CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getKeyValue();
+        key = CheckedInWorkersBySiteFragmentArgs.fromBundle(getArguments()).getKeyValue();
 
         checkedInWorkersBySiteViewModel.loadWorksite(key);
         checkedInWorkersBySiteViewModel.setWorksite(key);
@@ -149,7 +148,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
             public void onClick(View view) {
                 Intent mail_intent = new Intent(Intent.ACTION_SEND);
                 mail_intent.setType("*/*");
-                Uri uri = FileProvider.getUriForFile(requireActivity(), App.getFileProvider(), worksiteRepository.localFile);
+                Uri uri = FileProvider.getUriForFile(requireActivity(), App.getFileProvider(), checkedInWorkersBySiteViewModel.getQrFile(key));
                 mail_intent.putExtra(Intent.EXTRA_STREAM, uri);
                 mail_intent.putExtra(Intent.EXTRA_SUBJECT, "emailTest"); //이메일 제목
                 mail_intent.putExtra(Intent.EXTRA_TEXT, "test"); //메일 내용

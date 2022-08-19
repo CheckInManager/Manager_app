@@ -40,7 +40,7 @@ public class WorkerInformationViewModel extends ViewModel {
     public void saveUser() {
         if (accidentHistoryList.getValue().size() < 1) {
             currUser.setAccidentHistory(false);
-        }else{
+        } else {
             currUser.setAccidentHistory(true);
         }
         userRepository.addOrUpdateUser(currUser, new CompletedCallback<Result<String>>() {

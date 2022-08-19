@@ -35,7 +35,6 @@ public class AddNewWorksiteFormFragment extends Fragment {
     private FragmentAddnewworksiteformBinding binding;
     private AddNewWorksiteFormViewModel addNewWorksiteFormViewModel;
     private DialogInterface.OnCancelListener dateCancelListener;
-
     private EditText et_worksiteName;
     private EditText et_startDate;
     private EditText et_endDate;
@@ -45,7 +44,6 @@ public class AddNewWorksiteFormFragment extends Fragment {
     private Worksite worksite;
 
     public AddNewWorksiteFormFragment() {
-
     }
 
     @Override

@@ -103,18 +103,20 @@ public class AddWorkerViewModel extends ViewModel {
         });
     }
 
-    public void changeSpinnerStringToKeyValue(String worksiteName){
+    public void changeSpinnerStringToKeyValue(String worksiteName) {
         worksiteRepository.changeSpinnerStringToKeyValue(worksiteName, result -> {
-           if(result instanceof Result.Success){
-               worksiteKeyValue= ((Result.Success<String>)result).getData();
-               changedSpinnerStringLoaded.postValue(true);
-           }else{
-               changedSpinnerStringLoaded.postValue(false);
-           }
+            if (result instanceof Result.Success) {
+                worksiteKeyValue = ((Result.Success<String>) result).getData();
+                changedSpinnerStringLoaded.postValue(true);
+            } else {
+                changedSpinnerStringLoaded.postValue(false);
+            }
         });
     }
 
-    public String getWorksiteKeyValue(){return worksiteKeyValue;}
+    public String getWorksiteKeyValue() {
+        return worksiteKeyValue;
+    }
 
     public List<Worksite> getOpenWorksite() {
         return worksiteList;
@@ -124,5 +126,7 @@ public class AddWorkerViewModel extends ViewModel {
         return openWorksiteListLoaded;
     }
 
-    public LiveData<Boolean> isChangedSpinnerString(){return changedSpinnerStringLoaded;}
+    public LiveData<Boolean> isChangedSpinnerString() {
+        return changedSpinnerStringLoaded;
+    }
 }

@@ -120,12 +120,16 @@ public class WorksiteRepository {
         return null;
     }
 
-    public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback){
+    public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback) {
         dataSource.getWorksiteByKey(key, callback);
     }
 
     public Drawable getQrDrawable(String workName) {
         return worksiteQrDrawableMap.get(workName);
+    }
+
+    public File getQrFileForWorksite(String key) {
+        return fileService.getFile(App.getWorksiteQrImagePath(key));
     }
 
     public void loadQrDrawableForWorksite(String worksiteQrImagePath, CompletedCallback<Result<Drawable>> callback) {
@@ -159,7 +163,7 @@ public class WorksiteRepository {
         });
     }
 
-    public void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>>callback){
+    public void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>> callback) {
         dataSource.changeSpinnerStringToKeyValue(worksiteName, callback);
     }
 
@@ -175,7 +179,7 @@ public class WorksiteRepository {
         dataSource.getNoticeDetailByName(keyValue, callback);
     }
 
-    public void changeNotice(final Notice notice, final CompletedCallback<Result<String>> callback){
+    public void changeNotice(final Notice notice, final CompletedCallback<Result<String>> callback) {
         dataSource.changeNotice(notice, callback);
     }
 

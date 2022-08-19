@@ -26,7 +26,6 @@ import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteracti
 public class NoticeFragment extends Fragment {
     private FragmentNoticeBinding binding;
     private NoticeViewModel noticeViewModel;
-
     private RecyclerView rv_list;
     private Button bt_worksite;
     private Button bt_addWorker;

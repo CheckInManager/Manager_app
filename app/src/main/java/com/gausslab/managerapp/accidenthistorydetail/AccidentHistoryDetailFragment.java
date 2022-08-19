@@ -29,7 +29,6 @@ import java.util.Calendar;
 
 public class AccidentHistoryDetailFragment extends Fragment {
     private FragmentAccidenthistorydetailBinding binding;
-    //    private AccidentHistoryDetailViewModel accidentHistoryDetailViewModel;
     private WorkerInformationViewModel workerInformationViewModel;
     private DialogInterface.OnCancelListener dateCancelListener;
     private EditText et_description;

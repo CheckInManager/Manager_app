@@ -16,6 +16,7 @@ import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.model.User;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,10 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
                 }
             }
         });
+    }
+
+    public File getQrFile(String key) {
+        return worksiteRepository.getQrFileForWorksite(key);
     }
 
     public String getWorksiteName() {

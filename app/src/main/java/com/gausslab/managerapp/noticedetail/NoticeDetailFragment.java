@@ -91,9 +91,9 @@ public class NoticeDetailFragment extends Fragment {
         noticeDetailViewModel.isNoticeUpdateSuccessful().observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
             @Override
             public void onChanged(Event<Boolean> booleanEvent) {
-                if(!booleanEvent.isHandled()){
+                if (!booleanEvent.isHandled()) {
                     boolean isSuccessful = booleanEvent.consumeData();
-                    if(isSuccessful){
+                    if (isSuccessful) {
                         NavHostFragment.findNavController(NoticeDetailFragment.this).navigate(R.id.action_noticeDetailFragment_to_noticeFragment);
                     }
                 }
@@ -108,10 +108,10 @@ public class NoticeDetailFragment extends Fragment {
                 if (et_noticeName.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), "noticeName is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    if((loadedNoticeName + loadedMemo + loadedWorksiteName).equals(
-                            (et_noticeName.getText().toString()+et_memo.getText().toString()+sp_worksiteName.getSelectedItem().toString()))){
+                    if ((loadedNoticeName + loadedMemo + loadedWorksiteName).equals(
+                            (et_noticeName.getText().toString() + et_memo.getText().toString() + sp_worksiteName.getSelectedItem().toString()))) {
                         NavHostFragment.findNavController(NoticeDetailFragment.this).navigateUp();
-                    }else{
+                    } else {
                         SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         long mNow = System.currentTimeMillis();
                         Date mDate = new Date(mNow);

@@ -44,8 +44,8 @@ public class UserRepository {
             @Override
             public void onUpdate(Result<List<User>> result) {
                 if (result instanceof Result.Success) {
-                    List<User> userList = ((Result.Success<List<User>>)result).getData();
-                    worksiteUsersMap.put(keyValue,userList);
+                    List<User> userList = ((Result.Success<List<User>>) result).getData();
+                    worksiteUsersMap.put(keyValue, userList);
                     callback.onUpdate(userList);
                 }
             }
@@ -60,7 +60,7 @@ public class UserRepository {
         dataSource.noPhoneNumberGetUser(userName, callback);
     }
 
-    public void addOrUpdateUser(final User user, final CompletedCallback<Result<String>> callback){
+    public void addOrUpdateUser(final User user, final CompletedCallback<Result<String>> callback) {
         dataSource.addOrUpdateUser(user, callback);
     }
 

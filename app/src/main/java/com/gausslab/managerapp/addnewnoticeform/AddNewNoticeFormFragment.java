@@ -32,7 +32,6 @@ import java.util.List;
 public class AddNewNoticeFormFragment extends Fragment {
     private FragmentAddnewnoticeformBinding binding;
     private AddNewNoticeFormViewModel addNewNoticeFormViewModel;
-
     private EditText et_noticeName;
     private EditText et_memo;
     private Spinner sp_worksiteName;

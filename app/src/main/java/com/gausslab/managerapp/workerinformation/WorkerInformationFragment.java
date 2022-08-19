@@ -29,8 +29,7 @@ import com.gausslab.managerapp.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkerInformationFragment extends Fragment
-{
+public class WorkerInformationFragment extends Fragment {
     private FragmentWorkerinformationBinding binding;
     private WorkerInformationViewModel workerInformationViewModel;
     private AccidentHistoryRecyclerViewAdapter adapter;
@@ -47,14 +46,12 @@ public class WorkerInformationFragment extends Fragment
 
     private User currUser;
 
-    public WorkerInformationFragment()
-    {
+    public WorkerInformationFragment() {
 
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("DEBUG", "WorkerInformationFragment : " + this);
         workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
@@ -62,8 +59,7 @@ public class WorkerInformationFragment extends Fragment
         String userName = WorkerInformationFragmentArgs.fromBundle(getArguments()).getUserName();
 
         boolean userHasPhoneNumber = true;
-        if (phoneNumber.isEmpty())
-        {
+        if (phoneNumber.isEmpty()) {
             phoneNumber = userName;
             userHasPhoneNumber = false;
         }
@@ -72,19 +68,16 @@ public class WorkerInformationFragment extends Fragment
 
         adapter = new AccidentHistoryRecyclerViewAdapter(
                 new ArrayList<>(),
-                new OnAccidentHistoryInteractionListener()
-                {
+                new OnAccidentHistoryInteractionListener() {
                     @Override
-                    public void onClick(AccidentHistory obj)
-                    {
+                    public void onClick(AccidentHistory obj) {
                         WorkerInformationFragmentDirections.ActionUserInformationFragmentToAccidentHistoryDetailFragment action = WorkerInformationFragmentDirections.actionUserInformationFragmentToAccidentHistoryDetailFragment();
                         action.setKeyValue(obj.getKeyValue());
                         NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(action);
                     }
 
                     @Override
-                    public void onDelete(AccidentHistory obj)
-                    {
+                    public void onDelete(AccidentHistory obj) {
                         workerInformationViewModel.deleteAccidentHistory(obj);
                     }
                 });
@@ -92,8 +85,7 @@ public class WorkerInformationFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         binding = FragmentWorkerinformationBinding.inflate(inflater, container, false);
         iv_image = binding.workinformationIvImage;
         tv_name = binding.workerinformationEtName;
@@ -112,29 +104,23 @@ public class WorkerInformationFragment extends Fragment
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //region Observer
-        workerInformationViewModel.getAccidentHistoryList().observe(getViewLifecycleOwner(), new Observer<List<AccidentHistory>>()
-        {
+        workerInformationViewModel.getAccidentHistoryList().observe(getViewLifecycleOwner(), new Observer<List<AccidentHistory>>() {
             @Override
-            public void onChanged(List<AccidentHistory> accidentHistories)
-            {
+            public void onChanged(List<AccidentHistory> accidentHistories) {
                 adapter.setAccidentHistoryList(accidentHistories);
                 accidentHistoryList = accidentHistories;
 
             }
         });
 
-        workerInformationViewModel.isUserInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>()
-        {
+        workerInformationViewModel.isUserInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isLoaded)
-            {
-                if (isLoaded)
-                {
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
                     currUser = workerInformationViewModel.getCurrUser();
                     iv_image.setImageDrawable(workerInformationViewModel.getUserImage());
                     tv_name.setText(currUser.getUserName());
@@ -147,11 +133,9 @@ public class WorkerInformationFragment extends Fragment
         //endregion
 
         //region Listener
-        bt_accidentHistoryAdd.setOnClickListener(new View.OnClickListener()
-        {
+        bt_accidentHistoryAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 WorkerInformationFragmentDirections.ActionUserInformationFragmentToAddAccidentHistoryFormFragment action = WorkerInformationFragmentDirections.actionUserInformationFragmentToAddAccidentHistoryFormFragment();
                 action.setPhoneNumber(currUser.getPhoneNumber());
                 action.setUserName(currUser.getUserName());
@@ -159,34 +143,28 @@ public class WorkerInformationFragment extends Fragment
             }
         });
 
-        bt_complete.setOnClickListener(new View.OnClickListener()
-        {
+        bt_complete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 workerInformationViewModel.saveUser();
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
             }
         });
         //endregion
 
-        et_memo.addTextChangedListener(new TextWatcher()
-        {
+        et_memo.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
 
             @Override
-            public void afterTextChanged(Editable s)
-            {
+            public void afterTextChanged(Editable s) {
                 workerInformationViewModel.updateMemoText(s.toString());
             }
         });

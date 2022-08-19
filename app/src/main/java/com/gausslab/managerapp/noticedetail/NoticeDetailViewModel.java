@@ -25,9 +25,9 @@ public class NoticeDetailViewModel extends ViewModel {
     public void loadNoticeDetail(String keyValue) {
         worksiteRepository.getNoticeDetailByName(keyValue, result -> {
             if (result instanceof Result.Success) {
-                currNotice = ((Result.Success<Notice>)result).getData();
+                currNotice = ((Result.Success<Notice>) result).getData();
                 noticeDetailLoaded.postValue(true);
-            }else{
+            } else {
                 noticeDetailLoaded.postValue(false);
             }
         });
@@ -42,11 +42,11 @@ public class NoticeDetailViewModel extends ViewModel {
         });
     }
 
-    public void changeNotice(Notice notice){
-        worksiteRepository.changeNotice(notice, result->{
-           if(result instanceof Result.Success){
+    public void changeNotice(Notice notice) {
+        worksiteRepository.changeNotice(notice, result -> {
+            if (result instanceof Result.Success) {
                 noticeUpdateSuccessful.postValue(new Event<Boolean>(true));
-           }
+            }
         });
     }
 
@@ -54,7 +54,7 @@ public class NoticeDetailViewModel extends ViewModel {
         return worksiteList;
     }
 
-    public Notice getNoticeDetail(){
+    public Notice getNoticeDetail() {
         return currNotice;
     }
 
@@ -66,5 +66,7 @@ public class NoticeDetailViewModel extends ViewModel {
         return openWorksiteListLoaded;
     }
 
-    public LiveData<Event<Boolean>> isNoticeUpdateSuccessful(){return noticeUpdateSuccessful;}
+    public LiveData<Event<Boolean>> isNoticeUpdateSuccessful() {
+        return noticeUpdateSuccessful;
+    }
 }

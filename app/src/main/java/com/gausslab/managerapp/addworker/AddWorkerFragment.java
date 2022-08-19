@@ -50,7 +50,6 @@ import java.util.List;
 public class AddWorkerFragment extends Fragment {
     private FragmentAddworkerBinding binding;
     private AddWorkerViewModel addWorkerViewModel;
-
     private ImageView iv_image;
     private EditText et_name;
     private EditText et_phoneNumber;
@@ -68,12 +67,10 @@ public class AddWorkerFragment extends Fragment {
     private List<Worksite> openWorksiteList;
     private String todayCal;
     private User userToAdd;
-
     private File imageFile;
     private Bitmap changeBitmap;
 
     public AddWorkerFragment() {
-
     }
 
     @Override

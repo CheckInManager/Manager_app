@@ -16,63 +16,52 @@ import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteracti
 
 import java.util.List;
 
-public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<AccidentHistoryRecyclerViewAdapter.ViewHolder>
-{
+public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<AccidentHistoryRecyclerViewAdapter.ViewHolder> {
     private final OnAccidentHistoryInteractionListener listener;
     private List<AccidentHistory> accidentHistoryList;
 
-    public AccidentHistoryRecyclerViewAdapter(List<AccidentHistory> accidentHistoryList, OnAccidentHistoryInteractionListener interactionListener)
-    {
+    public AccidentHistoryRecyclerViewAdapter(List<AccidentHistory> accidentHistoryList, OnAccidentHistoryInteractionListener interactionListener) {
         this.accidentHistoryList = accidentHistoryList;
         listener = interactionListener;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(ObjectAccidenthistoryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AccidentHistory currAccidentHistory = accidentHistoryList.get(position);
         holder.tv_description.setText(currAccidentHistory.getDescription());
         holder.tv_place.setText(currAccidentHistory.getPlace());
         holder.tv_date.setText(currAccidentHistory.getDate());
         holder.tv_time.setText(currAccidentHistory.getTime());
-        holder.bt_delete.setOnClickListener(new View.OnClickListener()
-        {
+        holder.bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 listener.onDelete(currAccidentHistory);
             }
         });
-        holder.cv_card.setOnClickListener(new View.OnClickListener()
-        {
+        holder.cv_card.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 listener.onClick(accidentHistoryList.get(holder.getAdapterPosition()));
             }
         });
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return accidentHistoryList.size();
     }
 
-    public void setAccidentHistoryList(List<AccidentHistory> newAccidentHistoryList)
-    {
+    public void setAccidentHistoryList(List<AccidentHistory> newAccidentHistoryList) {
         accidentHistoryList = newAccidentHistoryList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final CardView cv_card;
         public final TextView tv_description;
         public final TextView tv_place;
@@ -80,8 +69,7 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
         public final TextView tv_time;
         public final Button bt_delete;
 
-        public ViewHolder(ObjectAccidenthistoryBinding binding)
-        {
+        public ViewHolder(ObjectAccidenthistoryBinding binding) {
             super(binding.getRoot());
             cv_card = binding.objNoticeCard;
             tv_description = binding.objAccidenthistoryTvDescription;
@@ -92,8 +80,7 @@ public class AccidentHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Acc
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return super.toString() + "";
         }
     }

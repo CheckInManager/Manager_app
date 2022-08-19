@@ -28,7 +28,6 @@ import java.util.List;
 public class TodayWorkSiteFragment extends Fragment {
     private FragmentTodayworksiteBinding binding;
     private TodayWorkSiteViewModel todayWorkSiteViewModel;
-
     private FrameLayout fl_list;
     private Button bt_worksite;
     private Button bt_addWorker;
@@ -37,7 +36,6 @@ public class TodayWorkSiteFragment extends Fragment {
     private Button bt_addWorksite;
 
     private List<Worksite> todayWorksiteList;
-
     private long pressedTime = 0;
     private String todayCal;
 
