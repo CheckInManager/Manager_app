@@ -43,15 +43,12 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
                 listener.onDelete(currNotice);
             }
         });
-        if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {
-            holder.cv_card.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((OnTodayWorksiteContextMenuInteractionListener<Notice>) listener).onItemClick(noticeList.get(holder.getAdapterPosition()));
-                }
-            });
-        }
-
+        holder.cv_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClick(noticeList.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
