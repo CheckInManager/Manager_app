@@ -47,7 +47,6 @@ public class WorkerInformationFragment extends Fragment {
     private Button bt_accidentHistoryAdd;
     private EditText et_memo;
     private Button bt_complete;
-    private List<AccidentHistory> accidentHistoryList;
 
     private User currUser;
 
@@ -64,6 +63,7 @@ public class WorkerInformationFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 Toast.makeText(requireContext(), R.string.toast_backButton, Toast.LENGTH_SHORT).show();
+//                showDialog();
                 if (!workerInformationViewModel.isClickComplete()) {
 //                    showDialog();
                 }
@@ -128,8 +128,6 @@ public class WorkerInformationFragment extends Fragment {
             @Override
             public void onChanged(List<AccidentHistory> accidentHistories) {
                 adapter.setAccidentHistoryList(accidentHistories);
-                accidentHistoryList = accidentHistories;
-
             }
         });
 
