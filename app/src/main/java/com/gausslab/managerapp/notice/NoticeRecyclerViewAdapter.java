@@ -19,12 +19,10 @@ import java.util.List;
 
 public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecyclerViewAdapter.ViewHolder> {
     private List<Notice> noticeList;
-    private NoticeViewModel noticeViewModel;
-    private OnItemInteractionListener<Notice> listener;
+    private OnNoticeInteractionListener listener;
 
-    public NoticeRecyclerViewAdapter(List<Notice> items, NoticeViewModel nvm, OnItemInteractionListener<Notice> clickListener) {
+    public NoticeRecyclerViewAdapter(List<Notice> items, OnNoticeInteractionListener clickListener) {
         noticeList = items;
-        noticeViewModel = nvm;
         listener = clickListener;
     }
 
@@ -42,7 +40,7 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         holder.bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                noticeViewModel.deleteNotice(currNotice.getKeyValue());
+                listener.onDelete(currNotice);
             }
         });
         if (listener != null && listener instanceof OnTodayWorksiteContextMenuInteractionListener) {

@@ -107,18 +107,18 @@ public class NoticeFragment extends Fragment {
     }
 
     private void setupAdapter() {
-        adapter = new NoticeRecyclerViewAdapter(noticeViewModel.getNoticeList(), noticeViewModel,
-                new OnTodayWorksiteContextMenuInteractionListener<Notice>() {
+        adapter = new NoticeRecyclerViewAdapter(noticeViewModel.getNoticeList(),
+                new OnNoticeInteractionListener() {
                     @Override
-                    public void onItemClick(Notice obj) {
+                    public void onClick(Notice obj) {
                         NoticeFragmentDirections.ActionNoticeFragmentToNoticeDetailFragment action = NoticeFragmentDirections.actionNoticeFragmentToNoticeDetailFragment();
                         action.setKeyValue(obj.getKeyValue());
                         NavHostFragment.findNavController(NoticeFragment.this).navigate(action);
                     }
 
                     @Override
-                    public void onContextReturnWorksite(Notice obj) {
-
+                    public void onDelete(Notice obj){
+                        noticeViewModel.deleteNotice(obj.getKeyValue());
                     }
                 });
         rv_list.setAdapter(adapter);
