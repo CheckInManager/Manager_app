@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,9 @@ import java.util.List;
 
 public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adapter<CheckedInWorkersBySiteRecyclerViewAdapter.ViewHolder> {
     private List<User> userList;
-    private OnItemInteractionListener<User> listener;
+    private OnCheckedInWorkersInteractionListener listener;
 
-    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> userList, OnItemInteractionListener<User> clickListener) {
+    public CheckedInWorkersBySiteRecyclerViewAdapter(List<User> userList, OnCheckedInWorkersInteractionListener clickListener) {
         this.userList = userList;
         listener = clickListener;
     }
@@ -41,10 +42,17 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
         if (currUser.isAccidentHistory()) {
             holder.cv_card.setBackgroundColor(Color.RED);
         }
+        holder.bt_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onDelete(currUser);
+            }
+        });
+
         holder.cv_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((OnTodayWorksiteContextMenuInteractionListener<User>) listener).onItemClick(userList.get(holder.getAdapterPosition()));
+                listener.onClick(userList.get(holder.getAdapterPosition()));
             }
         });
 
@@ -64,12 +72,14 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
         public final CardView cv_card;
         public final TextView tv_userName;
         public final TextView tv_phoneNum;
+        public final Button bt_delete;
 
         public ViewHolder(ObjectCheckedinworkersbysiteBinding binding) {
             super(binding.getRoot());
             cv_card = binding.objCheckinworkersbysiteCard;
             tv_userName = binding.objCheckinworkersbysiteTvUserName;
             tv_phoneNum = binding.objCheckinworkersbysiteTvPhonenum;
+            bt_delete = binding.objCheckinworkersbysiteBtDelete;
         }
 
         @Override

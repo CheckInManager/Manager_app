@@ -42,6 +42,17 @@
                 app:layout_constraintStart_toStartOf="@+id/obj_checkinworkersbysite_tv_userName"
                 app:layout_constraintTop_toBottomOf="@+id/obj_checkinworkersbysite_tv_userName" />
 
+            <Button
+                android:id="@+id/obj_checkinworkersbysite_bt_delete"
+                android:layout_width="53dp"
+                android:layout_height="41dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/white"
+                android:text="X"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -57,9 +57,9 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
 
         adapter = new CheckedInWorkersBySiteRecyclerViewAdapter(
                 new ArrayList<>(),
-                new OnTodayWorksiteContextMenuInteractionListener<User>() {
+                new OnCheckedInWorkersInteractionListener() {
                     @Override
-                    public void onItemClick(User obj) {
+                    public void onClick(User obj) {
                         String phoneNumber = obj.getPhoneNumber();
                         CheckedInWorkersBySiteFragmentDirections.ActionCheckInWorkdersBySiteFragmentToUserInformationFragment action = CheckedInWorkersBySiteFragmentDirections.actionCheckInWorkdersBySiteFragmentToUserInformationFragment();
                         action.setPhoneNumber(phoneNumber);
@@ -68,8 +68,8 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
                     }
 
                     @Override
-                    public void onContextReturnWorksite(User obj) {
-
+                    public void onDelete(User obj) {
+                        checkedInWorkersBySiteViewModel.deleteUser(obj);
                     }
                 });
     }

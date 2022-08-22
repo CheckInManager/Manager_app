@@ -53,7 +53,7 @@ public class AddNewNoticeFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAddnewnoticeformBinding.inflate(inflater, container, false);
         et_noticeName = binding.addnewnoticeformEtNoticeName;
-        et_memo = binding.addnewnoticeformEtMemo;
+        et_memo = binding.addnewnoticeformEtNoticeName;
         sp_worksiteName = binding.addnewnoticeformSpWorksiteSpinner;
         bt_add = binding.addnewnoticeBtAdd;
 

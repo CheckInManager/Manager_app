@@ -7,15 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".addworker.AddWorkerFragment">
 
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline22"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toTopOf="@+id/guideline22"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -24,18 +25,21 @@
                 android:id="@+id/addworker_iv_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/guideline8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addworker_bt_importPicture"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/addworker_tv_nameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:ems="6"
                 android:text="@string/tv_nameLabel"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/addworker_sp_worksiteSpinner"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +49,7 @@
                 android:id="@+id/addworker_et_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="@string/hint_name"
                 android:inputType="textPersonName"
@@ -58,7 +62,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:ems="6"
                 android:text="@string/tv_phoneNumberLabel"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/addworker_tv_nameLabel"
                 app:layout_constraintTop_toBottomOf="@+id/addworker_tv_nameLabel" />
 
@@ -77,8 +83,9 @@
                 android:id="@+id/addworker_tv_memoLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ems="6"
                 android:text="@string/tv_memoLabel"
-                app:layout_constraintEnd_toStartOf="@+id/addworker_et_memo"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/addworker_tv_worksiteNameLabel"
                 app:layout_constraintTop_toTopOf="@+id/addworker_et_memo" />
 
@@ -97,7 +104,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:ems="6"
                 android:text="@string/tv_worksiteNameLabel"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/addworker_tv_phoneNumberLabel"
                 app:layout_constraintTop_toBottomOf="@+id/addworker_tv_phoneNumberLabel" />
 
@@ -114,13 +123,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.3" />
+                app:layout_constraintGuide_percent="0.4" />
 
             <Button
                 android:id="@+id/addworker_bt_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/bt_formAdd"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -135,26 +144,23 @@
                 android:text="@string/bt_takePicture"
                 android:textColor="@color/white"
                 android:textSize="10sp"
-                app:layout_constraintBottom_toTopOf="@+id/addworker_bt_importPicture"
                 app:layout_constraintEnd_toEndOf="@+id/addworker_bt_importPicture"
                 app:layout_constraintStart_toStartOf="@+id/addworker_bt_importPicture"
-                app:layout_constraintTop_toBottomOf="@+id/addworker_iv_image" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/addworker_bt_importPicture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
                 android:text="@string/bt_importPicture"
                 android:textColor="@color/white"
                 android:textSize="10sp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline8"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addworker_bt_takePicture" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline22"

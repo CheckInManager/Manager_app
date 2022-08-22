@@ -49,4 +49,6 @@ public interface DataSource {
 
     void getAllWorksite(CompletedCallback<Result<List<Worksite>>> callback);
 
+    void deleteUser(User toRemove, CompletedCallback<Result<String>> callback);
+
 }

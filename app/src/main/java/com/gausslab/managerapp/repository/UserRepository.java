@@ -121,6 +121,10 @@ public class UserRepository {
         });
     }
 
+    public void deleteUser(User Remove, CompletedCallback<Result<String>> callback){
+        dataSource.deleteUser(Remove, callback);
+    }
+
     public void setExecutor(Executor exec) {
         this.executor = exec;
     }

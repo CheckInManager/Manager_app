@@ -323,6 +323,43 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
+    public void deleteUser(User toRemove, CompletedCallback<Result<String>> callback) {
+        if(toRemove.getPhoneNumber()!=null){
+            db.collection("user")
+                    .document(toRemove.getPhoneNumber())
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            callback.onComplete(new Result.Success<String>("Success"));
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            callback.onComplete(new Result.Error(new Exception("Failed")));
+                        }
+                    });
+        }else{
+            db.collection("user")
+                    .document("Guest_"+toRemove.getUserName())
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            callback.onComplete(new Result.Success<String>("Success"));
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            callback.onComplete(new Result.Error(new Exception("Failed")));
+                        }
+                    });
+        }
+    }
+
+    @Override
     public void getNoticeDetailByName(String keyValue, CompletedCallback<Result<Notice>> callback) {
         db.collection("notice")
                 .whereEqualTo("keyValue", keyValue)

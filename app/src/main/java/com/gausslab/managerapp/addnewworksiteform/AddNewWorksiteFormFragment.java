@@ -164,6 +164,8 @@ public class AddNewWorksiteFormFragment extends Fragment {
                         } else {
                             showDialog();
                         }
+                    }else {
+                        Toast.makeText(requireContext(), R.string.toast_dateWrong, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(requireContext(), R.string.toast_dateWrong, Toast.LENGTH_SHORT).show();
