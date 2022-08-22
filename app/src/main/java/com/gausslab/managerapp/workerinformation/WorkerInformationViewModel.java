@@ -137,8 +137,6 @@ public class WorkerInformationViewModel extends ViewModel {
                 return;
         }
 
-        Log.d("DEBUG", "----loadAllUserInformation----");
-
         if (userHasPhoneNumber)
             loadUserInformation(phoneNumberOrUserName);
         else

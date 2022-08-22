@@ -128,12 +128,10 @@ public class NoticeDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (et_noticeName.getText().toString().length() < 1) {
-                    Toast.makeText(requireContext(), "noticeName is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
                 } else {
                     if ((loadedNoticeName + loadedMemo + loadedWorksiteName).equals(
                             (et_noticeName.getText().toString() + et_memo.getText().toString() + sp_worksiteName.getSelectedItem().toString()))) {
-                        Log.d("DEBUG", "onClick: "+loadedNoticeName + loadedMemo + loadedWorksiteName);
-                        Log.d("DEBUG", "onClick: "+et_noticeName.getText().toString() + et_memo.getText().toString() + sp_worksiteName.getSelectedItem().toString());
                         NavHostFragment.findNavController(NoticeDetailFragment.this).navigateUp();
                     } else {
                         SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

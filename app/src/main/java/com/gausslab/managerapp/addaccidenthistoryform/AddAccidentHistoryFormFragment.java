@@ -23,6 +23,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.gausslab.managerapp.Event;
+import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddaccidenthistoryformBinding;
 import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.workerinformation.WorkerInformationViewModel;
@@ -92,7 +93,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (et_description.getText().toString().length() < 1) {
-                    Toast.makeText(requireContext(), "description is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.toast_descriptionEmpty, Toast.LENGTH_SHORT).show();
                 } else {
                     if(workerInformationViewModel.checkDate(et_date.getText().toString()) &&workerInformationViewModel.checkTime(et_time.getText().toString())){
                         if (userPhoneNumber.length() > 1) {
@@ -103,7 +104,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                         workerInformationViewModel.addAccidentHistory(accidentHistory);
                         bt_add.setEnabled(false);
                     }else{
-                        Toast.makeText(requireContext(), "Date or Time Format is Wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.toast_datetimeWrong, Toast.LENGTH_SHORT).show();
                         et_date.setText(null);
                         et_time.setText(null);
                     }

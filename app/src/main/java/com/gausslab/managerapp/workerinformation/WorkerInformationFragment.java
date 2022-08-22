@@ -63,6 +63,7 @@ public class WorkerInformationFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                Toast.makeText(requireContext(), R.string.toast_backButton, Toast.LENGTH_SHORT).show();
                 if(!workerInformationViewModel.isClickComplete()){
 //                    showDialog();
                 }

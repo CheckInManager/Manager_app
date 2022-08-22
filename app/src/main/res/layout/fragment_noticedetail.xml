@@ -15,7 +15,7 @@
             android:id="@+id/noticedetail_tv_noticeNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NoticeName"
+            android:text="@string/tv_noticeNameLabel"
             app:layout_constraintBottom_toTopOf="@+id/noticedetail_et_noticeName"
             app:layout_constraintStart_toStartOf="@+id/noticedetail_et_noticeName" />
 
@@ -34,7 +34,7 @@
             android:id="@+id/noticedetail_tv_memoLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="memo"
+            android:text="@string/tv_memoLabel"
             app:layout_constraintBottom_toTopOf="@+id/noticedetail_et_memo"
             app:layout_constraintStart_toStartOf="@+id/noticedetail_et_memo" />
 
@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="ok"
+            android:text="@string/bt_ok"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

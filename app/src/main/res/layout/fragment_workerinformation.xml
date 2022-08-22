@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:textColor="@color/black"
-            android:text="@string/et_career"
+            android:text="career"
             app:layout_constraintStart_toStartOf="@+id/workerinformation_rv_accidentHisoryList"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_et_phoneNumber" />
 
@@ -141,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Update"
+            android:text="@string/bt_update"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

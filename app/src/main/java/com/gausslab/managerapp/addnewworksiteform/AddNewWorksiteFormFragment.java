@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddnewworksiteformBinding;
 import com.gausslab.managerapp.model.Worksite;
 
@@ -165,7 +166,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
                         }
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Date Format is Wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.toast_dateWrong, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -253,9 +254,9 @@ public class AddNewWorksiteFormFragment extends Fragment {
 
     private void showDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("caution").setMessage("choose");
+        builder.setTitle(R.string.dialog_title_caution).setMessage(R.string.dialog_message_choose);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.dialog_positive_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 addNewWorksiteFormViewModel.addWorksite(worksite);
@@ -263,7 +264,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
             }
         });
 
-        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialog_negative_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 et_worksiteName.setText(null);

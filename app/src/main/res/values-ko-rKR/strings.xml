@@ -2,24 +2,38 @@
 <resources>
     <string name="app_name">ManagerApp</string>
     <string name="tv_worksiteNameLabel">작업장 이름</string>
-    <string name="hint_worksiteName">작업장 이름을 적으세요</string>
     <string name="tv_startDateLabel">시작 날짜</string>
-    <string name="hint_startDate">시작 날짜를 적으세요</string>
     <string name="tv_endDateLabel">종료 날짜</string>
-    <string name="hint_endDate">종료 날짜를 적으세요</string>
-    <string name="hint_location">위치를 적으세요</string>
-    <string name="bt_formAdd">추가</string>
     <string name="tv_locationLabel">위치</string>
     <string name="tv_nameLabel">이름</string>
-    <string name="hint_name">이름을 입력하세요</string>
     <string name="tv_phoneNumberLabel">핸드폰 번호</string>
-    <string name="hint_phoneNumber">01012345678</string>
     <string name="tv_passwordLabel">비밀번호</string>
-    <string name="hint_password">비밀번호를 입력하세요</string>
     <string name="tv_accidentHistoryLabel">사고이력</string>
-    <string name="hint_accidentHistory">사고이력을 입력하세요</string>
     <string name="tv_memoLabel">메모</string>
+    <string name="tv_careerLabel">경력</string>
+    <string name="tv_accidentDescriptionLabel">사고 요약</string>
+    <string name="tv_accidentPlaceLabel">사고 장소</string>
+    <string name="tv_accidentDateLabel">사고 날짜</string>
+    <string name="tv_accidentTimeLabel">사고 시간</string>
+    <string name="tv_noticeNameLabel">공지사항 이름</string>
+    <string name="tv_checkedworkersPath"><![CDATA[작업장>> 체크인 된 작업자]]></string>
+
+    <string name="hint_worksiteName">작업장 이름을 적으세요</string>
+    <string name="hint_startDate">시작 날짜를 적으세요</string>
+    <string name="hint_endDate">종료 날짜를 적으세요</string>
+    <string name="hint_location">위치를 적으세요</string>
+    <string name="hint_name">이름을 입력하세요</string>
+    <string name="hint_phoneNumber">01012345678</string>
+    <string name="hint_password">비밀번호를 입력하세요</string>
     <string name="hint_memo">메모를 입력하세요</string>
+    <string name="hint_writeAccidentDescription">사고이력을 입력하세요</string>
+    <string name="hint_writeAccidentPlace">사고장소를 입력하세요</string>
+    <string name="hint_writeAccidentDate">사고날짜를 입력하세요</string>
+    <string name="hint_writeAccidentTime">사고시간을 입력하세요</string>
+    <string name="hint_writeNoticeName">공지사항 이름을 입력하세요</string>
+    <string name="hint_writeMemo">새로운 공지사항에 대한 메모입니다~!~!</string>
+
+    <string name="bt_formAdd">추가</string>
     <string name="bt_worksite">작업장</string>
     <string name="bt_addWorker">작업자 추가</string>
     <string name="bt_Notice">공지사항</string>
@@ -27,14 +41,29 @@
     <string name="bt_share">공유</string>
     <string name="bt_home">메인</string>
     <string name="bt_addWorksite">+ 작업장 추가</string>
-    <string name="tv_careerLabel">경력</string>
-    <string name="et_career">경력을 입력하세요</string>
+    <string name="bt_takePicture">사진찍기</string>
+    <string name="bt_importPicture">사진 가져오기</string>
+    <string name="bt_addNoticeForm">+ 공지사항 추가</string>
+    <string name="bt_ok">확인</string>
+    <string name="bt_update">업데이트</string>
+    <string name="bt_delete">삭제</string>
+
     <string name="toast_changeDate">날짜를 변경하세요</string>
     <string name="toast_success">성공</string>
     <string name="toast_changePhoneNumber">핸드폰 번호 바꾸세요</string>
     <string name="toast_beforeExit">한 번 더 누르면 종료</string>
     <string name="toast_exit">앱을 종료합니다</string>
-    <string name="bt_takePicture">사진찍기</string>
-    <string name="bt_importPicture">사진 가져오기</string>
-    <string name="bt_addNoticeForm">+ 공지사항 추가</string>
+    <string name="toast_descriptionEmpty">요약이 비어있습니다</string>
+    <string name="toast_datetimeWrong">날짜 혹은 시간 형식이 잘못되었습니다</string>
+    <string name="toast_noticeNameEmpty">공지사항 이름이 비어있습니다</string>
+    <string name="toast_dateWrong">날짜 형식이 잘못되었습니다</string>
+    <string name="toast_nameEmpty">이름이 비어있습니다</string>
+    <string name="toast_imageEmpty">사진이 비어있습니다</string>
+    <string name="toast_backButton">버튼을 클릭해주세요</string>
+
+    <string name="dialog_positive_ok">확인</string>
+    <string name="dialog_negative_cancel">취소</string>
+    <string name="dialog_message_choose">선택하세요</string>
+    <string name="dialog_title_caution">주의</string>
+
 </resources>

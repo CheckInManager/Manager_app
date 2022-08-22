@@ -161,10 +161,10 @@ public class AddWorkerFragment extends Fragment {
                             "", et_name.getText().toString(),
                             "", addWorkerViewModel.getWorksiteKeyValue(), false, et_memo.getText().toString());
                     if (et_name.getText().toString().length() < 1) {
-                        Toast.makeText(requireContext(), "name is empty", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.toast_nameEmpty, Toast.LENGTH_SHORT).show();
                     }
                     if (iv_image.getDrawable() == null) {
-                        Toast.makeText(requireContext(), "image is empty", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.toast_imageEmpty, Toast.LENGTH_SHORT).show();
                     } else {
                         if (et_phoneNumber.getText().toString().length() < 1) {
                             noPhoneNumNewUser();

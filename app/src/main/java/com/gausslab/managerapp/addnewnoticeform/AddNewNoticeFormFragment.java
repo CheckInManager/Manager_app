@@ -96,7 +96,7 @@ public class AddNewNoticeFormFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (et_noticeName.getText().toString().length() < 1) {
-                    Toast.makeText(requireContext(), "noticeName is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
                 } else {
                     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     long mNow = System.currentTimeMillis();
