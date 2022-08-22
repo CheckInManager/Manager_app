@@ -71,8 +71,6 @@ public class WorkerInformationFragment extends Fragment {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
-
-
         String phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
         String userName = WorkerInformationFragmentArgs.fromBundle(getArguments()).getUserName();
 
@@ -124,8 +122,6 @@ public class WorkerInformationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
 
         //region Observer
         workerInformationViewModel.getAccidentHistoryList().observe(getViewLifecycleOwner(), new Observer<List<AccidentHistory>>() {

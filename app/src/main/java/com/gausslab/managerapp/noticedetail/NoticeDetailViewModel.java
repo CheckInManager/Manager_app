@@ -23,8 +23,10 @@ public class NoticeDetailViewModel extends ViewModel {
     private Notice currNotice;
 
     public void loadNoticeDetail(String keyValue) {
-        if(currNotice != null){
-            return;
+        if(currNotice !=null){
+            if(currNotice.getKeyValue().equals(keyValue)){
+                return;
+            }
         }
         worksiteRepository.getNoticeDetailByName(keyValue, result -> {
             if (result instanceof Result.Success) {
@@ -60,6 +62,7 @@ public class NoticeDetailViewModel extends ViewModel {
     public void updateNoticeNameText(String newNoticeNameText){
         currNotice.setNoticeName(newNoticeNameText);
     }
+
 
     public List<Worksite> getOpenWorksite() {
         return worksiteList;

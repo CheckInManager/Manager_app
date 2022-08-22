@@ -23,6 +23,8 @@ import com.gausslab.managerapp.databinding.FragmentNoticeBinding;
 import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
+import java.util.ArrayList;
+
 public class NoticeFragment extends Fragment {
     private FragmentNoticeBinding binding;
     private NoticeViewModel noticeViewModel;
@@ -107,7 +109,7 @@ public class NoticeFragment extends Fragment {
     }
 
     private void setupAdapter() {
-        adapter = new NoticeRecyclerViewAdapter(noticeViewModel.getNoticeList(),
+        adapter = new NoticeRecyclerViewAdapter(new ArrayList<>(),
                 new OnNoticeInteractionListener() {
                     @Override
                     public void onClick(Notice obj) {
