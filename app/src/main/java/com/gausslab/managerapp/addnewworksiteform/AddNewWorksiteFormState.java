@@ -7,7 +7,6 @@ public class AddNewWorksiteFormState {
     private final String locationErrorMessage;
     private final boolean isFieldsValid;
 
-
     public AddNewWorksiteFormState(String worksiteNameErrorMessage, String startDateErrorMessage, String endDateErrorMessage, String locationErrorMessage, boolean isFieldsValid) {
         this.worksiteNameErrorMessage = worksiteNameErrorMessage;
         this.startDateErrorMessage = startDateErrorMessage;

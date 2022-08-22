@@ -172,7 +172,7 @@ public class WorksiteRepository {
         dataSource.changeNotice(notice, callback);
     }
 
-    public void getAllWorksite(final CompletedCallback<Result<List<Worksite>>> callback){
+    public void getAllWorksite(final CompletedCallback<Result<List<Worksite>>> callback) {
         dataSource.getAllWorksite(callback);
     }
 

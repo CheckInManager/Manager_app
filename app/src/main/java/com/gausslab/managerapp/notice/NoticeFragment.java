@@ -119,7 +119,7 @@ public class NoticeFragment extends Fragment {
                     }
 
                     @Override
-                    public void onDelete(Notice obj){
+                    public void onDelete(Notice obj) {
                         noticeViewModel.deleteNotice(obj.getKeyValue());
                     }
                 });

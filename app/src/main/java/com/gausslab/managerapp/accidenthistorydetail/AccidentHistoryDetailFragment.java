@@ -91,10 +91,10 @@ public class AccidentHistoryDetailFragment extends Fragment {
                 if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), R.string.toast_descriptionEmpty, Toast.LENGTH_SHORT).show();
                 } else {
-                    if(workerInformationViewModel.checkDate(et_date.getText().toString()) && workerInformationViewModel.checkTime(et_time.getText().toString())){
+                    if (workerInformationViewModel.checkDate(et_date.getText().toString()) && workerInformationViewModel.checkTime(et_time.getText().toString())) {
                         workerInformationViewModel.changeAccidentHistory(et_description.getText().toString(),
                                 et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString());
-                    }else{
+                    } else {
                         Toast.makeText(requireContext(), R.string.toast_datetimeWrong, Toast.LENGTH_SHORT).show();
                     }
                 }

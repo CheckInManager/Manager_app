@@ -64,7 +64,7 @@ public class WorkerInformationFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 Toast.makeText(requireContext(), R.string.toast_backButton, Toast.LENGTH_SHORT).show();
-                if(!workerInformationViewModel.isClickComplete()){
+                if (!workerInformationViewModel.isClickComplete()) {
 //                    showDialog();
                 }
             }
@@ -186,7 +186,7 @@ public class WorkerInformationFragment extends Fragment {
         //endregion
     }
 
-    private void showDialog(){
+    private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("caution").setMessage("You haven't updated this content, are you going to leave this screen?");
 

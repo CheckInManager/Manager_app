@@ -158,10 +158,10 @@ public class AddNewWorksiteFormFragment extends Fragment {
                 if (addNewWorksiteFormViewModel.checkDate(et_startDate.getText().toString()) && addNewWorksiteFormViewModel.checkDate(et_endDate.getText().toString())) {
                     if (addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(), et_endDate.getText().toString())) {
                         worksite = new Worksite(et_worksiteName.getText().toString(), et_startDate.getText().toString(), et_endDate.getText().toString(), et_location.getText().toString(), null);
-                        if(addNewWorksiteFormViewModel.checkSameWorksiteName(et_worksiteName.getText().toString())){
+                        if (addNewWorksiteFormViewModel.checkSameWorksiteName(et_worksiteName.getText().toString())) {
                             addNewWorksiteFormViewModel.addWorksite(worksite);
                             bt_add.setEnabled(false);
-                        }else{
+                        } else {
                             showDialog();
                         }
                     }
@@ -252,7 +252,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
         dpd.show();
     }
 
-    private void showDialog(){
+    private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle(R.string.dialog_title_caution).setMessage(R.string.dialog_message_choose);
 

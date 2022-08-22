@@ -83,7 +83,7 @@ public class WorkerInformationViewModel extends ViewModel {
         });
     }
 
-    public boolean isClickComplete(){
+    public boolean isClickComplete() {
         return isClickButton;
     }
 
@@ -225,24 +225,24 @@ public class WorkerInformationViewModel extends ViewModel {
         return null;
     }
 
-    public boolean checkDate(String date){
-        try{
+    public boolean checkDate(String date) {
+        try {
             SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy.MM.dd");
             dateFormatParser.setLenient(false);
             dateFormatParser.parse(date);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean checkTime(String time){
+    public boolean checkTime(String time) {
         try {
             SimpleDateFormat timeFormatParser = new SimpleDateFormat("HH:mm");
             timeFormatParser.setLenient(false);
             timeFormatParser.parse(time);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

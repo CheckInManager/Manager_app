@@ -17,7 +17,6 @@ public class App extends Application {
         return "userImages/user_" + userPhoneNumber + ".jpg";
     }
 
-
     public static String getFileProvider() {
         return "com.gausslab.managerapp.fileprovider";
     }

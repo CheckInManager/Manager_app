@@ -16,7 +16,7 @@
             android:id="@+id/addaccidenthistory_tv_descriptionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text ="@string/tv_accidentDescriptionLabel"
+            android:text="@string/tv_accidentDescriptionLabel"
             app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_description"
             app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_description" />
 

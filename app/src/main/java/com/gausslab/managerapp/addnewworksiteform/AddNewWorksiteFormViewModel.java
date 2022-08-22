@@ -37,7 +37,6 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
         });
     }
 
-
     public void createQrForWorksite(Worksite toCreate) {
         worksiteRepository.createQrForWorksite(toCreate, result ->
         {

@@ -156,7 +156,7 @@ public class AddWorkerFragment extends Fragment {
         addWorkerViewModel.isChangedSpinnerString().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isChanged) {
-                if(isChanged){
+                if (isChanged) {
                     userToAdd = new User(et_phoneNumber.getText().toString(),
                             "", et_name.getText().toString(),
                             "", addWorkerViewModel.getWorksiteKeyValue(), false, et_memo.getText().toString());

@@ -95,7 +95,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                 if (et_description.getText().toString().length() < 1) {
                     Toast.makeText(requireContext(), R.string.toast_descriptionEmpty, Toast.LENGTH_SHORT).show();
                 } else {
-                    if(workerInformationViewModel.checkDate(et_date.getText().toString()) &&workerInformationViewModel.checkTime(et_time.getText().toString())){
+                    if (workerInformationViewModel.checkDate(et_date.getText().toString()) && workerInformationViewModel.checkTime(et_time.getText().toString())) {
                         if (userPhoneNumber.length() > 1) {
                             accidentHistory = new AccidentHistory(et_description.getText().toString(), et_place.getText().toString(), et_date.getText().toString(), et_time.getText().toString(), userPhoneNumber, null);
                         } else {
@@ -103,7 +103,7 @@ public class AddAccidentHistoryFormFragment extends Fragment {
                         }
                         workerInformationViewModel.addAccidentHistory(accidentHistory);
                         bt_add.setEnabled(false);
-                    }else{
+                    } else {
                         Toast.makeText(requireContext(), R.string.toast_datetimeWrong, Toast.LENGTH_SHORT).show();
                         et_date.setText(null);
                         et_time.setText(null);

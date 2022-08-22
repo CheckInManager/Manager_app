@@ -30,7 +30,7 @@ import com.gausslab.managerapp.repository.WorksiteRepository;
 
 import java.io.File;
 
-public class QrEmailFragment extends Fragment{
+public class QrEmailFragment extends Fragment {
     private FragmentQremailBinding binding;
     private QrEmailViewModel qrEmailViewModel;
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
