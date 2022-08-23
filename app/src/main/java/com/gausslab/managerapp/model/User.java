@@ -6,13 +6,13 @@ public class User {
     private String userName;
     private String career;
     private String worksiteName;
-    private String accidentHistory;
+    private boolean accidentHistory;
     private String memo;
 
     public User() {
     }
 
-    public User(String phoneNumber, String password, String userName, String career, String worksiteName, String accidentHistory, String memo) {
+    public User(String phoneNumber, String password, String userName, String career, String worksiteName, boolean accidentHistory, String memo) {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.userName = userName;
@@ -63,12 +63,12 @@ public class User {
         this.worksiteName = worksiteName;
     }
 
-    public String getAccidentHistory() {
-        return accidentHistory;
+    public void setAccidentHistory(boolean accidentHistory) {
+        this.accidentHistory = accidentHistory;
     }
 
-    public void setAccidentHistory(String accidentHistory) {
-        this.accidentHistory = accidentHistory;
+    public boolean isAccidentHistory() {
+        return accidentHistory;
     }
 
     public String getMemo() {

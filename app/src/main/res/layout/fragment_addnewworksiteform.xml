@@ -55,21 +55,21 @@
             app:layout_constraintTop_toBottomOf="@id/worksiteform_et_worksiteName" />
 
         <TextView
-            android:id="@+id/worksiteform_tv_lastDateLabel"
+            android:id="@+id/worksiteform_tv_endDateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_lastDateLabel"
+            android:text="@string/tv_endDateLabel"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_lastDate"
-            app:layout_constraintStart_toStartOf="@+id/worksiteform_et_lastDate" />
+            app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_endDate"
+            app:layout_constraintStart_toStartOf="@+id/worksiteform_et_endDate" />
 
         <EditText
-            android:id="@+id/worksiteform_et_lastDate"
+            android:id="@+id/worksiteform_et_endDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:ems="15"
-            android:hint="@string/hint_lastDate"
+            android:hint="@string/hint_endDate"
             android:minHeight="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,20 +94,20 @@
             android:minHeight="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/worksiteform_et_lastDate" />
+            app:layout_constraintTop_toBottomOf="@+id/worksiteform_et_endDate" />
 
         <Button
             android:id="@+id/worksitrform_bt_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#F1FDFF"
             android:text="@string/bt_formAdd"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/worksiteform_et_location"
             app:strokeWidth="2dp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

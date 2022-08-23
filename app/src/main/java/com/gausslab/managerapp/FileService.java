@@ -13,6 +13,8 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.FirebaseDataSource;
 import com.gausslab.managerapp.model.Result;
@@ -63,6 +65,15 @@ public class FileService extends Service {
             e.printStackTrace();
         }
         return file;
+    }
+
+    @NonNull
+    public File getFile(String filePath) {
+        File file = new File(imageStorageDir, filePath);
+        if (file.exists()) {
+            return file;
+        }
+        return null;
     }
 
     public void saveBitmapToDisk(String destination, Bitmap toSave, FileServiceCallback<Result<File>> callback) {
@@ -158,8 +169,6 @@ public class FileService extends Service {
     public void setExecutor(Executor e) {
         executor = e;
     }
-
-
 
 
     public interface FileServiceCallback<T> {

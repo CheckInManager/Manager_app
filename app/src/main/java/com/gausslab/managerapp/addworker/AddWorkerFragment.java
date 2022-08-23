@@ -40,34 +40,37 @@ import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddworkerBinding;
 import com.gausslab.managerapp.model.User;
+import com.gausslab.managerapp.model.Worksite;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AddWorkerFragment extends Fragment {
     private FragmentAddworkerBinding binding;
     private AddWorkerViewModel addWorkerViewModel;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-
     private ImageView iv_image;
     private EditText et_name;
     private EditText et_phoneNumber;
-    private EditText et_password;
-    private EditText et_accidentHistory;
     private EditText et_memo;
     private Spinner sp_worksiteSpinner;
     private Button bt_add;
     private Button bt_takePicture;
     private Button bt_importPicture;
     private Uri selectedImage;
+    private Button bt_worksite;
+    private Button bt_addWorker;
+    private Button bt_notice;
+    private Button bt_map;
 
-    private FileService fileService;
+    private List<Worksite> openWorksiteList;
+    private String todayCal;
+    private User userToAdd;
     private File imageFile;
     private Bitmap changeBitmap;
 
     public AddWorkerFragment() {
-
     }
 
     @Override
@@ -83,13 +86,17 @@ public class AddWorkerFragment extends Fragment {
         iv_image = binding.addworkerIvImage;
         et_name = binding.addworkerEtName;
         et_phoneNumber = binding.addworkerEtPhoneNumber;
-        et_password = binding.addworkerEtPassword;
-        et_accidentHistory = binding.addworkerEtAccidentHistory;
         et_memo = binding.addworkerEtMemo;
         sp_worksiteSpinner = binding.addworkerSpWorksiteSpinner;
         bt_add = binding.addworkerBtAdd;
         bt_takePicture = binding.addworkerBtTakePicture;
         bt_importPicture = binding.addworkerBtImportPicture;
+        bt_worksite = binding.addworkerBtWorksite;
+        bt_addWorker = binding.addworkerBtAddWorker;
+        bt_notice = binding.addworkerBtAddNotice;
+        bt_map = binding.addworkerMap;
+
+        init();
 
         return binding.getRoot();
     }
@@ -99,19 +106,18 @@ public class AddWorkerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         addWorkerViewModel.loadPhoneNumberList();
-        addWorkerViewModel.loadWorksiteNameList();
 
         ActivityResultLauncher<Intent> launchCamera = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if(result.getResultCode() == Activity.RESULT_OK){
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                             iv_image.setImageBitmap(bitmap);
                             addWorkerViewModel.saveBitmapToMediaStore(bitmap);
                             iv_image.invalidate();
-                            changeBitmap = ((BitmapDrawable)iv_image.getDrawable()).getBitmap();
+                            changeBitmap = ((BitmapDrawable) iv_image.getDrawable()).getBitmap();
                         }
                     }
                 }
@@ -119,30 +125,55 @@ public class AddWorkerFragment extends Fragment {
 
         ActivityResultLauncher<Intent> launchGallery = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>()
-                {
+                new ActivityResultCallback<ActivityResult>() {
                     @Override
-                    public void onActivityResult(ActivityResult result)
-                    {
-                        if(result.getResultCode() == Activity.RESULT_OK)
-                        {
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
                             selectedImage = result.getData().getData();
                             iv_image.setImageURI(selectedImage);
                             iv_image.invalidate();
-                            changeBitmap=((BitmapDrawable)iv_image.getDrawable()).getBitmap();
+                            changeBitmap = ((BitmapDrawable) iv_image.getDrawable()).getBitmap();
                         }
                     }
                 });
 
-
-
         //region Observer
-        addWorkerViewModel.isWorksiteNameList().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        addWorkerViewModel.openWorksiteListLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoaded) {
                 if (isLoaded) {
-                    ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, addWorkerViewModel.getWorksiteNameList());
+                    List<String> toReturn = new ArrayList<>();
+                    List<Worksite> openWorksiteList = addWorkerViewModel.getOpenWorksite();
+                    for (int i = 0; i < openWorksiteList.size(); i++) {
+                        toReturn.add(openWorksiteList.get(i).getWorksiteName());
+                    }
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, toReturn);
                     sp_worksiteSpinner.setAdapter(arrayAdapter);
+                }
+            }
+        });
+
+        addWorkerViewModel.isChangedSpinnerString().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isChanged) {
+                if (isChanged) {
+                    userToAdd = new User(et_phoneNumber.getText().toString(),
+                            "", et_name.getText().toString(),
+                            "", addWorkerViewModel.getWorksiteKeyValue(), false, et_memo.getText().toString());
+                    if (et_name.getText().toString().length() < 1) {
+                        Toast.makeText(requireContext(), R.string.toast_nameEmpty, Toast.LENGTH_SHORT).show();
+                    }
+                    if (iv_image.getDrawable() == null) {
+                        Toast.makeText(requireContext(), R.string.toast_imageEmpty, Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (et_phoneNumber.getText().toString().length() < 1) {
+                            noPhoneNumNewUser();
+                        } else if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
+                            phoneNumNewUser();
+                        } else {
+                            Toast.makeText(requireContext(), R.string.toast_changePhoneNumber, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
         });
@@ -155,15 +186,14 @@ public class AddWorkerFragment extends Fragment {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 FileService fileService = App.getFileService();
                 imageFile = fileService.createFile("", "temp.jpg");
-                if(imageFile != null)
-                {
+                if (imageFile != null) {
                     Uri photoURI = FileProvider.getUriForFile(requireActivity(), App.getFileProvider(), imageFile);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 }
                 int permissionCheck = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA);
-                if(permissionCheck== PackageManager.PERMISSION_DENIED){
-                    ActivityCompat.requestPermissions(requireActivity(),new String[]{Manifest.permission.CAMERA},0);
-                }else{
+                if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, 0);
+                } else {
                     launchCamera.launch(takePictureIntent);
                 }
             }
@@ -182,19 +212,65 @@ public class AddWorkerFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User userToAdd = new User(et_phoneNumber.getText().toString(),
-                        et_password.getText().toString(), et_name.getText().toString(),
-                        null, sp_worksiteSpinner.getSelectedItem().toString(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
-                if (addWorkerViewModel.checkPhoneNumber(et_phoneNumber.getText().toString())) {
-                    addWorkerViewModel.addUser(userToAdd);
-                    addWorkerViewModel.saveUserImage(userToAdd,changeBitmap);
-                    Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
-                    NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
-                } else {
-                    Toast.makeText(requireContext(), R.string.toast_changePhoneNumber, Toast.LENGTH_SHORT).show();
-                }
+                addWorkerViewModel.changeSpinnerStringToKeyValue(sp_worksiteSpinner.getSelectedItem().toString());
+
+            }
+        });
+
+        bt_worksite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(AddWorkerFragment.this).navigate(R.id.action_addWorkerFragment_to_todayWorkSiteFragment);
+            }
+        });
+
+        bt_notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(AddWorkerFragment.this).navigate(R.id.action_addWorkerFragment_to_noticeFragment);
             }
         });
         //endregion
+    }
+
+    private void init() {
+        convertDateFormat();
+        addWorkerViewModel.loadOpenWorksite(todayCal);
+        openWorksiteList = addWorkerViewModel.getOpenWorksite();
+    }
+
+    private void convertDateFormat() {
+        Calendar cal = Calendar.getInstance();
+        todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+
+        String todayMonthCal = ((cal.get(Calendar.MONTH) + 1) + "");
+        String todayDayCal = ((cal.get(Calendar.DATE)) + "");
+
+        if (todayMonthCal.length() < 2 && todayDayCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        } else if (todayMonthCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+        } else if (todayDayCal.length() < 2) {
+            todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        }
+    }
+
+    private void noPhoneNumNewUser() {
+        addWorkerViewModel.addGuestUser(userToAdd);
+        if (changeBitmap != null) {
+            addWorkerViewModel.saveNoPhoneNumberUserImage(userToAdd, changeBitmap);
+            Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
+        }
+    }
+
+    private void phoneNumNewUser() {
+        userToAdd.setPassword("0000");
+        addWorkerViewModel.addUser(userToAdd);
+        if (changeBitmap != null) {
+            addWorkerViewModel.saveUserImage(userToAdd, changeBitmap);
+            Toast.makeText(requireContext(), R.string.toast_success, Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(AddWorkerFragment.this).navigateUp();
+        }
     }
 }

@@ -26,19 +26,16 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TodayWorkSiteFragment extends Fragment {
-
     private FragmentTodayworksiteBinding binding;
     private TodayWorkSiteViewModel todayWorkSiteViewModel;
-
     private FrameLayout fl_list;
     private Button bt_worksite;
     private Button bt_addWorker;
-    private Button bt_addNotice;
+    private Button bt_notice;
     private Button bt_map;
     private Button bt_addWorksite;
 
     private List<Worksite> todayWorksiteList;
-
     private long pressedTime = 0;
     private String todayCal;
 
@@ -70,7 +67,7 @@ public class TodayWorkSiteFragment extends Fragment {
         fl_list = binding.todayworksiteFlList;
         bt_worksite = binding.todayworksiteBtWorksite;
         bt_addWorker = binding.todayworksiteBtAddWorker;
-        bt_addNotice = binding.todayworksiteBtAddNotice;
+        bt_notice = binding.todayworksiteBtAddNotice;
         bt_map = binding.todayworksiteMap;
         bt_addWorksite = binding.todayworksiteBtAddWorksite;
 
@@ -98,11 +95,18 @@ public class TodayWorkSiteFragment extends Fragment {
                 NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_addWorkerFragment);
             }
         });
+
+        bt_notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_noticeFragment);
+            }
+        });
         //endregion
     }
 
     private void init() {
-        todayInCalendar();
+        convertDateFormat();
         todayWorkSiteViewModel.loadTodayWorksite(todayCal);
         todayWorksiteList = todayWorkSiteViewModel.getTodayWorksite();
 
@@ -113,7 +117,7 @@ public class TodayWorkSiteFragment extends Fragment {
         transaction.commit();
     }
 
-    private void todayInCalendar() {
+    private void convertDateFormat() {
         Calendar cal = Calendar.getInstance();
         todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
 

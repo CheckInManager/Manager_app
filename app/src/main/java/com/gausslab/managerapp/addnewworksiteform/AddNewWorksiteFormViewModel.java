@@ -8,8 +8,11 @@ import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 
-public class AddNewWorksiteFormViewModel extends ViewModel {
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
+public class AddNewWorksiteFormViewModel extends ViewModel {
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private MutableLiveData<Boolean> addWorksiteFormSuccess = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> addWorksiteSuccess = new MutableLiveData<>(false);
@@ -17,8 +20,11 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
 
     private String worksiteName = "";
     private String startDate = "";
-    private String lastDate = "";
+    private String endDate = "";
     private String location = "";
+
+    private List<Worksite> allWorksite = new ArrayList<>();
+    private List<String> allWorksiteName = new ArrayList<>();
 
     public void addWorksite(Worksite worksite) {
         worksiteRepository.addWorksite(worksite, result ->
@@ -48,7 +54,7 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, false));
         } else if (!isWorksiteNameValid(worksiteName)) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState("worksite format is wrong", addNewWorksiteFormState.getValue().getStartDateErrorMessage(), addNewWorksiteFormState.getValue().getStartDateErrorMessage(), addNewWorksiteFormState.getValue().getLocationErrorMessage(), false));
-        } else if (isStartDateValid(startDate) && isLastDateValid(lastDate) && isLocationValid(location)) {
+        } else if (isStartDateValid(startDate) && isEndDateValid(endDate) && isLocationValid(location)) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, true));
         } else if (addNewWorksiteFormState.getValue().getWorksiteNameErrorMessage() != null) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, addNewWorksiteFormState.getValue().getStartDateErrorMessage(), addNewWorksiteFormState.getValue().getStartDateErrorMessage(), addNewWorksiteFormState.getValue().getLocationErrorMessage(), false));
@@ -61,18 +67,18 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, false));
         } else if (!isStartDateValid(startDate)) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(addNewWorksiteFormState.getValue().getWorksiteNameErrorMessage(), "StartDate format is wrong", addNewWorksiteFormState.getValue().getStartDateErrorMessage(), addNewWorksiteFormState.getValue().getLocationErrorMessage(), false));
-        } else if (isWorksiteNameValid(worksiteName) && isLastDateValid(lastDate) && isLocationValid(location)) {
+        } else if (isWorksiteNameValid(worksiteName) && isEndDateValid(endDate) && isLocationValid(location)) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, true));
         } else if (addNewWorksiteFormState.getValue().getStartDateErrorMessage() != null) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(addNewWorksiteFormState.getValue().getWorksiteNameErrorMessage(), null, addNewWorksiteFormState.getValue().getStartDateErrorMessage(), addNewWorksiteFormState.getValue().getLocationErrorMessage(), false));
         }
     }
 
-    public void onLastDateChanged(String writeLastDate) {
-        lastDate = writeLastDate;
-        if (writeLastDate.length() == 0) {
+    public void onEndDateChanged(String writeEndDate) {
+        endDate = writeEndDate;
+        if (writeEndDate.length() == 0) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, false));
-        } else if (!isLastDateValid(lastDate)) {
+        } else if (!isEndDateValid(endDate)) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(addNewWorksiteFormState.getValue().getWorksiteNameErrorMessage(), addNewWorksiteFormState.getValue().getStartDateErrorMessage(), "LastDate format is wrong", addNewWorksiteFormState.getValue().getLocationErrorMessage(), false));
         } else if (isWorksiteNameValid(worksiteName) && isStartDateValid(startDate) && isLocationValid(location)) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, true));
@@ -87,7 +93,7 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, false));
         } else if (!isLocationValid(location)) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(addNewWorksiteFormState.getValue().getWorksiteNameErrorMessage(), addNewWorksiteFormState.getValue().getStartDateErrorMessage(), addNewWorksiteFormState.getValue().getStartDateErrorMessage(), "Location is too short", false));
-        } else if (isStartDateValid(startDate) && isStartDateValid(startDate) && isLastDateValid(lastDate)) {
+        } else if (isStartDateValid(startDate) && isStartDateValid(startDate) && isEndDateValid(endDate)) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(null, null, null, null, true));
         } else if (addNewWorksiteFormState.getValue().getWorksiteNameErrorMessage() != null) {
             addNewWorksiteFormState.setValue(new AddNewWorksiteFormState(addNewWorksiteFormState.getValue().getWorksiteNameErrorMessage(), addNewWorksiteFormState.getValue().getStartDateErrorMessage(), addNewWorksiteFormState.getValue().getStartDateErrorMessage(), null, false));
@@ -102,8 +108,8 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
         return !(startDate.length() < 8);
     }
 
-    public boolean isLastDateValid(String lastDate) {
-        return !(lastDate.length() < 8);
+    public boolean isEndDateValid(String endDate) {
+        return !(endDate.length() < 8);
     }
 
     public boolean isLocationValid(String location) {
@@ -112,13 +118,41 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
 
     public boolean isDatesValid(String startDate, String lastDate) {
         String[] splitStartDate = startDate.split("/");
-        String[] splitLastDate = lastDate.split("/");
+        String[] splitEndDate = lastDate.split("/");
         String strStartDate = String.join("", splitStartDate);
-        String strLastDate = String.join("", splitLastDate);
-        if (Integer.parseInt(strStartDate) > Integer.parseInt(strLastDate)) {
+        String strEndDate = String.join("", splitEndDate);
+        if (Integer.parseInt(strStartDate) > Integer.parseInt(strEndDate)) {
             return false;
         } else {
             return true;
+        }
+    }
+
+    public boolean checkDate(String date){
+        try{
+            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy/MM/dd");
+            dateFormatParser.setLenient(false);
+            dateFormatParser.parse(date);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public void loadAllWorksite(){
+        worksiteRepository.getAllWorksite(result->{
+            allWorksite =((Result.Success<List<Worksite>>)result).getData();
+            allWorksiteName = new ArrayList<>();
+            for(int i=0;i<allWorksite.size();i++){
+                allWorksiteName.add(allWorksite.get(i).getWorksiteName());
+            }
+        });
+    }
+    public boolean checkSameWorksiteName(String newWorksiteName){
+        if(!allWorksiteName.contains(newWorksiteName)){
+            return true;
+        }else{
+            return false;
         }
     }
 

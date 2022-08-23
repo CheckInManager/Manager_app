@@ -15,13 +15,11 @@ public class QrEmailViewModel extends ViewModel {
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private MutableLiveData<Boolean> isQrLoaded = new MutableLiveData<>(false);
 
-    private Worksite currWorksite;
     private Drawable qrImage;
 
-    public void setWorksite(String worksiteName,String workPath) {
-        currWorksite = worksiteRepository.getWorksite(worksiteName);
+    public void setWorksite(String keyValue) {
 
-        worksiteRepository.loadQrDrawableForWorksite(workPath, new CompletedCallback<Result<Drawable>>() {
+        worksiteRepository.loadQrDrawableForWorksite(keyValue, new CompletedCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result<Drawable> drawableResult) {
                 if (drawableResult instanceof Result.Success) {
@@ -34,6 +32,7 @@ public class QrEmailViewModel extends ViewModel {
         });
     }
 
+
     public LiveData<Boolean> isQrImageLoaded() {
         return isQrLoaded;
     }
@@ -42,7 +41,5 @@ public class QrEmailViewModel extends ViewModel {
         return qrImage;
     }
 
-    public Worksite getCurrWorksite() {
-        return currWorksite;
-    }
+
 }

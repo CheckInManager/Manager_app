@@ -15,10 +15,13 @@
             app:destination="@id/worksiteFormFragment" />
         <action
             android:id="@+id/action_todayWorkSiteFragment_to_checkInWorkdersBySiteFragment"
-            app:destination="@id/checkInWorkdersBySiteFragment" />
+            app:destination="@id/checkInWorkersBySiteFragment" />
         <action
             android:id="@+id/action_todayWorkSiteFragment_to_addWorkerFragment"
             app:destination="@id/addWorkerFragment" />
+        <action
+            android:id="@+id/action_todayWorkSiteFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
     </fragment>
     <fragment
         android:id="@+id/worksiteFormFragment"
@@ -35,29 +38,21 @@
         android:label="fragment_qremail"
         tools:layout="@layout/fragment_qremail" >
         <argument
-            android:name="worksiteName"
-            android:defaultValue="worksite"
-            app:argType="string"/>
-        <argument
-            android:name="worksiteLocation"
-            android:defaultValue="worksiteLocation"
-            app:argType="string"/>
-        <argument
-            android:name="worksiteStartDate"
-            android:defaultValue="worksiteStartDate"
+            android:name="keyValue"
+            android:defaultValue="keyValue"
             app:argType="string"/>
         <action
             android:id="@+id/action_qrEmailFragment_to_todayWorkSiteFragment"
             app:destination="@id/todayWorkSiteFragment" />
     </fragment>
     <fragment
-        android:id="@+id/checkInWorkdersBySiteFragment"
+        android:id="@+id/checkInWorkersBySiteFragment"
         android:name="com.gausslab.managerapp.checkinworkerbysite.CheckedInWorkersBySiteFragment"
         android:label="fragment_checkinworkdersbysite"
         tools:layout="@layout/fragment_checkedinworkersbysite">
         <argument
-            android:name="worksiteName"
-            android:defaultValue="worksite"
+            android:name="keyValue"
+            android:defaultValue="keyValue"
             app:argType="string"/>
         <action
             android:id="@+id/action_checkInWorkdersBySiteFragment_to_userInformationFragment"
@@ -68,6 +63,9 @@
         <action
             android:id="@+id/action_checkInWorkdersBySiteFragment_to_addWorkerFragment"
             app:destination="@id/addWorkerFragment" />
+        <action
+            android:id="@+id/action_checkInWorkdersBySiteFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
     </fragment>
     <fragment
         android:id="@+id/userInformationFragment"
@@ -78,13 +76,90 @@
             android:name="phoneNumber"
             android:defaultValue="01000000000"
             app:argType="string"/>
+        <argument
+            android:name="userName"
+            android:defaultValue="userName"
+            app:argType="string"/>
         <action
             android:id="@+id/action_userInformationFragment_to_checkInWorkdersBySiteFragment"
-            app:destination="@id/checkInWorkdersBySiteFragment" />
+            app:destination="@id/checkInWorkersBySiteFragment" />
+        <action
+            android:id="@+id/action_userInformationFragment_to_addAccidentHistoryFormFragment"
+            app:destination="@id/addAccidentHistoryFormFragment" />
+        <action
+            android:id="@+id/action_userInformationFragment_to_accidentHistoryDetailFragment"
+            app:destination="@id/accidentHistoryDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/addWorkerFragment"
         android:name="com.gausslab.managerapp.addworker.AddWorkerFragment"
         android:label="AddWorkerFragment"
-        tools:layout="@layout/fragment_addworker"/>
+        tools:layout="@layout/fragment_addworker">
+        <action
+            android:id="@+id/action_addWorkerFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+        <action
+            android:id="@+id/action_addWorkerFragment_to_todayWorkSiteFragment"
+            app:destination="@id/todayWorkSiteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noticeFragment"
+        android:name="com.gausslab.managerapp.notice.NoticeFragment"
+        android:label="fragment_notice"
+        tools:layout="@layout/fragment_notice" >
+        <action
+            android:id="@+id/action_noticeFragment_to_todayWorkSiteFragment"
+            app:destination="@id/todayWorkSiteFragment" />
+        <action
+            android:id="@+id/action_noticeFragment_to_addWorkerFragment"
+            app:destination="@id/addWorkerFragment" />
+        <action
+            android:id="@+id/action_noticeFragment_to_addNewNoticeFormFragment"
+            app:destination="@id/addNewNoticeFormFragment" />
+        <action
+            android:id="@+id/action_noticeFragment_to_noticeDetailFragment"
+            app:destination="@id/noticeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewNoticeFormFragment"
+        android:name="com.gausslab.managerapp.addnewnoticeform.AddNewNoticeFormFragment"
+        android:label="fragment_addnewnoticeform"
+        tools:layout="@layout/fragment_addnewnoticeform" />
+    <fragment
+        android:id="@+id/noticeDetailFragment"
+        android:name="com.gausslab.managerapp.noticedetail.NoticeDetailFragment"
+        android:label="fragment_noticedetail"
+        tools:layout="@layout/fragment_noticedetail" >
+        <argument
+            android:name="keyValue"
+            android:defaultValue="keyValue"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_noticeDetailFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAccidentHistoryFormFragment"
+        android:name="com.gausslab.managerapp.addaccidenthistoryform.AddAccidentHistoryFormFragment"
+        android:label="fragment_addaccidenthistoryform"
+        tools:layout="@layout/fragment_addaccidenthistoryform" >
+        <argument
+            android:name="phoneNumber"
+            android:defaultValue="01000000000"
+            app:argType="string"/>
+        <argument
+            android:name="userName"
+            android:defaultValue="userName"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/accidentHistoryDetailFragment"
+        android:name="com.gausslab.managerapp.accidenthistorydetail.AccidentHistoryDetailFragment"
+        android:label="fragment_accidenthistorydetail"
+        tools:layout="@layout/fragment_accidenthistorydetail" >
+        <argument
+            android:name="keyValue"
+            android:defaultValue="key"
+            app:argType="string"/>
+    </fragment>
 </navigation>

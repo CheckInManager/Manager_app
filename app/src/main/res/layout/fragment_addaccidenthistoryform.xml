@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".addaccidenthistoryform.AddAccidentHistoryFormFragment">
+
+        <TextView
+            android:id="@+id/addaccidenthistory_tv_descriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_accidentDescriptionLabel"
+            app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_description"
+            app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_description" />
+
+        <MultiAutoCompleteTextView
+            android:id="@+id/addaccidenthistory_et_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="13"
+            android:hint="@string/hint_writeAccidentDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+        <TextView
+            android:id="@+id/addaccidenthistory_tv_placeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_accidentPlaceLabel"
+            app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_place"
+            app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_place" />
+
+        <EditText
+            android:id="@+id/addaccidenthistory_et_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="13"
+            android:hint="@string/hint_writeAccidentPlace"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_description"
+            app:layout_constraintTop_toBottomOf="@+id/addaccidenthistory_et_description" />
+
+        <TextView
+            android:id="@+id/addaccidenthistory_tv_dateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_accidentDateLabel"
+            app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_date"
+            app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_date" />
+
+        <EditText
+            android:id="@+id/addaccidenthistory_et_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="13"
+            android:hint="@string/hint_writeAccidentDate"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_place"
+            app:layout_constraintTop_toBottomOf="@+id/addaccidenthistory_et_place" />
+
+        <TextView
+            android:id="@+id/addaccidenthistory_tv_timeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_accidentTimeLabel"
+            app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_time"
+            app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_time" />
+
+        <EditText
+            android:id="@+id/addaccidenthistory_et_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="13"
+            android:hint="@string/hint_writeAccidentTime"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_date"
+            app:layout_constraintTop_toBottomOf="@+id/addaccidenthistory_et_date" />
+
+        <Button
+            android:id="@+id/addaccidenthistory_bt_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/bt_formAdd"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addaccidenthistory_et_time" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

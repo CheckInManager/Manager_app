@@ -4,11 +4,17 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
 import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.datasource.DataSource;
+import com.gausslab.managerapp.datasource.ListenerCallback;
+import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 import com.google.zxing.BarcodeFormat;
@@ -30,7 +36,9 @@ public class WorksiteRepository {
     protected Executor executor;
 
     private Map<String, Drawable> worksiteQrDrawableMap = new HashMap<String, Drawable>();
-    private Map<String, Worksite> worksiteMap = new HashMap<>();
+    private MutableLiveData<Boolean> noticeListLoaded = new MutableLiveData<>(false);
+    public List<Notice> noticeList = new ArrayList<>();
+    public File localFile;
 
     public static WorksiteRepository getInstance() {
         return INSTANCE;
@@ -57,8 +65,8 @@ public class WorksiteRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String toEncode = "gausslab.managerapp.worksite_" + worksite.getWorksiteName() + worksite.getLocation() + worksite.getStartDate();
-                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getWorksiteName() + worksite.getLocation() + worksite.getStartDate()), new CompletedCallback<Result<Uri>>() {
+                String toEncode = "gausslab.managerapp.worksite_" + worksite.getKeyValue();
+                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getKeyValue()), new CompletedCallback<Result<Uri>>() {
                     @Override
                     public void onComplete(Result result) {
                         callback.onComplete(result);
@@ -84,7 +92,7 @@ public class WorksiteRepository {
                 @Override
                 public void onComplete(Result<File> result) {
                     if (result instanceof Result.Success) {
-                        File localFile = ((Result.Success<File>) result).getData();
+                        localFile = ((Result.Success<File>) result).getData();
                         fileService.uploadFileToDatabase(localFile, localDestinationPath, new FileService.FileServiceCallback<Result<Uri>>() {
                             @Override
                             public void onComplete(Result<Uri> result) {
@@ -101,35 +109,71 @@ public class WorksiteRepository {
         }
     }
 
-    public List<Worksite> getWorksiteList() {
-        return new ArrayList<Worksite>(worksiteMap.values());
-    }
-
-    public Worksite getWorksite(String worksiteName) {
-        if (worksiteMap.containsKey(worksiteName))
-            return worksiteMap.get(worksiteName);
-        return null;
+    public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback) {
+        dataSource.getWorksiteByKey(key, callback);
     }
 
     public Drawable getQrDrawable(String workName) {
         return worksiteQrDrawableMap.get(workName);
     }
 
-    public void loadQrDrawableForWorksite(String workPath, CompletedCallback<Result<Drawable>> callback) {
-        fileService.getImageDrawable(App.getWorksiteQrImagePath(workPath), new FileService.FileServiceCallback<Result<Drawable>>() {
+    public File getQrFileForWorksite(String key) {
+        return fileService.getFile(App.getWorksiteQrImagePath(key));
+    }
+
+    public void loadQrDrawableForWorksite(String worksiteQrImagePath, CompletedCallback<Result<Drawable>> callback) {
+        fileService.getImageDrawable(App.getWorksiteQrImagePath(worksiteQrImagePath), new FileService.FileServiceCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result result) {
                 if (result instanceof Result.Success) {
                     Drawable drawable = ((Result.Success<Drawable>) result).getData();
-                    worksiteQrDrawableMap.put(workPath, drawable);
+                    worksiteQrDrawableMap.put(worksiteQrImagePath, drawable);
                 }
                 callback.onComplete(result);
             }
         });
     }
 
-    public void loadWorksiteNameList(CompletedCallback<Result<List<String>>> callback) {
-        dataSource.loadWorksiteNameList(callback);
+    public void addNotice(final Notice notice, CompletedCallback<Result<String>> callback) {
+        dataSource.addNotice(notice, callback);
+    }
+
+    public void registerNoticeListListener() {
+        dataSource.getNoticeList(new ListenerCallback<Result<List<Notice>>>() {
+            @Override
+            public void onUpdate(Result<List<Notice>> result) {
+                if (result instanceof Result.Success) {
+                    noticeList = ((Result.Success<List<Notice>>) result).getData();
+                    noticeListLoaded.postValue(true);
+                } else {
+                    noticeListLoaded.postValue(false);
+                }
+            }
+        });
+    }
+
+    public void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>> callback) {
+        dataSource.changeSpinnerStringToKeyValue(worksiteName, callback);
+    }
+
+    public List<Notice> getNoticeList() {
+        return noticeList;
+    }
+
+    public void deleteNotice(final String keyValue, CompletedCallback<Result<String>> callback) {
+        dataSource.deleteNotice(keyValue, callback);
+    }
+
+    public void getNoticeDetailByName(final String keyValue, CompletedCallback<Result<Notice>> callback) {
+        dataSource.getNoticeDetailByName(keyValue, callback);
+    }
+
+    public void changeNotice(final Notice notice, final CompletedCallback<Result<String>> callback) {
+        dataSource.changeNotice(notice, callback);
+    }
+
+    public void getAllWorksite(final CompletedCallback<Result<List<Worksite>>> callback) {
+        dataSource.getAllWorksite(callback);
     }
 
     public void setExecutor(Executor exec) {
@@ -142,6 +186,10 @@ public class WorksiteRepository {
 
     public void setFileService(FileService fs) {
         this.fileService = fs;
+    }
+
+    public LiveData<Boolean> isNoticeListLoaded() {
+        return noticeListLoaded;
     }
 
 }

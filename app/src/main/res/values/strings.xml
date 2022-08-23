@@ -1,40 +1,68 @@
 <resources>
     <string name="app_name">ManagerApp</string>
     <string name="tv_worksiteNameLabel">Worksite Name</string>
-    <string name="hint_worksiteName">Worksite Name</string>
     <string name="tv_startDateLabel">Start Date</string>
-    <string name="hint_startDate">StartDate</string>
-    <string name="tv_lastDateLabel">Last Date</string>
-    <string name="hint_lastDate">Last Date</string>
+    <string name="tv_endDateLabel">End Date</string>
     <string name="tv_locationLabel">Location</string>
-    <string name="hint_location">Location</string>
-    <string name="bt_formAdd">Add</string>
     <string name="tv_nameLabel">Name</string>
-    <string name="hint_name">Name</string>
     <string name="tv_phoneNumberLabel">Phone Number</string>
-    <string name="hint_phoneNumber">01012345678</string>
     <string name="tv_passwordLabel">Password</string>
-    <string name="hint_password">password</string>
     <string name="tv_accidentHistoryLabel">Accident History</string>
-    <string name="hint_accidentHistory">accident History</string>
     <string name="tv_memoLabel">Memo</string>
-    <string name="hint_memo">memo</string>
+    <string name="tv_careerLabel">Career</string>
+    <string name="tv_accidentDescriptionLabel">Accident Description</string>
+    <string name="tv_accidentPlaceLabel">Accident place</string>
+    <string name="tv_accidentDateLabel">Accident date</string>
+    <string name="tv_accidentTimeLabel">Accident Time</string>
+    <string name="tv_noticeNameLabel">NoticeName</string>
+    <string name="tv_checkedworkersPath"><![CDATA[Worksite >> CheckedWorkers]]></string>
+
+    <string name="hint_worksiteName">Write down Worksite</string>
+    <string name="hint_startDate">Write down StartDate</string>
+    <string name="hint_endDate">Write down EndDate</string>
+    <string name="hint_location">Write down Location</string>
+    <string name="hint_name">Write down Name</string>
+    <string name="hint_phoneNumber">01012345678</string>
+    <string name="hint_password">Write down password</string>
+    <string name="hint_memo">Write down memo</string>
+    <string name="hint_writeAccidentDescription">write down accident description</string>
+    <string name="hint_writeAccidentPlace">write down accident place</string>
+    <string name="hint_writeAccidentDate">write down accident date</string>
+    <string name="hint_writeAccidentTime">write down accident time</string>
+    <string name="hint_writeNoticeName">write down NoticeName</string>
+    <string name="hint_writeMemo">This is memo about newNotice~!~!</string>
+
+    <string name="bt_formAdd">Add</string>
     <string name="bt_worksite">Work Site</string>
     <string name="bt_addWorker">Add worker</string>
-    <string name="bt_addNotice">Add Notice</string>
+    <string name="bt_Notice">Notice</string>
     <string name="bt_map">map</string>
     <string name="bt_share">share</string>
-    <string name="et_inputYourEmail">Input your Email</string>
     <string name="bt_home">home</string>
     <string name="bt_addWorksite">+ Add WorkSite</string>
-    <string name="tv_careerLabel">Career</string>
-    <string name="et_career">career</string>
+    <string name="bt_takePicture">Take Picture</string>
+    <string name="bt_importPicture">Import Picture</string>
+    <string name="bt_addNoticeForm">+ Add notice</string>
+    <string name="bt_ok">ok</string>
+    <string name="bt_update">Update</string>
+    <string name="bt_delete">del</string>
+
     <string name="toast_changeDate">Change the date</string>
     <string name="toast_success">Success</string>
     <string name="toast_changePhoneNumber">Please change phone number</string>
     <string name="toast_beforeExit">Press once more to exit</string>
     <string name="toast_exit">Exit the app</string>
-    <string name="bt_takePicture">Take Picture</string>
-    <string name="bt_importPicture">Import Picture</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="toast_descriptionEmpty">description is empty</string>
+    <string name="toast_datetimeWrong">Date or Time format is Wrong</string>
+    <string name="toast_noticeNameEmpty">noticeName is empty</string>
+    <string name="toast_dateWrong">Date Format is Wrong</string>
+    <string name="toast_nameEmpty">name is empty</string>
+    <string name="toast_imageEmpty">image is empty</string>
+    <string name="toast_backButton">button click please</string>
+
+    <string name="dialog_positive_ok">OK</string>
+    <string name="dialog_negative_cancel">cancel</string>
+    <string name="dialog_message_choose">choose</string>
+    <string name="dialog_title_caution">caution</string>
+
 </resources>

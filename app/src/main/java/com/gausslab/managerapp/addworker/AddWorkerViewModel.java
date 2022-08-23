@@ -1,7 +1,6 @@
 package com.gausslab.managerapp.addworker;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.FileService;
+import com.gausslab.managerapp.model.Worksite;
 import com.gausslab.managerapp.repository.UserRepository;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 import com.gausslab.managerapp.model.Result;
@@ -21,9 +21,11 @@ import java.util.List;
 public class AddWorkerViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
-    private MutableLiveData<Boolean> isWorksiteNameList = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> openWorksiteListLoaded = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> changedSpinnerStringLoaded = new MutableLiveData<>(false);
     private List<String> phoneNumberList = new ArrayList<>();
-    private List<String> worksiteNameList = new ArrayList<>();
+    private List<Worksite> worksiteList = new ArrayList<>();
+    private String worksiteKeyValue;
 
     public void loadPhoneNumberList() {
         userRepository.loadPhoneNumberList(result -> {
@@ -44,7 +46,7 @@ public class AddWorkerViewModel extends ViewModel {
     }
 
     public void addUser(User userToAdd) {
-        userRepository.addUser(userToAdd, result -> {
+        userRepository.addOrUpdateUser(userToAdd, result -> {
             if (result instanceof Result.Success) {
 
             } else {
@@ -53,44 +55,78 @@ public class AddWorkerViewModel extends ViewModel {
         });
     }
 
-    public void loadWorksiteNameList() {
-        worksiteRepository.loadWorksiteNameList(result -> {
+    public void addGuestUser(User userToAdd) {
+        userRepository.addOrUpdateUser(userToAdd, result -> {
             if (result instanceof Result.Success) {
-                worksiteNameList = ((Result.Success<List<String>>) result).getData();
-                isWorksiteNameList.postValue(true);
+
             } else {
 
             }
         });
     }
 
-    public void saveBitmapToMediaStore(Bitmap bm)
-    {
+    public void saveBitmapToMediaStore(Bitmap bm) {
         FileService fileService = App.getFileService();
-        fileService.saveBitmapToMediaStore("userImage_" + Timestamp.now().getSeconds(), bm, new FileService.FileServiceCallback<Result<String>>()
-        {
+        fileService.saveBitmapToMediaStore("userImage_" + Timestamp.now().getSeconds(), bm, new FileService.FileServiceCallback<Result<String>>() {
             @Override
-            public void onComplete(Result result)
-            {
+            public void onComplete(Result result) {
             }
         });
     }
 
-    public void saveUserImage(User user,Bitmap userImage){
-        userRepository.saveUserImage(user,userImage, result->{
-            if(result instanceof Result.Success){
+    public void saveUserImage(User user, Bitmap userImage) {
+        userRepository.saveUserImage(user, userImage, result -> {
+            if (result instanceof Result.Success) {
 
-            }else{
+            } else {
 
             }
         });
     }
 
-    public List<String> getWorksiteNameList() {
-        return worksiteNameList;
+    public void saveNoPhoneNumberUserImage(User user, Bitmap userImage) {
+        userRepository.saveNoPhoneNumberUserImage(user, userImage, result -> {
+            if (result instanceof Result.Success) {
+
+            } else {
+
+            }
+        });
     }
 
-    public LiveData<Boolean> isWorksiteNameList() {
-        return isWorksiteNameList;
+    public void loadOpenWorksite(String todayCal) {
+        worksiteRepository.getTodayWorksite(todayCal, result -> {
+            if (result instanceof Result.Success) {
+                worksiteList = ((Result.Success<List<Worksite>>) result).getData();
+                openWorksiteListLoaded.setValue(true);
+            }
+        });
+    }
+
+    public void changeSpinnerStringToKeyValue(String worksiteName) {
+        worksiteRepository.changeSpinnerStringToKeyValue(worksiteName, result -> {
+            if (result instanceof Result.Success) {
+                worksiteKeyValue = ((Result.Success<String>) result).getData();
+                changedSpinnerStringLoaded.postValue(true);
+            } else {
+                changedSpinnerStringLoaded.postValue(false);
+            }
+        });
+    }
+
+    public String getWorksiteKeyValue() {
+        return worksiteKeyValue;
+    }
+
+    public List<Worksite> getOpenWorksite() {
+        return worksiteList;
+    }
+
+    public LiveData<Boolean> openWorksiteListLoaded() {
+        return openWorksiteListLoaded;
+    }
+
+    public LiveData<Boolean> isChangedSpinnerString() {
+        return changedSpinnerStringLoaded;
     }
 }

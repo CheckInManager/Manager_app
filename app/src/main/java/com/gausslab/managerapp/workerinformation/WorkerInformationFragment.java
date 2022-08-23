@@ -1,6 +1,11 @@
 package com.gausslab.managerapp.workerinformation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,27 +13,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentWorkerinformationBinding;
+import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorkerInformationFragment extends Fragment {
     private FragmentWorkerinformationBinding binding;
     private WorkerInformationViewModel workerInformationViewModel;
+    private AccidentHistoryRecyclerViewAdapter adapter;
 
     private ImageView iv_image;
     private TextView tv_name;
     private TextView tv_phoneNumber;
     private TextView tv_career;
-    private EditText et_accidentHistory;
+    private RecyclerView rv_accidentHistoryList;
+    private Button bt_accidentHistoryAdd;
     private EditText et_memo;
     private Button bt_complete;
 
@@ -42,6 +58,45 @@ public class WorkerInformationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         workerInformationViewModel = new ViewModelProvider(requireActivity()).get(WorkerInformationViewModel.class);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Toast.makeText(requireContext(), R.string.toast_backButton, Toast.LENGTH_SHORT).show();
+//                showDialog();
+                if (!workerInformationViewModel.isClickComplete()) {
+//                    showDialog();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+        String phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
+        String userName = WorkerInformationFragmentArgs.fromBundle(getArguments()).getUserName();
+
+        boolean userHasPhoneNumber = true;
+        if (phoneNumber.isEmpty()) {
+            phoneNumber = userName;
+            userHasPhoneNumber = false;
+        }
+
+        workerInformationViewModel.loadAllUserInformation(phoneNumber, userHasPhoneNumber);
+
+        adapter = new AccidentHistoryRecyclerViewAdapter(
+                new ArrayList<>(),
+                new OnAccidentHistoryInteractionListener() {
+                    @Override
+                    public void onClick(AccidentHistory obj) {
+                        WorkerInformationFragmentDirections.ActionUserInformationFragmentToAccidentHistoryDetailFragment action = WorkerInformationFragmentDirections.actionUserInformationFragmentToAccidentHistoryDetailFragment();
+                        action.setKeyValue(obj.getKeyValue());
+                        NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(action);
+                    }
+
+                    @Override
+                    public void onDelete(AccidentHistory obj) {
+                        workerInformationViewModel.deleteAccidentHistory(obj);
+                    }
+                });
     }
 
     @Override
@@ -52,12 +107,15 @@ public class WorkerInformationFragment extends Fragment {
         tv_name = binding.workerinformationEtName;
         tv_phoneNumber = binding.workerinformationEtPhoneNumber;
         tv_career = binding.workerinformationEtCareer;
-        et_accidentHistory = binding.workerinformationEtAccidentHistory;
+        rv_accidentHistoryList = binding.workerinformationRvAccidentHisoryList;
+        bt_accidentHistoryAdd = binding.workerinformationBtAccidentHistoryAdd;
         et_memo = binding.workerinformationEtMemo;
         bt_complete = binding.workerinformationBtComplete;
 
-        init();
+        rv_accidentHistoryList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        rv_accidentHistoryList.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
 
+        rv_accidentHistoryList.setAdapter(adapter);
         return binding.getRoot();
     }
 
@@ -65,33 +123,86 @@ public class WorkerInformationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //region Observer
+        workerInformationViewModel.getAccidentHistoryList().observe(getViewLifecycleOwner(), new Observer<List<AccidentHistory>>() {
+            @Override
+            public void onChanged(List<AccidentHistory> accidentHistories) {
+                adapter.setAccidentHistoryList(accidentHistories);
+            }
+        });
+
+        workerInformationViewModel.isUserInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
+                    currUser = workerInformationViewModel.getCurrUser();
+                    iv_image.setImageDrawable(workerInformationViewModel.getUserImage());
+                    tv_name.setText(currUser.getUserName());
+                    tv_phoneNumber.setText(currUser.getPhoneNumber());
+                    tv_career.setText(currUser.getCareer());
+                    et_memo.setText(currUser.getMemo());
+                }
+            }
+        });
+        //endregion
+
         //region Listener
+        bt_accidentHistoryAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WorkerInformationFragmentDirections.ActionUserInformationFragmentToAddAccidentHistoryFormFragment action = WorkerInformationFragmentDirections.actionUserInformationFragmentToAddAccidentHistoryFormFragment();
+                action.setPhoneNumber(currUser.getPhoneNumber());
+                action.setUserName(currUser.getUserName());
+                NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(action);
+            }
+        });
+
         bt_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currUser = new User(currUser.getPhoneNumber(), currUser.getPassword(), currUser.getUserName(), currUser.getCareer(), currUser.getWorksiteName(), et_accidentHistory.getText().toString(), et_memo.getText().toString());
-                workerInformationViewModel.changeInformation(currUser);
+                workerInformationViewModel.saveUser();
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
+            }
+        });
+
+        et_memo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                workerInformationViewModel.updateMemoText(s.toString());
             }
         });
         //endregion
     }
 
-    private void init() {
-        String phoneNumber = WorkerInformationFragmentArgs.fromBundle(getArguments()).getPhoneNumber();
-        workerInformationViewModel.loadUserInformation(phoneNumber);
-        workerInformationViewModel.userInformationLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("caution").setMessage("You haven't updated this content, are you going to leave this screen?");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onChanged(Boolean isLoaded) {
-                if (isLoaded) {
-                    currUser = workerInformationViewModel.getUserInformation();
-                    tv_name.setText(currUser.getUserName());
-                    tv_phoneNumber.setText(currUser.getPhoneNumber());
-                    tv_career.setText(currUser.getCareer());
-                    et_accidentHistory.setText(currUser.getAccidentHistory());
-                    et_memo.setText(currUser.getMemo());
-                }
+            public void onClick(DialogInterface dialogInterface, int i) {
+                NavHostFragment.findNavController(WorkerInformationFragment.this).navigateUp();
             }
         });
+
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

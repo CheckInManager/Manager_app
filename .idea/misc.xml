@@ -3,16 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.2867274569402229" />
         <entry key="../../.gradle/caches/transforms-3/6967ad6a4863567a1cbd01c72e47ca73/transformed/appcompat-1.4.2/res/layout/support_simple_spinner_dropdown_item.xml" value="0.3151041666666667" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app2/app/src/main/res/layout/fragment_accidenthistorydetail.xml" value="0.328125" />
+        <entry key="..\:/Users/Changmin/AndroidStudioProjects/Manager_app2/app/src/main/res/layout/fragment_workerinformation.xml" value="0.4990942028985507" />
+        <entry key="app/src/main/res/drawable/buttondrawable.xml" value="0.472" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26875" />
+        <entry key="app/src/main/res/layout/fragment_accidenthistorydetail.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_addaccidenthistoryform.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/fragment_addnewnoticeform.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/fragment_addnewworksiteform.xml" value="0.34375" />
         <entry key="app/src/main/res/layout/fragment_addworker.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_checkedinworkersbysite.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/fragment_notice.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/fragment_noticedetail.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/fragment_qremail.xml" value="0.48854166666666665" />
         <entry key="app/src/main/res/layout/fragment_todayworksite.xml" value="0.34375" />
         <entry key="app/src/main/res/layout/fragment_todayworksite_list.xml" value="0.34375" />
-        <entry key="app/src/main/res/layout/fragment_workerinformation.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/fragment_workerinformation.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/object_accidenthistory.xml" value="0.5625" />
         <entry key="app/src/main/res/layout/object_checkedinworkersbysite.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/object_notice.xml" value="0.5625" />
         <entry key="app/src/main/res/layout/object_todayworksite.xml" value="0.48854166666666665" />
         <entry key="app/src/main/res/layout/object_workeraccidenthistorys.xml" value="0.4875" />
       </map>

@@ -9,14 +9,13 @@ public class App extends Application {
 
     private static final WorksiteRepository WORKSITE_REPOSITORY = WorksiteRepository.getInstance();
 
-    public static String getWorksiteQrImagePath(String workName) {
-        return "worksiteQrImages/worksite_" + workName + ".jpg";
+    public static String getWorksiteQrImagePath(String worksiteKeyValue) {
+        return "worksiteQrImages/worksite_" + worksiteKeyValue + ".jpg";
     }
 
     public static String getUserImagePath(String userPhoneNumber) {
         return "userImages/user_" + userPhoneNumber + ".jpg";
     }
-
 
     public static String getFileProvider() {
         return "com.gausslab.managerapp.fileprovider";
