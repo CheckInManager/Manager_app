@@ -143,6 +143,13 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
             }
         });
 
+        bt_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(R.id.action_checkInWorkersBySiteFragment_to_mapFragment);
+            }
+        });
+
         iv_qr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

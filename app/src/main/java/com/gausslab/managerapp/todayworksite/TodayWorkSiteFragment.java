@@ -102,6 +102,13 @@ public class TodayWorkSiteFragment extends Fragment {
                 NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_noticeFragment);
             }
         });
+
+        bt_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TodayWorkSiteFragment.this).navigate(R.id.action_todayWorkSiteFragment_to_mapFragment);
+            }
+        });
         //endregion
     }
 

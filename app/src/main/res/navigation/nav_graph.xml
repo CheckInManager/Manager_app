@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_todayWorkSiteFragment_to_noticeFragment"
             app:destination="@id/noticeFragment" />
+        <action
+            android:id="@+id/action_todayWorkSiteFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/worksiteFormFragment"
@@ -66,6 +69,9 @@
         <action
             android:id="@+id/action_checkInWorkdersBySiteFragment_to_noticeFragment"
             app:destination="@id/noticeFragment" />
+        <action
+            android:id="@+id/action_checkInWorkersBySiteFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/userInformationFragment"
@@ -101,6 +107,9 @@
         <action
             android:id="@+id/action_addWorkerFragment_to_todayWorkSiteFragment"
             app:destination="@id/todayWorkSiteFragment" />
+        <action
+            android:id="@+id/action_addWorkerFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/noticeFragment"
@@ -119,6 +128,9 @@
         <action
             android:id="@+id/action_noticeFragment_to_noticeDetailFragment"
             app:destination="@id/noticeDetailFragment" />
+        <action
+            android:id="@+id/action_noticeFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewNoticeFormFragment"
@@ -161,5 +173,20 @@
             android:name="keyValue"
             android:defaultValue="key"
             app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.gausslab.managerapp.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_todayWorkSiteFragment"
+            app:destination="@id/todayWorkSiteFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_addWorkerFragment"
+            app:destination="@id/addWorkerFragment" />
     </fragment>
 </navigation>

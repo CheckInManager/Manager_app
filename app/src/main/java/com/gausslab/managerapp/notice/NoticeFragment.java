@@ -100,6 +100,13 @@ public class NoticeFragment extends Fragment {
                 NavHostFragment.findNavController(NoticeFragment.this).navigate(R.id.action_noticeFragment_to_addNewNoticeFormFragment);
             }
         });
+
+        bt_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(NoticeFragment.this).navigate(R.id.action_noticeFragment_to_mapFragment);
+            }
+        });
         //endregion
     }
 

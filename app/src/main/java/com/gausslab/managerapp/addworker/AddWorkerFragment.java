@@ -230,6 +230,13 @@ public class AddWorkerFragment extends Fragment {
                 NavHostFragment.findNavController(AddWorkerFragment.this).navigate(R.id.action_addWorkerFragment_to_noticeFragment);
             }
         });
+
+        bt_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(AddWorkerFragment.this).navigate(R.id.action_addWorkerFragment_to_mapFragment);
+            }
+        });
         //endregion
     }
 
