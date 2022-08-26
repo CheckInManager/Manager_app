@@ -27,7 +27,7 @@
                 android:layout_marginStart="16dp"
                 android:textColor="@color/black"
                 android:ems="8"
-                android:text="accidenthistory desxription"
+                android:text="accidenthistory description"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

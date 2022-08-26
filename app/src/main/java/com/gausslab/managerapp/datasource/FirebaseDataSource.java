@@ -190,7 +190,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>> callback) {
         db.collection("worksite")
-                .whereEqualTo("worksite", worksiteName)
+                .whereEqualTo("worksiteName", worksiteName)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

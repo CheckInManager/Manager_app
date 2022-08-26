@@ -14,7 +14,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/frameLayout12"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".map.MapFragment">
 
             <ImageView
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="This is map"
+                android:text="@string/tv_mapHeader"
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toTopOf="@+id/map_iv_map"
