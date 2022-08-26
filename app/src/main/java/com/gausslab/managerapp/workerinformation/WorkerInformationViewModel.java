@@ -1,7 +1,6 @@
 package com.gausslab.managerapp.workerinformation;
 
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -133,7 +132,7 @@ public class WorkerInformationViewModel extends ViewModel {
         if (currUser != null) {
             if (userHasPhoneNumber && currUser.getPhoneNumber().equals(phoneNumberOrUserName))
                 return;
-            else if (!userHasPhoneNumber && currUser.getUserName().equals(phoneNumberOrUserName))
+            else if (!userHasPhoneNumber && currUser.getName().equals(phoneNumberOrUserName))
                 return;
         }
 

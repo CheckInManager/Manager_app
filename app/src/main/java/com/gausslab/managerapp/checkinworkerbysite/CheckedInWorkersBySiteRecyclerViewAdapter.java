@@ -9,14 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.databinding.ObjectCheckedinworkersbysiteBinding;
-import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.User;
-import com.gausslab.managerapp.todayworksite.OnItemInteractionListener;
-import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
 import java.util.List;
 
@@ -37,7 +33,7 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         User currUser = userList.get(position);
-        holder.tv_userName.setText(currUser.getUserName());
+        holder.tv_userName.setText(currUser.getName());
         holder.tv_phoneNum.setText(currUser.getPhoneNumber());
         if (currUser.isAccidentHistory()) {
             holder.cv_card.setBackgroundColor(Color.RED);

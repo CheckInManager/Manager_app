@@ -24,10 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gausslab.managerapp.App;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentCheckedinworkersbysiteBinding;
-import com.gausslab.managerapp.model.AccidentHistory;
 import com.gausslab.managerapp.model.User;
-import com.gausslab.managerapp.repository.WorksiteRepository;
-import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +60,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
                         String phoneNumber = obj.getPhoneNumber();
                         CheckedInWorkersBySiteFragmentDirections.ActionCheckInWorkdersBySiteFragmentToUserInformationFragment action = CheckedInWorkersBySiteFragmentDirections.actionCheckInWorkdersBySiteFragmentToUserInformationFragment();
                         action.setPhoneNumber(phoneNumber);
-                        action.setUserName(obj.getUserName());
+                        action.setUserName(obj.getName());
                         NavHostFragment.findNavController(CheckedInWorkersBySiteFragment.this).navigate(action);
                     }
 

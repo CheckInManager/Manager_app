@@ -62,7 +62,7 @@ public class FirebaseDataSource implements DataSource {
     public void addOrUpdateUser(User user, CompletedCallback<Result<String>> callback) {
         if (user.getPhoneNumber().isEmpty()) {
             db.collection("user")
-                    .document("Guest_" + user.getUserName())
+                    .document("Guest_" + user.getName())
                     .set(user);
         } else {
             db.collection("user")
@@ -190,7 +190,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>> callback) {
         db.collection("worksite")
-                .whereEqualTo("worksiteName", worksiteName)
+                .whereEqualTo("worksite", worksiteName)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -215,7 +215,7 @@ public class FirebaseDataSource implements DataSource {
                             List<User> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
                             for (DocumentSnapshot snap : snaps) {
-                                if (snap.getString("worksiteName").equals(keyValue)) {
+                                if (snap.getString("worksite").equals(keyValue)) {
                                     User toAdd = snap.toObject(User.class);
                                     toReturn.add(toAdd);
                                 }
@@ -249,7 +249,7 @@ public class FirebaseDataSource implements DataSource {
     @Override
     public void noPhoneNumberGetUser(String userName, CompletedCallback<Result<User>> callback) {
         db.collection("user")
-                .whereEqualTo("userName", userName)
+                .whereEqualTo("name", userName)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -342,7 +342,7 @@ public class FirebaseDataSource implements DataSource {
                     });
         }else{
             db.collection("user")
-                    .document("Guest_"+toRemove.getUserName())
+                    .document("Guest_"+toRemove.getName())
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

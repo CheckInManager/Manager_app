@@ -159,7 +159,7 @@ public class AddWorkerFragment extends Fragment {
                 if (isChanged) {
                     userToAdd = new User(et_phoneNumber.getText().toString(),
                             "", et_name.getText().toString(),
-                            "", addWorkerViewModel.getWorksiteKeyValue(), false, et_memo.getText().toString());
+                            "", addWorkerViewModel.getWorksiteKeyValue(), false, et_memo.getText().toString(), true);
                     if (et_name.getText().toString().length() < 1) {
                         Toast.makeText(requireContext(), R.string.toast_nameEmpty, Toast.LENGTH_SHORT).show();
                     }

@@ -3,23 +3,25 @@ package com.gausslab.managerapp.model;
 public class User {
     private String phoneNumber;
     private String password;
-    private String userName;
+    private String name;
     private String career;
-    private String worksiteName;
+    private String worksite;
     private boolean accidentHistory;
     private String memo;
+    private boolean picture;
 
     public User() {
     }
 
-    public User(String phoneNumber, String password, String userName, String career, String worksiteName, boolean accidentHistory, String memo) {
+    public User(String phoneNumber, String password, String userName, String career, String worksiteName, boolean accidentHistory, String memo, boolean picture) {
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.userName = userName;
+        this.name = userName;
         this.career = career;
-        this.worksiteName = worksiteName;
+        this.worksite = worksiteName;
         this.accidentHistory = accidentHistory;
         this.memo = memo;
+        this.picture = picture;
     }
 
     public String getPhoneNumber() {
@@ -38,12 +40,12 @@ public class User {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -55,12 +57,12 @@ public class User {
         this.career = career;
     }
 
-    public String getWorksiteName() {
-        return worksiteName;
+    public String getWorksite() {
+        return worksite;
     }
 
-    public void setWorksiteName(String worksiteName) {
-        this.worksiteName = worksiteName;
+    public void setWorksite(String worksite) {
+        this.worksite = worksite;
     }
 
     public void setAccidentHistory(boolean accidentHistory) {
@@ -77,5 +79,13 @@ public class User {
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    public boolean isPicture() {
+        return picture;
+    }
+
+    public void setPicture(boolean picture) {
+        this.picture = picture;
     }
 }

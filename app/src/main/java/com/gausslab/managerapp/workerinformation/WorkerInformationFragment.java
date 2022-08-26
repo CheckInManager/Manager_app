@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,7 +136,7 @@ public class WorkerInformationFragment extends Fragment {
                 if (isLoaded) {
                     currUser = workerInformationViewModel.getCurrUser();
                     iv_image.setImageDrawable(workerInformationViewModel.getUserImage());
-                    tv_name.setText(currUser.getUserName());
+                    tv_name.setText(currUser.getName());
                     tv_phoneNumber.setText(currUser.getPhoneNumber());
                     tv_career.setText(currUser.getCareer());
                     et_memo.setText(currUser.getMemo());
@@ -152,7 +151,7 @@ public class WorkerInformationFragment extends Fragment {
             public void onClick(View view) {
                 WorkerInformationFragmentDirections.ActionUserInformationFragmentToAddAccidentHistoryFormFragment action = WorkerInformationFragmentDirections.actionUserInformationFragmentToAddAccidentHistoryFormFragment();
                 action.setPhoneNumber(currUser.getPhoneNumber());
-                action.setUserName(currUser.getUserName());
+                action.setUserName(currUser.getName());
                 NavHostFragment.findNavController(WorkerInformationFragment.this).navigate(action);
             }
         });

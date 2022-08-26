@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.gausslab.managerapp.App;
@@ -89,7 +88,7 @@ public class UserRepository {
     }
 
     public void saveNoPhoneNumberUserImage(final User user, final Bitmap userImage, CompletedCallback<Result> callback) {
-        String localDestinationPath = App.getUserImagePath(user.getUserName());
+        String localDestinationPath = App.getUserImagePath(user.getName());
         fileService.saveBitmapToDisk(localDestinationPath, userImage, new FileService.FileServiceCallback<Result<File>>() {
             @Override
             public void onComplete(Result<File> result) {
