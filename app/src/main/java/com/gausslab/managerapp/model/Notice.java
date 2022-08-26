@@ -1,23 +1,23 @@
 package com.gausslab.managerapp.model;
 
-import java.util.Date;
-
 public class Notice {
     private String noticeName;
     private String memo;
-    private String worksiteName;
+    private String worksiteKeyValue;
     private String time;
     private String keyValue;
+    private String worksiteName;
 
     public Notice() {
     }
 
-    public Notice(String noticeName, String memo, String worksiteName, String time,String keyValue) {
+    public Notice(String noticeName, String memo, String worksiteKeyValue, String time,String keyValue,String worksiteName) {
         this.noticeName = noticeName;
         this.memo = memo;
-        this.worksiteName = worksiteName;
+        this.worksiteKeyValue = worksiteKeyValue;
         this.time = time;
         this.keyValue = keyValue;
+        this.worksiteName = worksiteName;
     }
 
     public String getNoticeName() {
@@ -36,12 +36,12 @@ public class Notice {
         this.memo = memo;
     }
 
-    public String getWorksiteName() {
-        return worksiteName;
+    public String getWorksiteKeyValue() {
+        return worksiteKeyValue;
     }
 
-    public void setWorksiteName(String worksiteName) {
-        this.worksiteName = worksiteName;
+    public void setWorksiteKeyValue(String worksiteKeyValue) {
+        this.worksiteKeyValue = worksiteKeyValue;
     }
 
     public String getTime() {
@@ -58,5 +58,13 @@ public class Notice {
 
     public void setKeyValue(String keyValue) {
         this.keyValue = keyValue;
+    }
+
+    public String getWorksiteName() {
+        return worksiteName;
+    }
+
+    public void setWorksiteName(String worksiteName) {
+        this.worksiteName = worksiteName;
     }
 }

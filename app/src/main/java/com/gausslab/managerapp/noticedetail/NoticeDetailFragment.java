@@ -11,7 +11,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,27 +120,37 @@ public class NoticeDetailFragment extends Fragment {
                 }
             }
         });
+
+        noticeDetailViewModel.isChangedSpinnerString().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isChanged) {
+                if(isChanged){
+                    if (et_noticeName.getText().toString().length() < 1) {
+                        Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
+                    } else {
+                        if ((loadedNoticeName + loadedMemo + loadedWorksiteName).equals(
+                                (et_noticeName.getText().toString() + et_memo.getText().toString() + sp_worksiteName.getSelectedItem().toString()))) {
+                            NavHostFragment.findNavController(NoticeDetailFragment.this).navigateUp();
+                        } else {
+                            SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            long mNow = System.currentTimeMillis();
+                            Date mDate = new Date(mNow);
+                            Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),noticeDetailViewModel.getWorksiteKeyValue()
+                                    , mFormat.format(mDate), loadedKeyValue, sp_worksiteName.getSelectedItem().toString());
+                            noticeDetailViewModel.changeNotice(notice);
+                        }
+                        noticeDetailViewModel.changeState();
+                    }
+                }
+            }
+        });
         //endregion
 
         //region Listener
         bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (et_noticeName.getText().toString().length() < 1) {
-                    Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
-                } else {
-                    if ((loadedNoticeName + loadedMemo + loadedWorksiteName).equals(
-                            (et_noticeName.getText().toString() + et_memo.getText().toString() + sp_worksiteName.getSelectedItem().toString()))) {
-                        NavHostFragment.findNavController(NoticeDetailFragment.this).navigateUp();
-                    } else {
-                        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        long mNow = System.currentTimeMillis();
-                        Date mDate = new Date(mNow);
-                        Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(),
-                                sp_worksiteName.getSelectedItem().toString(), mFormat.format(mDate), loadedKeyValue);
-                        noticeDetailViewModel.changeNotice(notice);
-                    }
-                }
+                noticeDetailViewModel.changeSpinnerStringToKeyValue(sp_worksiteName.getSelectedItem().toString());
             }
         });
 

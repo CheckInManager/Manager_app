@@ -90,23 +90,32 @@ public class AddNewNoticeFormFragment extends Fragment {
                 }
             }
         });
+
+        addNewNoticeFormViewModel.isChangedSpinnerString().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isChanged) {
+                if(isChanged){
+                    if (et_noticeName.getText().toString().length() < 1) {
+                        Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
+                    } else {
+                        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        long mNow = System.currentTimeMillis();
+                        Date mDate = new Date(mNow);
+                        Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(), addNewNoticeFormViewModel.getWorksiteKeyValue(),
+                                mFormat.format(mDate), null,sp_worksiteName.getSelectedItem().toString());
+                        addNewNoticeFormViewModel.addNotice(notice);
+                    }
+                }
+            }
+        });
         //endregion
 
         //region Listener
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (et_noticeName.getText().toString().length() < 1) {
-                    Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
-                } else {
-                    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    long mNow = System.currentTimeMillis();
-                    Date mDate = new Date(mNow);
-                    Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(), sp_worksiteName.getSelectedItem().toString(),
-                            mFormat.format(mDate), null);
-                    addNewNoticeFormViewModel.addNotice(notice);
-                    bt_add.setEnabled(false);
-                }
+                addNewNoticeFormViewModel.changeSpinnerStringToKeyValue(sp_worksiteName.getSelectedItem().toString());
+                bt_add.setEnabled(false);
             }
         });
         //endregion

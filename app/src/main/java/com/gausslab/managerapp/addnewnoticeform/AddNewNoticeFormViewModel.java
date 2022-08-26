@@ -16,6 +16,8 @@ public class AddNewNoticeFormViewModel extends ViewModel {
     private WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private MutableLiveData<Boolean> addNoticeFormSuccess = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> openWorksiteListLoaded = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> changedSpinnerStringLoaded = new MutableLiveData<>(false);
+    private String worksiteKeyValue;
 
     private List<Worksite> worksiteList = new ArrayList<>();
 
@@ -40,6 +42,21 @@ public class AddNewNoticeFormViewModel extends ViewModel {
         });
     }
 
+    public void changeSpinnerStringToKeyValue(String worksiteName){
+        worksiteRepository.changeSpinnerStringToKeyValue(worksiteName, result -> {
+            if(result instanceof Result.Success){
+                worksiteKeyValue =((Result.Success<String>)result).getData();
+                changedSpinnerStringLoaded.postValue(true);
+            }else {
+                changedSpinnerStringLoaded.postValue(false);
+            }
+        });
+    }
+
+    public String getWorksiteKeyValue() {
+        return worksiteKeyValue;
+    }
+
     public List<Worksite> getOpenWorksite() {
         return worksiteList;
     }
@@ -50,6 +67,10 @@ public class AddNewNoticeFormViewModel extends ViewModel {
 
     public LiveData<Boolean> openWorksiteListLoaded() {
         return openWorksiteListLoaded;
+    }
+
+    public LiveData<Boolean> isChangedSpinnerString() {
+        return changedSpinnerStringLoaded;
     }
 
 }

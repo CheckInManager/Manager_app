@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gausslab.managerapp.databinding.ObjectNoticeBinding;
 import com.gausslab.managerapp.model.Notice;
-import com.gausslab.managerapp.todayworksite.OnItemInteractionListener;
-import com.gausslab.managerapp.todayworksite.OnTodayWorksiteContextMenuInteractionListener;
 
 import java.util.List;
 

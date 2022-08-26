@@ -18,6 +18,8 @@ public class NoticeDetailViewModel extends ViewModel {
     private final MutableLiveData<Boolean> noticeDetailLoaded = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> openWorksiteListLoaded = new MutableLiveData<>(false);
     private final MutableLiveData<Event<Boolean>> noticeUpdateSuccessful = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> changedSpinnerStringLoaded = new MutableLiveData<>(false);
+    private String worksiteKeyValue;
 
     private List<Worksite> worksiteList = new ArrayList<>();
     private Notice currNotice;
@@ -61,6 +63,29 @@ public class NoticeDetailViewModel extends ViewModel {
 
     public void updateNoticeNameText(String newNoticeNameText){
         currNotice.setNoticeName(newNoticeNameText);
+    }
+
+    public void changeSpinnerStringToKeyValue(String worksiteName){
+        worksiteRepository.changeSpinnerStringToKeyValue(worksiteName, result -> {
+            if(result instanceof Result.Success){
+                worksiteKeyValue =((Result.Success<String>)result).getData();
+                changedSpinnerStringLoaded.postValue(true);
+            }else {
+                changedSpinnerStringLoaded.postValue(false);
+            }
+        });
+    }
+
+    public void changeState(){
+        changedSpinnerStringLoaded.postValue(false);
+    }
+
+    public String getWorksiteKeyValue() {
+        return worksiteKeyValue;
+    }
+
+    public LiveData<Boolean> isChangedSpinnerString() {
+        return changedSpinnerStringLoaded;
     }
 
 
