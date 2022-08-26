@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_noticeNameLabel"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/noticedetail_et_noticeName"
             app:layout_constraintStart_toStartOf="@+id/noticedetail_et_noticeName" />
 
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_memoLabel"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/noticedetail_et_memo"
             app:layout_constraintStart_toStartOf="@+id/noticedetail_et_memo" />
 
@@ -54,6 +56,7 @@
             android:id="@+id/noticedetail_tv_worksiteNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/tv_worksiteNameLabel"
             app:layout_constraintBottom_toTopOf="@+id/noticedetila_sp_worksiteName"
             app:layout_constraintStart_toStartOf="@+id/noticedetila_sp_worksiteName" />

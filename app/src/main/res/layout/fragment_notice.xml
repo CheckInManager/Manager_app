@@ -60,7 +60,8 @@
         <Button
             android:id="@+id/notice_bt_addNotice"
             style="@style/navBar_button"
-            android:backgroundTint="#C5E1F8"
+            android:backgroundTint="#001E92"
+            android:textColor="@color/white"
             android:enabled="false"
             android:text="@string/bt_Notice"
             app:layout_constraintBottom_toBottomOf="parent"

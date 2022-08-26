@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_accidentDescriptionLabel"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_description"
             app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_description" />
 
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_accidentPlaceLabel"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_place"
             app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_place" />
 
@@ -53,6 +55,7 @@
             android:id="@+id/addaccidenthistory_tv_dateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/tv_accidentDateLabel"
             app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_date"
             app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_date" />
@@ -73,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_accidentTimeLabel"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/addaccidenthistory_et_time"
             app:layout_constraintStart_toStartOf="@+id/addaccidenthistory_et_time" />
 

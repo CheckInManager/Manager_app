@@ -11,10 +11,10 @@
     <string name="tv_memoLabel">Memo</string>
     <string name="tv_careerLabel">Career</string>
     <string name="tv_accidentDescriptionLabel">Accident Description</string>
-    <string name="tv_accidentPlaceLabel">Accident place</string>
-    <string name="tv_accidentDateLabel">Accident date</string>
+    <string name="tv_accidentPlaceLabel">Accident Place</string>
+    <string name="tv_accidentDateLabel">Accident Date</string>
     <string name="tv_accidentTimeLabel">Accident Time</string>
-    <string name="tv_noticeNameLabel">NoticeName</string>
+    <string name="tv_noticeNameLabel">Notice Name</string>
     <string name="tv_checkedworkersPath"><![CDATA[Worksite >> CheckedWorkers]]></string>
 
     <string name="hint_worksiteName">Write down Worksite</string>

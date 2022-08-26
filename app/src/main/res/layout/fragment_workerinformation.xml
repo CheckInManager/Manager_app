@@ -29,6 +29,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:text="@string/tv_nameLabel"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/workinformation_iv_image" />
 
@@ -47,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:textColor="@color/black"
             android:text="@string/tv_phoneNumberLabel"
             app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_nameLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_nameLabel" />
@@ -67,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/tv_careerLabel"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_phoneNumberLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_phoneNumberLabel" />
 
@@ -86,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/tv_accidentHistoryLabel"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="@+id/workerinformation_tv_careerLabel"
             app:layout_constraintTop_toBottomOf="@+id/workerinformation_tv_careerLabel" />
 
@@ -114,6 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/tv_memoLabel"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="@+id/workerinformation_bt_accidentHistoryAdd"
             app:layout_constraintTop_toTopOf="@+id/workerinformation_et_memo" />
 

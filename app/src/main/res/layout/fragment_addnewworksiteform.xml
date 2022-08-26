@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_worksiteNameLabel"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_worksiteName"
             app:layout_constraintStart_toStartOf="@+id/worksiteform_et_worksiteName" />
@@ -38,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_startDateLabel"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_startDate"
             app:layout_constraintStart_toStartOf="@+id/worksiteform_et_startDate" />
@@ -59,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_endDateLabel"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_endDate"
             app:layout_constraintStart_toStartOf="@+id/worksiteform_et_endDate" />
@@ -80,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_locationLabel"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@+id/worksiteform_et_location"
             app:layout_constraintStart_toStartOf="@+id/worksiteform_et_location" />
