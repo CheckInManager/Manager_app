@@ -121,13 +121,13 @@ public class NoticeFragment extends Fragment {
                     @Override
                     public void onClick(Notice obj) {
                         NoticeFragmentDirections.ActionNoticeFragmentToNoticeDetailFragment action = NoticeFragmentDirections.actionNoticeFragmentToNoticeDetailFragment();
-                        action.setKeyValue(obj.getKeyValue());
+                        action.setKeyValue(obj.getId());
                         NavHostFragment.findNavController(NoticeFragment.this).navigate(action);
                     }
 
                     @Override
                     public void onDelete(Notice obj) {
-                        noticeViewModel.deleteNotice(obj.getKeyValue());
+                        noticeViewModel.deleteNotice(obj.getId());
                     }
                 });
         rv_list.setAdapter(adapter);

@@ -91,30 +91,31 @@ public class AddNewNoticeFormFragment extends Fragment {
             }
         });
 
-        addNewNoticeFormViewModel.isChangedSpinnerString().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isChanged) {
-                if(isChanged){
-                    if (et_noticeName.getText().toString().length() < 1) {
-                        Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
-                    } else {
-                        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        long mNow = System.currentTimeMillis();
-                        Date mDate = new Date(mNow);
-                        Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(), addNewNoticeFormViewModel.getWorksiteKeyValue(),
-                                mFormat.format(mDate), null,sp_worksiteName.getSelectedItem().toString());
-                        addNewNoticeFormViewModel.addNotice(notice);
-                    }
-                }
-            }
-        });
+//        addNewNoticeFormViewModel.isChangedSpinnerString().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean isChanged) {
+//                if(isChanged){
+//                    if (et_noticeName.getText().toString().length() < 1) {
+//                        Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//                        long mNow = System.currentTimeMillis();
+//                        Date mDate = new Date(mNow);
+//                        Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(), addNewNoticeFormViewModel.getWorksiteKeyValue(),
+//                                mFormat.format(mDate), null,sp_worksiteName.getSelectedItem().toString());
+//                        addNewNoticeFormViewModel.addNotice(notice);
+//                    }
+//                }
+//            }
+//        });
         //endregion
 
         //region Listener
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewNoticeFormViewModel.changeSpinnerStringToKeyValue(sp_worksiteName.getSelectedItem().toString());
+                Worksite selectedWorksite = addNewNoticeFormViewModel.getOpenWorksite().get(sp_worksiteName.getSelectedItemPosition());
+                addNewNoticeFormViewModel.addNotice(new Notice(0, et_noticeName.getText().toString(), et_memo.getText().toString(), selectedWorksite, 0));
                 bt_add.setEnabled(false);
             }
         });

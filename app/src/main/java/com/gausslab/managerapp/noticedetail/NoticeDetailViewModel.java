@@ -4,108 +4,165 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gausslab.managerapp.Event;
+import com.gausslab.managerapp.datasource.CompletedCallback;
 import com.gausslab.managerapp.model.Notice;
 import com.gausslab.managerapp.model.Result;
 import com.gausslab.managerapp.model.Worksite;
 import com.gausslab.managerapp.repository.WorksiteRepository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class NoticeDetailViewModel extends ViewModel {
+public class NoticeDetailViewModel extends ViewModel
+{
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
-    private final MutableLiveData<Boolean> noticeDetailLoaded = new MutableLiveData<>(false);
-    private final MutableLiveData<Boolean> openWorksiteListLoaded = new MutableLiveData<>(false);
-    private final MutableLiveData<Event<Boolean>> noticeUpdateSuccessful = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> changedSpinnerStringLoaded = new MutableLiveData<>(false);
-    private String worksiteKeyValue;
-
+    private final MutableLiveData<Boolean> dataLoaded = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> worksiteUpdated = new MutableLiveData<>(false);
     private List<Worksite> worksiteList = new ArrayList<>();
-    private Notice currNotice;
+    private Notice currNotice = null;
+    private long currNoticeId = 0;
 
-    public void loadNoticeDetail(String keyValue) {
-        if(currNotice !=null){
-            if(currNotice.getKeyValue().equals(keyValue)){
-                return;
-            }
+    public void updateNotice(String noticeTitle, String noticeMemo, Worksite selectedWorksite)
+    {
+        if (!isNoticeChanged(currNotice, noticeTitle, noticeMemo, selectedWorksite))
+        {
+            worksiteUpdated.postValue(true);
+            return;
         }
-        worksiteRepository.getNoticeDetailByName(keyValue, result -> {
-            if (result instanceof Result.Success) {
-                currNotice = ((Result.Success<Notice>) result).getData();
-                noticeDetailLoaded.postValue(true);
-            } else {
-                noticeDetailLoaded.postValue(false);
+
+        currNotice.setTitle(noticeTitle);
+        currNotice.setContent(noticeMemo);
+        currNotice.setWorksite(selectedWorksite);
+        worksiteRepository.changeNotice(currNotice, new CompletedCallback<Result<String>>()
+        {
+            @Override
+            public void onComplete(Result<String> result)
+            {
+                if (result instanceof Result.Success)
+                    worksiteUpdated.postValue(true);
             }
         });
     }
 
-    public void loadOpenWorksite(String todayCal) {
-        worksiteRepository.getTodayWorksite(todayCal, result -> {
-            if (result instanceof Result.Success) {
-                worksiteList = ((Result.Success<List<Worksite>>) result).getData();
-                openWorksiteListLoaded.setValue(true);
+    private void loadData()
+    {
+        loadWorksiteList(getTodayCalendarDateString(), new CompletedCallback<Result<String>>()
+        {
+            @Override
+            public void onComplete(Result<String> result)
+            {
+                if (result instanceof Result.Success)
+                {
+                    loadNotice(currNoticeId, new CompletedCallback<Result<String>>()
+                    {
+                        @Override
+                        public void onComplete(Result<String> result)
+                        {
+                            if (result instanceof Result.Success)
+                            {
+                                dataLoaded.postValue(true);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        //노티스 정보
+        //worksite list
+    }
+
+    private void loadWorksiteList(String todayCalString, CompletedCallback<Result<String>> callback)
+    {
+        worksiteRepository.getTodayWorksite(todayCalString, new CompletedCallback<Result<List<Worksite>>>()
+        {
+            @Override
+            public void onComplete(Result<List<Worksite>> result)
+            {
+                if (result instanceof Result.Success)
+                {
+                    worksiteList = ((Result.Success<List<Worksite>>) result).getData();
+                    callback.onComplete(new Result.Success<String>("Success"));
+                }
+                else
+                    callback.onComplete(new Result.Error(new Exception("AHHH")));
             }
         });
     }
 
-    public void changeNotice(Notice notice) {
-        worksiteRepository.changeNotice(notice, result -> {
-            if (result instanceof Result.Success) {
-                noticeUpdateSuccessful.postValue(new Event<Boolean>(true));
+    private void loadNotice(long noticeId, CompletedCallback<Result<String>> callback)
+    {
+        worksiteRepository.getNotice(noticeId, new CompletedCallback<Result<Notice>>()
+        {
+            @Override
+            public void onComplete(Result<Notice> result)
+            {
+                if (result instanceof Result.Success)
+                {
+                    currNotice = ((Result.Success<Notice>) result).getData();
+                    callback.onComplete(new Result.Success<String>("Success"));
+                }
+                else
+                {
+                    callback.onComplete(new Result.Error(((Result.Error) result).getError()));
+                }
             }
         });
     }
 
-    public void updateMemoText(String newMemoText){
-        currNotice.setMemo(newMemoText);
-    }
-
-    public void updateNoticeNameText(String newNoticeNameText){
-        currNotice.setNoticeName(newNoticeNameText);
-    }
-
-    public void changeSpinnerStringToKeyValue(String worksiteName){
-        worksiteRepository.changeSpinnerStringToKeyValue(worksiteName, result -> {
-            if(result instanceof Result.Success){
-                worksiteKeyValue =((Result.Success<String>)result).getData();
-                changedSpinnerStringLoaded.postValue(true);
-            }else {
-                changedSpinnerStringLoaded.postValue(false);
-            }
-        });
-    }
-
-    public void changeState(){
-        changedSpinnerStringLoaded.postValue(false);
-    }
-
-    public String getWorksiteKeyValue() {
-        return worksiteKeyValue;
-    }
-
-    public LiveData<Boolean> isChangedSpinnerString() {
-        return changedSpinnerStringLoaded;
-    }
-
-
-    public List<Worksite> getOpenWorksite() {
+    public List<Worksite> getWorksiteList()
+    {
         return worksiteList;
     }
 
-    public Notice getNoticeDetail() {
+    public Notice getCurrNotice()
+    {
         return currNotice;
     }
 
-    public LiveData<Boolean> isNoticeDetailLoaded() {
-        return noticeDetailLoaded;
+    public void setCurrNoticeId(long noticeId)
+    {
+        this.currNoticeId = noticeId;
+        loadData();
     }
 
-    public LiveData<Boolean> openWorksiteListLoaded() {
-        return openWorksiteListLoaded;
+    public LiveData<Boolean> isDataLoaded()
+    {
+        return dataLoaded;
     }
 
-    public LiveData<Event<Boolean>> isNoticeUpdateSuccessful() {
-        return noticeUpdateSuccessful;
+    public LiveData<Boolean> isWorksiteUpdated()
+    {
+        return worksiteUpdated;
+    }
+
+    private String getTodayCalendarDateString()
+    {
+        Calendar cal = Calendar.getInstance();
+        String todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+
+        String todayMonthCal = ((cal.get(Calendar.MONTH) + 1) + "");
+        String todayDayCal = ((cal.get(Calendar.DATE)) + "");
+
+        if (todayMonthCal.length() < 2 && todayDayCal.length() < 2)
+        {
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        }
+        else if (todayMonthCal.length() < 2)
+        {
+            todayCal = ((cal.get(Calendar.YEAR)) + "0" + (cal.get(Calendar.MONTH) + 1) + "" + (cal.get(Calendar.DATE)));
+        }
+        else if (todayDayCal.length() < 2)
+        {
+            todayCal = ((cal.get(Calendar.YEAR)) + "" + (cal.get(Calendar.MONTH) + 1) + "0" + (cal.get(Calendar.DATE)));
+        }
+        return todayCal;
+    }
+
+    private boolean isNoticeChanged(Notice currNotice, String noticeName, String noticeMemo, Worksite worksite)
+    {
+        return !(currNotice.getTitle().equals(noticeName) &&
+                 currNotice.getContent().equals(noticeMemo) &&
+                 currNotice.getWorksite().equals(worksite));
     }
 }

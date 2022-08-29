@@ -1,6 +1,11 @@
 package com.gausslab.managerapp.model;
 
+import androidx.annotation.Nullable;
+
+import java.math.BigDecimal;
+
 public class Worksite {
+    private String name;
     private String worksiteName;
     private String startDate;
     private String endDate;
@@ -57,5 +62,19 @@ public class Worksite {
 
     public void setKeyValue(String keyValue) {
         this.keyValue = keyValue;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj)
+    {
+        if(!(obj instanceof Worksite)){
+            return false;
+        }
+        Worksite toCompare = (Worksite) obj;
+        return keyValue.equals(toCompare.keyValue) &&
+               worksiteName.equals(toCompare.worksiteName) &&
+               location.equals(toCompare.location) &&
+               startDate.equals(toCompare.startDate) &&
+               endDate.equals(toCompare.endDate);
     }
 }

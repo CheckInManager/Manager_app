@@ -1,70 +1,73 @@
 package com.gausslab.managerapp.model;
 
-public class Notice {
-    private String noticeName;
-    private String memo;
-    private String worksiteKeyValue;
-    private String time;
-    private String keyValue;
-    private String worksiteName;
+public class Notice
+{
+    private long id;
+    private String title;
+    private String content;
+    private Worksite worksite;
+    private long timestamp;
 
-    public Notice() {
+    public Notice()
+    {
     }
 
-    public Notice(String noticeName, String memo, String worksiteKeyValue, String time,String keyValue,String worksiteName) {
-        this.noticeName = noticeName;
-        this.memo = memo;
-        this.worksiteKeyValue = worksiteKeyValue;
-        this.time = time;
-        this.keyValue = keyValue;
-        this.worksiteName = worksiteName;
+    public Notice(long id, String title, String content, Worksite worksite, long timestamp)
+    {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.worksite = worksite;
+        this.timestamp = timestamp;
     }
 
-    public String getNoticeName() {
-        return noticeName;
+    public long getId()
+    {
+        return id;
     }
 
-    public void setNoticeName(String noticeName) {
-        this.noticeName = noticeName;
+    public void setId(long id)
+    {
+        this.id = id;
     }
 
-    public String getMemo() {
-        return memo;
+    public String getTitle()
+    {
+        return title;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setTitle(String title)
+    {
+        this.title = title;
     }
 
-    public String getWorksiteKeyValue() {
-        return worksiteKeyValue;
+    public String getContent()
+    {
+        return content;
     }
 
-    public void setWorksiteKeyValue(String worksiteKeyValue) {
-        this.worksiteKeyValue = worksiteKeyValue;
+    public void setContent(String content)
+    {
+        this.content = content;
     }
 
-    public String getTime() {
-        return time;
+    public Worksite getWorksite()
+    {
+        return worksite;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setWorksite(Worksite worksite)
+    {
+        this.worksite = worksite;
     }
 
-    public String getKeyValue() {
-        return keyValue;
+    public long getTimestamp()
+    {
+        return timestamp;
     }
 
-    public void setKeyValue(String keyValue) {
-        this.keyValue = keyValue;
-    }
-
-    public String getWorksiteName() {
-        return worksiteName;
-    }
-
-    public void setWorksiteName(String worksiteName) {
-        this.worksiteName = worksiteName;
+    public void setTimestamp(long timestamp)
+    {
+        this.timestamp = timestamp;
     }
 }

@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -134,9 +133,7 @@ public class WorksiteRepository {
         });
     }
 
-    public void addNotice(final Notice notice, CompletedCallback<Result<String>> callback) {
-        dataSource.addNotice(notice, callback);
-    }
+
 
     public void registerNoticeListListener() {
         dataSource.getNoticeList(new ListenerCallback<Result<List<Notice>>>() {
@@ -152,25 +149,32 @@ public class WorksiteRepository {
         });
     }
 
+    public void addNotice(final Notice notice, CompletedCallback<Result<String>> callback) {
+        notice.setTimestamp(System.currentTimeMillis());
+        dataSource.addNotice(notice, callback);
+    }
+
     public void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>> callback) {
-        dataSource.changeSpinnerStringToKeyValue(worksiteName, callback);
+        dataSource.getWorksiteKeyFromString(worksiteName, callback);
+    }
+
+    public void deleteNotice(final Long noticeId, CompletedCallback<Result<String>> callback) {
+        dataSource.deleteNotice(noticeId, callback);
+    }
+
+    public void changeNotice(final Notice notice, final CompletedCallback<Result<String>> callback) {
+
+        dataSource.changeNotice(notice, callback);
     }
 
     public List<Notice> getNoticeList() {
         return noticeList;
     }
 
-    public void deleteNotice(final String keyValue, CompletedCallback<Result<String>> callback) {
-        dataSource.deleteNotice(keyValue, callback);
+    public void getNotice(long noticeId, CompletedCallback<Result<Notice>> callback){
+        dataSource.getNotice(noticeId, callback);
     }
 
-    public void getNoticeDetailByName(final String keyValue, CompletedCallback<Result<Notice>> callback) {
-        dataSource.getNoticeDetailByName(keyValue, callback);
-    }
-
-    public void changeNotice(final Notice notice, final CompletedCallback<Result<String>> callback) {
-        dataSource.changeNotice(notice, callback);
-    }
 
     public void getAllWorksite(final CompletedCallback<Result<List<Worksite>>> callback) {
         dataSource.getAllWorksite(callback);

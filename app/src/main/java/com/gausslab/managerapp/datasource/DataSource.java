@@ -8,7 +8,8 @@ import com.gausslab.managerapp.model.Worksite;
 
 import java.util.List;
 
-public interface DataSource {
+public interface DataSource
+{
     void getTodayWorksiteList(String todayCal, CompletedCallback<Result<List<Worksite>>> callback);
 
     void addWorksite(Worksite worksite, CompletedCallback<Result<String>> callback);
@@ -27,9 +28,11 @@ public interface DataSource {
 
     void getNoticeList(ListenerCallback<Result<List<Notice>>> callback);
 
-    void deleteNotice(String keyValue, CompletedCallback<Result<String>> callback);
+    void getNotice(long noticeId, CompletedCallback<Result<Notice>> callback);
 
-    void getNoticeDetailByName(String keyValue, CompletedCallback<Result<Notice>> callback);
+    void changeNotice(Notice notice, CompletedCallback<Result<String>> callback);
+
+    void deleteNotice(Long keyValue, CompletedCallback<Result<String>> callback);
 
     void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
@@ -41,11 +44,9 @@ public interface DataSource {
 
     void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
-    void changeNotice(Notice notice, CompletedCallback<Result<String>> callback);
-
     void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback);
 
-    void changeSpinnerStringToKeyValue(String worksiteName, CompletedCallback<Result<String>> callback);
+    void getWorksiteKeyFromString(String worksiteName, CompletedCallback<Result<String>> callback);
 
     void getAllWorksite(CompletedCallback<Result<List<Worksite>>> callback);
 
