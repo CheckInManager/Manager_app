@@ -29,7 +29,7 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
     private Drawable qrImage;
     private Worksite worksite;
 
-    public void loadUserListByWorksite(String keyValue) {
+    public void loadUserListByWorksite(Long keyValue) {
         userRepository.registerWorksiteUserListListener(keyValue, new ListenerCallback<List<User>>() {
             @Override
             public void onUpdate(List<User> result) {
@@ -38,7 +38,7 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         });
     }
 
-    public void setWorksite(String keyValue) {
+    public void setWorksite(Long keyValue) {
         worksiteRepository.loadQrDrawableForWorksite(keyValue, new CompletedCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result<Drawable> drawableResult) {
@@ -52,7 +52,7 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         });
     }
 
-    public void loadWorksite(String key) {
+    public void loadWorksite(Long key) {
         loadUserListByWorksite(key);
         worksiteRepository.getWorksiteByKey(key, new CompletedCallback<Result<Worksite>>() {
             @Override
@@ -67,7 +67,7 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         });
     }
 
-    public File getQrFile(String key) {
+    public File getQrFile(Long key) {
         return worksiteRepository.getQrFileForWorksite(key);
     }
 

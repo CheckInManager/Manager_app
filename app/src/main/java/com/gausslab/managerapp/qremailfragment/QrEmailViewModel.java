@@ -17,7 +17,7 @@ public class QrEmailViewModel extends ViewModel {
 
     private Drawable qrImage;
 
-    public void setWorksite(String keyValue) {
+    public void setWorksite(Long keyValue) {
 
         worksiteRepository.loadQrDrawableForWorksite(keyValue, new CompletedCallback<Result<Drawable>>() {
             @Override

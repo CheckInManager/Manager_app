@@ -41,7 +41,7 @@ public class CheckedInWorkersBySiteFragment extends Fragment {
     private TextView tv_worksiteName;
     private RecyclerView rv_userList;
     private CheckedInWorkersBySiteRecyclerViewAdapter adapter;
-    private String key;
+    private Long key;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

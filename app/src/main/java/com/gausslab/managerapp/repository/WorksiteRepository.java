@@ -34,7 +34,7 @@ public class WorksiteRepository {
     private FileService fileService;
     protected Executor executor;
 
-    private Map<String, Drawable> worksiteQrDrawableMap = new HashMap<String, Drawable>();
+    private Map<Long, Drawable> worksiteQrDrawableMap = new HashMap<Long, Drawable>();
     private MutableLiveData<Boolean> noticeListLoaded = new MutableLiveData<>(false);
     public List<Notice> noticeList = new ArrayList<>();
     public File localFile;
@@ -64,8 +64,8 @@ public class WorksiteRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String toEncode = "gausslab.managerapp.worksite_" + worksite.getKeyValue();
-                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getKeyValue()), new CompletedCallback<Result<Uri>>() {
+                String toEncode = "gausslab.managerapp.worksite_" + worksite.getId();
+                generateWorksiteQr_helper(toEncode, App.getWorksiteQrImagePath(worksite.getId()), new CompletedCallback<Result<Uri>>() {
                     @Override
                     public void onComplete(Result result) {
                         callback.onComplete(result);
@@ -108,7 +108,7 @@ public class WorksiteRepository {
         }
     }
 
-    public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback) {
+    public void getWorksiteByKey(long key, CompletedCallback<Result<Worksite>> callback) {
         dataSource.getWorksiteByKey(key, callback);
     }
 
@@ -116,11 +116,11 @@ public class WorksiteRepository {
         return worksiteQrDrawableMap.get(workName);
     }
 
-    public File getQrFileForWorksite(String key) {
+    public File getQrFileForWorksite(Long key) {
         return fileService.getFile(App.getWorksiteQrImagePath(key));
     }
 
-    public void loadQrDrawableForWorksite(String worksiteQrImagePath, CompletedCallback<Result<Drawable>> callback) {
+    public void loadQrDrawableForWorksite(long worksiteQrImagePath, CompletedCallback<Result<Drawable>> callback) {
         fileService.getImageDrawable(App.getWorksiteQrImagePath(worksiteQrImagePath), new FileService.FileServiceCallback<Result<Drawable>>() {
             @Override
             public void onComplete(Result result) {

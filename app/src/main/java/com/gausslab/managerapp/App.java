@@ -9,7 +9,7 @@ public class App extends Application {
 
     private static final WorksiteRepository WORKSITE_REPOSITORY = WorksiteRepository.getInstance();
 
-    public static String getWorksiteQrImagePath(String worksiteKeyValue) {
+    public static String getWorksiteQrImagePath(long worksiteKeyValue) {
         return "worksiteQrImages/worksite_" + worksiteKeyValue + ".jpg";
     }
 

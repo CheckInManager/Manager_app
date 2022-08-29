@@ -14,7 +14,7 @@ public interface DataSource
 
     void addWorksite(Worksite worksite, CompletedCallback<Result<String>> callback);
 
-    void getUserListByWorksite(String worksiteName, ListenerCallback<Result<List<User>>> callback);
+    void getUserListByWorksite(long keyValue, ListenerCallback<Result<List<User>>> callback);
 
     void getUserByPhoneNumber(String phoneNumber, CompletedCallback<Result<User>> callback);
 
@@ -44,7 +44,7 @@ public interface DataSource
 
     void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback);
 
-    void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback);
+    void getWorksiteByKey(long key, CompletedCallback<Result<Worksite>> callback);
 
     void getWorksiteKeyFromString(String worksiteName, CompletedCallback<Result<String>> callback);
 

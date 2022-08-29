@@ -76,7 +76,7 @@ public class TodayWorkSiteListFragment extends Fragment {
                         @Override
                         public void onItemClick(Worksite obj) {
                             TodayWorkSiteFragmentDirections.ActionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment action = TodayWorkSiteFragmentDirections.actionTodayWorkSiteFragmentToCheckInWorkdersBySiteFragment();
-                            action.setKeyValue(obj.getKeyValue());
+                            action.setKeyValue(obj.getId());
                             NavHostFragment.findNavController(TodayWorkSiteListFragment.this).navigate(action);
                         }
 

@@ -91,7 +91,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
             public void onChanged(Boolean isAdditionSuccessful) {
                 if (isAdditionSuccessful) {
                     AddNewWorksiteFormFragmentDirections.ActionWorksiteFormFragmentToQrEmailFragment action = AddNewWorksiteFormFragmentDirections.actionWorksiteFormFragmentToQrEmailFragment();
-                    action.setKeyValue(worksite.getKeyValue());
+                    action.setKeyValue(worksite.getId());
                     NavHostFragment.findNavController(AddNewWorksiteFormFragment.this).navigate(action);
                 }
             }
@@ -121,8 +121,14 @@ public class AddNewWorksiteFormFragment extends Fragment {
         DatePickerDialog.OnDateSetListener startDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                String s = "" + year + "" + (month + 1) + "" + dayOfMonth;
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMdd");
+                String strMonth;
+                if(String.valueOf(month+1).length()<2){
+                    strMonth = "0"+(month+1);
+                }else{
+                    strMonth =""+(month+1);
+                }
+                String s = "" + year + "" + strMonth+ "" + dayOfMonth;
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
                 ArrayList<String> result = new ArrayList<>();
                 try {
                     Date date = format.parse(s);
@@ -138,8 +144,14 @@ public class AddNewWorksiteFormFragment extends Fragment {
         DatePickerDialog.OnDateSetListener endDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                String s = "" + year + "" + (month + 1) + "" + dayOfMonth;
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMdd");
+                String strMonth;
+                if(String.valueOf(month+1).length()<2){
+                    strMonth = "0"+(month+1);
+                }else{
+                    strMonth =""+(month+1);
+                }
+                String s = "" + year + "" + strMonth + "" + dayOfMonth;
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
                 ArrayList<String> result = new ArrayList<>();
                 try {
                     Date date = format.parse(s);
@@ -185,7 +197,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
 
                 if (addNewWorksiteFormViewModel.checkDate(et_startDate.getText().toString()) && addNewWorksiteFormViewModel.checkDate(et_endDate.getText().toString())) {
                     if (addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(), et_endDate.getText().toString())) {
-                        worksite = new Worksite(et_worksiteName.getText().toString(), longStartDate, longEndDate, et_location.getText().toString(), null);
+                        worksite = new Worksite(et_worksiteName.getText().toString(), longStartDate, longEndDate, et_location.getText().toString(), 0);
                         if (addNewWorksiteFormViewModel.checkSameWorksiteName(et_worksiteName.getText().toString())) {
                             addNewWorksiteFormViewModel.addWorksite(worksite);
                             bt_add.setEnabled(false);

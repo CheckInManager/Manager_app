@@ -27,8 +27,8 @@ public class UserRepository {
     protected Executor executor;
     private DataSource dataSource;
     private FileService fileService;
-    private Map<String, List<User>> worksiteUsersMap = new HashMap<>(); // keyValue, userList
-    private Map<String, MutableLiveData<Boolean>> worksiteUsersLoaded = new HashMap<>();
+    private Map<Long, List<User>> worksiteUsersMap = new HashMap<>(); // keyValue, userList
+    private Map<Long, MutableLiveData<Boolean>> worksiteUsersLoaded = new HashMap<>();
 
     private Map<String, Drawable> userImageDrawableMap = new HashMap<String, Drawable>();
 
@@ -36,7 +36,7 @@ public class UserRepository {
         return INSTANCE;
     }
 
-    public void registerWorksiteUserListListener(String keyValue, ListenerCallback<List<User>> callback) {
+    public void registerWorksiteUserListListener(long keyValue, ListenerCallback<List<User>> callback) {
         worksiteUsersMap.put(keyValue, new ArrayList<>());
         worksiteUsersLoaded.put(keyValue, new MutableLiveData<>());
         dataSource.getUserListByWorksite(keyValue, new ListenerCallback<Result<List<User>>>() {

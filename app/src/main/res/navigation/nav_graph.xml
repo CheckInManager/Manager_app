@@ -42,8 +42,8 @@
         tools:layout="@layout/fragment_qremail" >
         <argument
             android:name="keyValue"
-            android:defaultValue="keyValue"
-            app:argType="string"/>
+            android:defaultValue="0L"
+            app:argType="long"/>
         <action
             android:id="@+id/action_qrEmailFragment_to_todayWorkSiteFragment"
             app:destination="@id/todayWorkSiteFragment" />
@@ -55,8 +55,8 @@
         tools:layout="@layout/fragment_checkedinworkersbysite">
         <argument
             android:name="keyValue"
-            android:defaultValue="keyValue"
-            app:argType="string"/>
+            android:defaultValue="0L"
+            app:argType="long"/>
         <action
             android:id="@+id/action_checkInWorkdersBySiteFragment_to_userInformationFragment"
             app:destination="@id/userInformationFragment" />

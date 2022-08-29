@@ -7,18 +7,18 @@ public class Worksite {
     private long startDateStamp;
     private long endDateStamp;
     private String location;
-    private String keyValue;
+    private long id;
 
     public Worksite() {
 
     }
 
-    public Worksite(String worksiteName, long startDateStamp, long endDateStamp, String location, String keyValue) {
+    public Worksite(String worksiteName, long startDateStamp, long endDateStamp, String location, long id) {
         this.worksiteName = worksiteName;
         this.startDateStamp = startDateStamp;
         this.endDateStamp = endDateStamp;
         this.location = location;
-        this.keyValue = keyValue;
+        this.id = id;
     }
 
     public String getWorksiteName() {
@@ -53,12 +53,12 @@ public class Worksite {
         this.location = location;
     }
 
-    public String getKeyValue() {
-        return keyValue;
+    public long getId() {
+        return id;
     }
 
-    public void setKeyValue(String keyValue) {
-        this.keyValue = keyValue;
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override
@@ -68,8 +68,8 @@ public class Worksite {
             return false;
         }
         Worksite toCompare = (Worksite) obj;
-        return keyValue.equals(toCompare.keyValue) &&
-               worksiteName.equals(toCompare.worksiteName) &&
+//        return id.equals(toCompare.id) &&
+        return worksiteName.equals(toCompare.worksiteName) &&
                location.equals(toCompare.location) ;
 //               startDateStamp.equals(toCompare.startDateStamp) &&
 //               endDateStamp.equals(toCompare.endDateStamp);

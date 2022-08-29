@@ -43,20 +43,23 @@ public class FirebaseDataSource implements DataSource {
 
     @Override
     public void addWorksite(Worksite toAdd, CompletedCallback<Result<String>> callback) {
-        getNewKey(KeyType.WORKSITE, new CompletedCallback<Result<String>>() {
+        getNewKey2(KeyType.WORKSITE, new CompletedCallback<Result<Long>>() {
             @Override
-            public void onComplete(Result<String> result) {
+            public void onComplete(Result<Long> result) {
                 if (result instanceof Result.Success) {
-                    String keyValue = ((Result.Success<String>) result).getData();
-                    toAdd.setKeyValue(keyValue);
+                    Long keyValue = ((Result.Success<Long>) result).getData();
+                    toAdd.setId(keyValue);
                     db.collection("worksite")
-                            .document(keyValue)
+                            .document(String.valueOf(keyValue))
                             .set(toAdd);
                     callback.onComplete(new Result.Success<String>("Success"));
                 }
             }
         });
     }
+
+
+
 
     @Override
     public void addOrUpdateUser(User user, CompletedCallback<Result<String>> callback) {
@@ -93,8 +96,7 @@ public class FirebaseDataSource implements DataSource {
     public void getTodayWorksiteList(String todayCal, CompletedCallback<Result<List<Worksite>>> callback) {
         long today = System.currentTimeMillis();
         db.collection("worksite")
-                .whereGreaterThan("startDateStamp", today)
-                .whereLessThan("endDateStamp",today)
+                .whereGreaterThan("endDateStamp", today)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -102,14 +104,10 @@ public class FirebaseDataSource implements DataSource {
                             List<Worksite> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
                             for (DocumentSnapshot snap : snaps) {
-                                Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getLong("startDateStamp"), snap.getLong("endDateStamp"), snap.getString("location"), snap.getString("keyValue"));
-                                toReturn.add(toAdd);
-//                                String parsedStringStartDate = parseDate(snap.getString("startDate"));
-//                                String parsedStringEndDate = parseDate(snap.getString("endDate"));
-//                                if ((Integer.parseInt(parsedStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsedStringEndDate) >= Integer.parseInt(todayCal))) {
-//                                    Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getLong("startDate"), snap.getLong("endDate"), snap.getString("location"), snap.getString("keyValue"));
-//                                    toReturn.add(toAdd);
-//                                }
+                                if (today >= snap.getLong("startDateStamp")) {
+                                    Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getLong("startDateStamp"), snap.getLong("endDateStamp"), snap.getString("location"), snap.getLong("id"));
+                                    toReturn.add(toAdd);
+                                }
                             }
                             callback.onComplete(new Result.Success<List<Worksite>>(toReturn));
                         } else {
@@ -118,18 +116,6 @@ public class FirebaseDataSource implements DataSource {
                     }
                 });
     }
-
-//    public String parseDate(String date) {
-//        String[] splitDate = date.split("/");
-//        if (splitDate[1].length() < 2) {
-//            splitDate[1] = "0" + splitDate[1];
-//        }
-//        if (splitDate[2].length() < 2) {
-//            splitDate[2] = "0" + splitDate[2];
-//        }
-//        String strDate = String.join("", splitDate);
-//        return strDate;
-//    }
 
     public void uploadFile(File toUpload, String destination, CompletedCallback<Result<Uri>> callback) {
         Log.d("DEBUG:DataSource", "uploadFile: " + toUpload.getName() + " to " + destination);
@@ -194,7 +180,7 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void getUserListByWorksite(String keyValue, ListenerCallback<Result<List<User>>> callback) {
+    public void getUserListByWorksite(long keyValue, ListenerCallback<Result<List<User>>> callback) {
         db.collection("user")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -203,7 +189,7 @@ public class FirebaseDataSource implements DataSource {
                             List<User> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
                             for (DocumentSnapshot snap : snaps) {
-                                if (snap.getString("worksite").equals(keyValue)) {
+                                if (snap.getString("worksite").equals(String.valueOf(keyValue))) {
                                     User toAdd = snap.toObject(User.class);
                                     toReturn.add(toAdd);
                                 }
@@ -349,9 +335,9 @@ public class FirebaseDataSource implements DataSource {
     }
 
     @Override
-    public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback) {
+    public void getWorksiteByKey(long key, CompletedCallback<Result<Worksite>> callback) {
         db.collection("worksite")
-                .whereEqualTo("keyValue", key)
+                .whereEqualTo("id", key)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

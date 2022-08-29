@@ -136,7 +136,7 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
 
     public boolean checkDate(String date){
         try{
-            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyyMdd");
+            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyyMMdd");
             dateFormatParser.setLenient(false);
             dateFormatParser.parse(date);
             return true;
