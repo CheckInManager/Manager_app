@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,13 @@ import android.widget.Toast;
 import com.gausslab.managerapp.R;
 import com.gausslab.managerapp.databinding.FragmentAddnewworksiteformBinding;
 import com.gausslab.managerapp.model.Worksite;
+import com.gausslab.managerapp.util.DateFormatter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddNewWorksiteFormFragment extends Fragment {
     private FragmentAddnewworksiteformBinding binding;
@@ -39,6 +45,8 @@ public class AddNewWorksiteFormFragment extends Fragment {
     private Button bt_add;
 
     private Worksite worksite;
+    private Long longStartDate;
+    private Long longEndDate;
 
     public AddNewWorksiteFormFragment() {
     }
@@ -113,7 +121,16 @@ public class AddNewWorksiteFormFragment extends Fragment {
         DatePickerDialog.OnDateSetListener startDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                String s = "" + year + "/" + (month + 1) + "/" + dayOfMonth;
+                String s = "" + year + "" + (month + 1) + "" + dayOfMonth;
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMdd");
+                ArrayList<String> result = new ArrayList<>();
+                try {
+                    Date date = format.parse(s);
+                    longStartDate = date.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Log.d("DEBUG", "onDateSet: "+DateFormatter.formatTimestampToDate(longStartDate));
                 et_startDate.setText(s);
             }
         };
@@ -121,7 +138,17 @@ public class AddNewWorksiteFormFragment extends Fragment {
         DatePickerDialog.OnDateSetListener endDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                String s = "" + year + "/" + (month + 1) + "/" + dayOfMonth;
+                String s = "" + year + "" + (month + 1) + "" + dayOfMonth;
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMdd");
+                ArrayList<String> result = new ArrayList<>();
+                try {
+                    Date date = format.parse(s);
+                    longEndDate = date.getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                Log.d("DEBUG", "onDateSet: "+DateFormatter.formatTimestampToDate(longEndDate));
                 et_endDate.setText(s);
             }
         };
@@ -155,9 +182,10 @@ public class AddNewWorksiteFormFragment extends Fragment {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (addNewWorksiteFormViewModel.checkDate(et_startDate.getText().toString()) && addNewWorksiteFormViewModel.checkDate(et_endDate.getText().toString())) {
                     if (addNewWorksiteFormViewModel.isDatesValid(et_startDate.getText().toString(), et_endDate.getText().toString())) {
-                        worksite = new Worksite(et_worksiteName.getText().toString(), et_startDate.getText().toString(), et_endDate.getText().toString(), et_location.getText().toString(), null);
+                        worksite = new Worksite(et_worksiteName.getText().toString(), longStartDate, longEndDate, et_location.getText().toString(), null);
                         if (addNewWorksiteFormViewModel.checkSameWorksiteName(et_worksiteName.getText().toString())) {
                             addNewWorksiteFormViewModel.addWorksite(worksite);
                             bt_add.setEnabled(false);

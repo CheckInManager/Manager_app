@@ -31,28 +31,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-enum KeyType
-{
+enum KeyType {
     WORKSITE,
     NOTICE,
     ACCIDENT_HISTORY
 }
 
-public class FirebaseDataSource implements DataSource
-{
+public class FirebaseDataSource implements DataSource {
     private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
-    public void addWorksite(Worksite toAdd, CompletedCallback<Result<String>> callback)
-    {
-        getNewKey(KeyType.WORKSITE, new CompletedCallback<Result<String>>()
-        {
+    public void addWorksite(Worksite toAdd, CompletedCallback<Result<String>> callback) {
+        getNewKey(KeyType.WORKSITE, new CompletedCallback<Result<String>>() {
             @Override
-            public void onComplete(Result<String> result)
-            {
-                if (result instanceof Result.Success)
-                {
+            public void onComplete(Result<String> result) {
+                if (result instanceof Result.Success) {
                     String keyValue = ((Result.Success<String>) result).getData();
                     toAdd.setKeyValue(keyValue);
                     db.collection("worksite")
@@ -65,16 +59,12 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void addOrUpdateUser(User user, CompletedCallback<Result<String>> callback)
-    {
-        if (user.getPhoneNumber().isEmpty())
-        {
+    public void addOrUpdateUser(User user, CompletedCallback<Result<String>> callback) {
+        if (user.getPhoneNumber().isEmpty()) {
             db.collection("user")
                     .document("Guest_" + user.getName())
                     .set(user);
-        }
-        else
-        {
+        } else {
             db.collection("user")
                     .document(user.getPhoneNumber())
                     .set(user);
@@ -83,15 +73,11 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback)
-    {
-        getNewKey(KeyType.ACCIDENT_HISTORY, new CompletedCallback<Result<String>>()
-        {
+    public void addAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
+        getNewKey(KeyType.ACCIDENT_HISTORY, new CompletedCallback<Result<String>>() {
             @Override
-            public void onComplete(Result<String> result)
-            {
-                if (result instanceof Result.Success)
-                {
+            public void onComplete(Result<String> result) {
+                if (result instanceof Result.Success) {
                     String keyValue = ((Result.Success<String>) result).getData();
                     accidentHistory.setKeyValue(keyValue);
                     db.collection("accidenthistory")
@@ -104,107 +90,85 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getTodayWorksiteList(String todayCal, CompletedCallback<Result<List<Worksite>>> callback)
-    {
+    public void getTodayWorksiteList(String todayCal, CompletedCallback<Result<List<Worksite>>> callback) {
+        long today = System.currentTimeMillis();
         db.collection("worksite")
-                .addSnapshotListener(new EventListener<QuerySnapshot>()
-                {
+                .whereGreaterThan("startDateStamp", today)
+                .whereLessThan("endDateStamp",today)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-                    {
-                        if (error == null)
-                        {
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
                             List<Worksite> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (DocumentSnapshot snap : snaps)
-                            {
-                                String parsedStringStartDate = parseDate(snap.getString("startDate"));
-                                String parsedStringEndDate = parseDate(snap.getString("endDate"));
-                                if ((Integer.parseInt(parsedStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsedStringEndDate) >= Integer.parseInt(todayCal)))
-                                {
-                                    Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getString("startDate"), snap.getString("endDate"), snap.getString("location"), snap.getString("keyValue"));
-                                    toReturn.add(toAdd);
-                                }
+                            for (DocumentSnapshot snap : snaps) {
+                                Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getLong("startDateStamp"), snap.getLong("endDateStamp"), snap.getString("location"), snap.getString("keyValue"));
+                                toReturn.add(toAdd);
+//                                String parsedStringStartDate = parseDate(snap.getString("startDate"));
+//                                String parsedStringEndDate = parseDate(snap.getString("endDate"));
+//                                if ((Integer.parseInt(parsedStringStartDate) <= Integer.parseInt(todayCal)) && (Integer.parseInt(parsedStringEndDate) >= Integer.parseInt(todayCal))) {
+//                                    Worksite toAdd = new Worksite((snap.getString("worksiteName")), snap.getLong("startDate"), snap.getLong("endDate"), snap.getString("location"), snap.getString("keyValue"));
+//                                    toReturn.add(toAdd);
+//                                }
                             }
                             callback.onComplete(new Result.Success<List<Worksite>>(toReturn));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onComplete(new Result.Error(new Exception("error")));
                         }
                     }
                 });
     }
 
-    public String parseDate(String date)
-    {
-        String[] splitDate = date.split("/");
-        if (splitDate[1].length() < 2)
-        {
-            splitDate[1] = "0" + splitDate[1];
-        }
-        if (splitDate[2].length() < 2)
-        {
-            splitDate[2] = "0" + splitDate[2];
-        }
-        String strDate = String.join("", splitDate);
-        return strDate;
-    }
+//    public String parseDate(String date) {
+//        String[] splitDate = date.split("/");
+//        if (splitDate[1].length() < 2) {
+//            splitDate[1] = "0" + splitDate[1];
+//        }
+//        if (splitDate[2].length() < 2) {
+//            splitDate[2] = "0" + splitDate[2];
+//        }
+//        String strDate = String.join("", splitDate);
+//        return strDate;
+//    }
 
-    public void uploadFile(File toUpload, String destination, CompletedCallback<Result<Uri>> callback)
-    {
+    public void uploadFile(File toUpload, String destination, CompletedCallback<Result<Uri>> callback) {
         Log.d("DEBUG:DataSource", "uploadFile: " + toUpload.getName() + " to " + destination);
         Uri localFile = Uri.fromFile(toUpload);
         StorageReference storageReference = firebaseStorage.getReference().child(destination);
         UploadTask uploadTask = storageReference.putFile(localFile);
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
-        {
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-            {
-                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>()
-                {
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
-                    public void onComplete(@NonNull Task<Uri> task)
-                    {
-                        if (task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
                             Uri result = task.getResult();
                             callback.onComplete(new Result.Success<Uri>(result));
-                        }
-                        else
-                        {
+                        } else {
 
                         }
                     }
                 });
             }
-        }).addOnFailureListener(new OnFailureListener()
-        {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e)
-            {
+            public void onFailure(@NonNull Exception e) {
                 callback.onComplete(new Result.Error(e));
                 Log.d("DEBUG", "DataSource: storeImage() failed!");
             }
         });
     }
 
-    public void downloadFile(String downloadPath, File localFile, CompletedCallback<Result<File>> callback)
-    {
+    public void downloadFile(String downloadPath, File localFile, CompletedCallback<Result<File>> callback) {
         Log.d("DEBUG:DataSource", "downloadFile: " + downloadPath);
         StorageReference ref = firebaseStorage.getReference().child(downloadPath);
-        ref.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>()
-        {
+        ref.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task)
-            {
-                if (task.isSuccessful())
-                {
+            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()) {
                     callback.onComplete(new Result.Success<File>(localFile));
-                }
-                else
-                {
+                } else {
                     callback.onComplete(new Result.Error(task.getException()));
                 }
             }
@@ -212,23 +176,17 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getWorksiteKeyFromString(String worksiteName, CompletedCallback<Result<String>> callback)
-    {
+    public void getWorksiteKeyFromString(String worksiteName, CompletedCallback<Result<String>> callback) {
         db.collection("worksite")
                 .whereEqualTo("worksiteName", worksiteName)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
                             List<DocumentSnapshot> snaps = task.getResult().getDocuments();
                             callback.onComplete(new Result.Success<String>(snaps.get(0).getString("keyValue")));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onComplete(new Result.Error(new Exception()));
                         }
                     }
@@ -236,30 +194,22 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getUserListByWorksite(String keyValue, ListenerCallback<Result<List<User>>> callback)
-    {
+    public void getUserListByWorksite(String keyValue, ListenerCallback<Result<List<User>>> callback) {
         db.collection("user")
-                .addSnapshotListener(new EventListener<QuerySnapshot>()
-                {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-                    {
-                        if (error == null)
-                        {
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
                             List<User> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (DocumentSnapshot snap : snaps)
-                            {
-                                if (snap.getString("worksite").equals(keyValue))
-                                {
+                            for (DocumentSnapshot snap : snaps) {
+                                if (snap.getString("worksite").equals(keyValue)) {
                                     User toAdd = snap.toObject(User.class);
                                     toReturn.add(toAdd);
                                 }
                             }
                             callback.onUpdate(new Result.Success<List<User>>(toReturn));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onUpdate(new Result.Error(new Exception("error")));
                         }
                     }
@@ -267,23 +217,17 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getUserByPhoneNumber(String phoneNumber, CompletedCallback<Result<User>> callback)
-    {
+    public void getUserByPhoneNumber(String phoneNumber, CompletedCallback<Result<User>> callback) {
         db.collection("user")
                 .whereEqualTo("phoneNumber", phoneNumber)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
                             List<DocumentSnapshot> snaps = task.getResult().getDocuments();
                             callback.onComplete(new Result.Success<User>(snaps.get(0).toObject(User.class)));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onComplete(new Result.Error(new Exception("error")));
                         }
                     }
@@ -291,23 +235,17 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void noPhoneNumberGetUser(String userName, CompletedCallback<Result<User>> callback)
-    {
+    public void noPhoneNumberGetUser(String userName, CompletedCallback<Result<User>> callback) {
         db.collection("user")
                 .whereEqualTo("name", userName)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
                             List<DocumentSnapshot> snaps = task.getResult().getDocuments();
                             callback.onComplete(new Result.Success<User>(snaps.get(0).toObject(User.class)));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onComplete(new Result.Error(new Exception("error")));
                         }
                     }
@@ -315,69 +253,54 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getPhoneNumberList(CompletedCallback<Result<List<String>>> callback)
-    {
+    public void getPhoneNumberList(CompletedCallback<Result<List<String>>> callback) {
         db.collection("user")
                 .get()
                 .addOnCompleteListener(task ->
-                                       {
-                                           if (task.isSuccessful())
-                                           {
-                                               List<String> toReturn = new ArrayList<>();
-                                               List<DocumentSnapshot> snaps = task.getResult().getDocuments();
-                                               for (DocumentSnapshot snap : snaps)
-                                               {
-                                                   toReturn.add(snap.getString("phoneNumber"));
-                                               }
-                                               callback.onComplete(new Result.Success<List<String>>(toReturn));
-                                           }
-                                           callback.onComplete(new Result.Error(new Exception("error")));
-                                       });
+                {
+                    if (task.isSuccessful()) {
+                        List<String> toReturn = new ArrayList<>();
+                        List<DocumentSnapshot> snaps = task.getResult().getDocuments();
+                        for (DocumentSnapshot snap : snaps) {
+                            toReturn.add(snap.getString("phoneNumber"));
+                        }
+                        callback.onComplete(new Result.Success<List<String>>(toReturn));
+                    }
+                    callback.onComplete(new Result.Error(new Exception("error")));
+                });
     }
 
     @Override
-    public void deleteUser(User toRemove, CompletedCallback<Result<String>> callback)
-    {
-        if (toRemove.getPhoneNumber() != null)
-        {
+    public void deleteUser(User toRemove, CompletedCallback<Result<String>> callback) {
+        if (toRemove.getPhoneNumber() != null) {
             db.collection("user")
                     .document(toRemove.getPhoneNumber())
                     .delete()
-                    .addOnSuccessListener(new OnSuccessListener<Void>()
-                    {
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(Void unused)
-                        {
+                        public void onSuccess(Void unused) {
                             callback.onComplete(new Result.Success<String>("Success"));
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener()
-                    {
+                    .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
+                        public void onFailure(@NonNull Exception e) {
                             callback.onComplete(new Result.Error(new Exception("Failed")));
                         }
                     });
-        }
-        else
-        {
+        } else {
             db.collection("user")
                     .document("Guest_" + toRemove.getName())
                     .delete()
-                    .addOnSuccessListener(new OnSuccessListener<Void>()
-                    {
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(Void unused)
-                        {
+                        public void onSuccess(Void unused) {
                             callback.onComplete(new Result.Success<String>("Success"));
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener()
-                    {
+                    .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
+                        public void onFailure(@NonNull Exception e) {
                             callback.onComplete(new Result.Error(new Exception("Failed")));
                         }
                     });
@@ -385,30 +308,22 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getAccidentHistoryByUser(String phoneNumber, ListenerCallback<Result<List<AccidentHistory>>> callback)
-    {
+    public void getAccidentHistoryByUser(String phoneNumber, ListenerCallback<Result<List<AccidentHistory>>> callback) {
         db.collection("accidenthistory")
-                .addSnapshotListener(new EventListener<QuerySnapshot>()
-                {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-                    {
-                        if (error == null)
-                        {
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
                             List<AccidentHistory> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (DocumentSnapshot snap : snaps)
-                            {
+                            for (DocumentSnapshot snap : snaps) {
                                 AccidentHistory toAdd = snap.toObject(AccidentHistory.class);
-                                if (toAdd.getUserPhoneNumber().equals(phoneNumber))
-                                {
+                                if (toAdd.getUserPhoneNumber().equals(phoneNumber)) {
                                     toReturn.add(toAdd);
                                 }
                             }
                             callback.onUpdate(new Result.Success<List<AccidentHistory>>(toReturn));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onUpdate(new Result.Error(new Exception("error")));
                         }
                     }
@@ -416,23 +331,17 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getAccidentHistoryByKey(String key, CompletedCallback<Result<AccidentHistory>> callback)
-    {
+    public void getAccidentHistoryByKey(String key, CompletedCallback<Result<AccidentHistory>> callback) {
         db.collection("accidenthistory")
                 .whereEqualTo("keyValue", key)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
                             AccidentHistory toReturn = task.getResult().getDocuments().get(0).toObject(AccidentHistory.class);
                             callback.onComplete(new Result.Success<AccidentHistory>(toReturn));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onComplete(new Result.Error(task.getException()));
                         }
                     }
@@ -440,23 +349,17 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback)
-    {
+    public void getWorksiteByKey(String key, CompletedCallback<Result<Worksite>> callback) {
         db.collection("worksite")
                 .whereEqualTo("keyValue", key)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
-                        {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
                             Worksite toReturn = task.getResult().getDocuments().get(0).toObject(Worksite.class);
                             callback.onComplete(new Result.Success<Worksite>(toReturn));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onComplete(new Result.Error(task.getException()));
                         }
                     }
@@ -464,51 +367,39 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void deleteAccidentHistory(String keyValue, CompletedCallback<Result<String>> callback)
-    {
+    public void deleteAccidentHistory(String keyValue, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
                 .document(keyValue)
                 .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>()
-                {
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void unused)
-                    {
+                    public void onSuccess(Void unused) {
                         callback.onComplete(new Result.Success<String>("Success"));
                     }
                 })
-                .addOnFailureListener(new OnFailureListener()
-                {
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
+                    public void onFailure(@NonNull Exception e) {
                         callback.onComplete(new Result.Error(new Exception("Failed")));
                     }
                 });
     }
 
     @Override
-    public void getAllWorksite(CompletedCallback<Result<List<Worksite>>> callback)
-    {
+    public void getAllWorksite(CompletedCallback<Result<List<Worksite>>> callback) {
         db.collection("worksite")
-                .addSnapshotListener(new EventListener<QuerySnapshot>()
-                {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-                    {
-                        if (error == null)
-                        {
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
                             List<Worksite> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (DocumentSnapshot snap : snaps)
-                            {
+                            for (DocumentSnapshot snap : snaps) {
                                 Worksite toAdd = snap.toObject(Worksite.class);
                                 toReturn.add(toAdd);
                             }
                             callback.onComplete(new Result.Success<List<Worksite>>(toReturn));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onComplete(new Result.Error(new Exception("error")));
                         }
                     }
@@ -516,8 +407,7 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback)
-    {
+    public void changeAccidentHistory(AccidentHistory accidentHistory, CompletedCallback<Result<String>> callback) {
         db.collection("accidenthistory")
                 .document(accidentHistory.getKeyValue())
                 .set(accidentHistory);
@@ -525,15 +415,11 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void addNotice(Notice notice, CompletedCallback<Result<String>> callback)
-    {
-        getNewKey2(KeyType.NOTICE, new CompletedCallback<Result<Long>>()
-        {
+    public void addNotice(Notice notice, CompletedCallback<Result<String>> callback) {
+        getNewKey2(KeyType.NOTICE, new CompletedCallback<Result<Long>>() {
             @Override
-            public void onComplete(Result<Long> result)
-            {
-                if (result instanceof Result.Success)
-                {
+            public void onComplete(Result<Long> result) {
+                if (result instanceof Result.Success) {
                     long keyValue = ((Result.Success<Long>) result).getData();
                     notice.setId(keyValue);
                     db.collection("notice")
@@ -546,8 +432,7 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void changeNotice(Notice notice, CompletedCallback<Result<String>> callback)
-    {
+    public void changeNotice(Notice notice, CompletedCallback<Result<String>> callback) {
         db.collection("notice")
                 .document(String.valueOf(notice.getId()))
                 .set(notice);
@@ -555,27 +440,20 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getNoticeList(ListenerCallback<Result<List<Notice>>> callback)
-    {
+    public void getNoticeList(ListenerCallback<Result<List<Notice>>> callback) {
         db.collection("notice")
-                .addSnapshotListener(new EventListener<QuerySnapshot>()
-                {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-                    {
-                        if (error == null)
-                        {
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
                             List<Notice> toReturn = new ArrayList<>();
                             List<DocumentSnapshot> snaps = value.getDocuments();
-                            for (DocumentSnapshot snap : snaps)
-                            {
+                            for (DocumentSnapshot snap : snaps) {
                                 Notice toAdd = snap.toObject(Notice.class);
                                 toReturn.add(toAdd);
                             }
                             callback.onUpdate(new Result.Success<List<Notice>>(toReturn));
-                        }
-                        else
-                        {
+                        } else {
                             callback.onUpdate(new Result.Error(new Exception("error")));
                         }
                     }
@@ -583,54 +461,42 @@ public class FirebaseDataSource implements DataSource
     }
 
     @Override
-    public void getNotice(long noticeId, CompletedCallback<Result<Notice>> callback)
-    {
-        db.collection("notice").whereEqualTo("id", noticeId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>()
-        {
+    public void getNotice(long noticeId, CompletedCallback<Result<Notice>> callback) {
+        db.collection("notice").whereEqualTo("id", noticeId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots)
-            {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 callback.onComplete(new Result.Success<Notice>(queryDocumentSnapshots.getDocuments().get(0).toObject(Notice.class)));
             }
-        }).addOnFailureListener(new OnFailureListener()
-        {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e)
-            {
+            public void onFailure(@NonNull Exception e) {
                 callback.onComplete(new Result.Error(new Exception("AHHH")));
             }
         });
     }
 
     @Override
-    public void deleteNotice(Long noticeId, CompletedCallback<Result<String>> callback)
-    {
+    public void deleteNotice(Long noticeId, CompletedCallback<Result<String>> callback) {
         db.collection("notice")
                 .document(String.valueOf(noticeId))
                 .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>()
-                {
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void unused)
-                    {
+                    public void onSuccess(Void unused) {
                         callback.onComplete(new Result.Success<String>("Success"));
                     }
                 })
-                .addOnFailureListener(new OnFailureListener()
-                {
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
+                    public void onFailure(@NonNull Exception e) {
                         callback.onComplete(new Result.Error(new Exception("Failed")));
                     }
                 });
     }
 
-    private void getNewKey(KeyType type, CompletedCallback<Result<String>> callback)
-    {
+    private void getNewKey(KeyType type, CompletedCallback<Result<String>> callback) {
         DocumentReference docRef = null;
-        switch (type)
-        {
+        switch (type) {
             case WORKSITE:
                 docRef = db.collection("worksiteKey").document("worksiteKey");
                 break;
@@ -641,42 +507,33 @@ public class FirebaseDataSource implements DataSource
                 docRef = db.collection("accidenthistorykey").document("accidenthistorykey");
                 break;
         }
-        if (docRef != null)
-        {
+        if (docRef != null) {
             DocumentReference finalDocRef = docRef;
-            db.runTransaction(new Transaction.Function<String>()
-            {
+            db.runTransaction(new Transaction.Function<String>() {
                 @Nullable
                 @Override
-                public String apply(@NonNull Transaction transaction) throws FirebaseFirestoreException
-                {
+                public String apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                     int currKey = transaction.get(finalDocRef).getDouble("key").intValue();
                     transaction.update(finalDocRef, "key", currKey + 1);
                     return "" + currKey;
                 }
-            }).addOnSuccessListener(new OnSuccessListener<String>()
-            {
+            }).addOnSuccessListener(new OnSuccessListener<String>() {
                 @Override
-                public void onSuccess(String key)
-                {
+                public void onSuccess(String key) {
                     callback.onComplete(new Result.Success<String>(key));
                 }
-            }).addOnFailureListener(new OnFailureListener()
-            {
+            }).addOnFailureListener(new OnFailureListener() {
                 @Override
-                public void onFailure(@NonNull Exception e)
-                {
+                public void onFailure(@NonNull Exception e) {
                     callback.onComplete(new Result.Error(e));
                 }
             });
         }
     }
 
-    private void getNewKey2(KeyType type, CompletedCallback<Result<Long>> callback)
-    {
+    private void getNewKey2(KeyType type, CompletedCallback<Result<Long>> callback) {
         DocumentReference docRef = null;
-        switch (type)
-        {
+        switch (type) {
             case WORKSITE:
                 docRef = db.collection("worksiteKey").document("worksiteKey");
                 break;
@@ -687,27 +544,22 @@ public class FirebaseDataSource implements DataSource
                 docRef = db.collection("accidenthistorykey").document("accidenthistorykey");
                 break;
         }
-        if (docRef != null)
-        {
+        if (docRef != null) {
             DocumentReference finalDocRef = docRef;
             db.runTransaction(transaction ->
-                              {
-                                  long currKey = transaction.get(finalDocRef).getLong("key");
-                                  transaction.update(finalDocRef, "key", currKey + 1);
-                                  return currKey;
-                              }).addOnSuccessListener(new OnSuccessListener<Long>()
                     {
+                        long currKey = transaction.get(finalDocRef).getLong("key");
+                        transaction.update(finalDocRef, "key", currKey + 1);
+                        return currKey;
+                    }).addOnSuccessListener(new OnSuccessListener<Long>() {
                         @Override
-                        public void onSuccess(Long key)
-                        {
+                        public void onSuccess(Long key) {
                             callback.onComplete(new Result.Success<Long>(key));
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener()
-                    {
+                    .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
+                        public void onFailure(@NonNull Exception e) {
                             callback.onComplete(new Result.Error(e));
                         }
                     });

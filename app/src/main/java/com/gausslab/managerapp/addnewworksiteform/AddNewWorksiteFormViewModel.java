@@ -105,11 +105,11 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
     }
 
     public boolean isStartDateValid(String startDate) {
-        return !(startDate.length() < 8);
+        return !(startDate.length() < 6);
     }
 
     public boolean isEndDateValid(String endDate) {
-        return !(endDate.length() < 8);
+        return !(endDate.length() < 6);
     }
 
     public boolean isLocationValid(String location) {
@@ -117,20 +117,26 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
     }
 
     public boolean isDatesValid(String startDate, String lastDate) {
-        String[] splitStartDate = startDate.split("/");
-        String[] splitEndDate = lastDate.split("/");
-        String strStartDate = String.join("", splitStartDate);
-        String strEndDate = String.join("", splitEndDate);
-        if (Integer.parseInt(strStartDate) > Integer.parseInt(strEndDate)) {
+//        String[] splitStartDate = startDate.split("/");
+//        String[] splitEndDate = lastDate.split("/");
+//        String strStartDate = String.join("", splitStartDate);
+//        String strEndDate = String.join("", splitEndDate);
+        if (Integer.parseInt(startDate) > Integer.parseInt(lastDate)) {
             return false;
         } else {
             return true;
         }
+
+//        if (Integer.parseInt(strStartDate) > Integer.parseInt(strEndDate)) {
+//            return false;
+//        } else {
+//            return true;
+//        }
     }
 
     public boolean checkDate(String date){
         try{
-            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyyMdd");
             dateFormatParser.setLenient(false);
             dateFormatParser.parse(date);
             return true;
