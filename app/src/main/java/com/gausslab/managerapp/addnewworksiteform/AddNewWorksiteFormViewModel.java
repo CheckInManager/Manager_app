@@ -134,30 +134,31 @@ public class AddNewWorksiteFormViewModel extends ViewModel {
 //        }
     }
 
-    public boolean checkDate(String date){
-        try{
+    public boolean checkDate(String date) {
+        try {
             SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyyMMdd");
             dateFormatParser.setLenient(false);
             dateFormatParser.parse(date);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public void loadAllWorksite(){
-        worksiteRepository.getAllWorksite(result->{
-            allWorksite =((Result.Success<List<Worksite>>)result).getData();
+    public void loadAllWorksite() {
+        worksiteRepository.getAllWorksite(result -> {
+            allWorksite = ((Result.Success<List<Worksite>>) result).getData();
             allWorksiteName = new ArrayList<>();
-            for(int i=0;i<allWorksite.size();i++){
+            for (int i = 0; i < allWorksite.size(); i++) {
                 allWorksiteName.add(allWorksite.get(i).getWorksiteName());
             }
         });
     }
-    public boolean checkSameWorksiteName(String newWorksiteName){
-        if(!allWorksiteName.contains(newWorksiteName)){
+
+    public boolean checkSameWorksiteName(String newWorksiteName) {
+        if (!allWorksiteName.contains(newWorksiteName)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

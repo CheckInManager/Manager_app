@@ -62,15 +62,14 @@ public class Worksite {
     }
 
     @Override
-    public boolean equals(@Nullable Object obj)
-    {
-        if(!(obj instanceof Worksite)){
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof Worksite)) {
             return false;
         }
         Worksite toCompare = (Worksite) obj;
 //        return id.equals(toCompare.id) &&
         return worksiteName.equals(toCompare.worksiteName) &&
-               location.equals(toCompare.location) ;
+                location.equals(toCompare.location);
 //               startDateStamp.equals(toCompare.startDateStamp) &&
 //               endDateStamp.equals(toCompare.endDateStamp);
     }

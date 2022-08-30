@@ -90,24 +90,6 @@ public class AddNewNoticeFormFragment extends Fragment {
                 }
             }
         });
-
-//        addNewNoticeFormViewModel.isChangedSpinnerString().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean isChanged) {
-//                if(isChanged){
-//                    if (et_noticeName.getText().toString().length() < 1) {
-//                        Toast.makeText(requireContext(), R.string.toast_noticeNameEmpty, Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//                        long mNow = System.currentTimeMillis();
-//                        Date mDate = new Date(mNow);
-//                        Notice notice = new Notice(et_noticeName.getText().toString(), et_memo.getText().toString(), addNewNoticeFormViewModel.getWorksiteKeyValue(),
-//                                mFormat.format(mDate), null,sp_worksiteName.getSelectedItem().toString());
-//                        addNewNoticeFormViewModel.addNotice(notice);
-//                    }
-//                }
-//            }
-//        });
         //endregion
 
         //region Listener
@@ -115,7 +97,7 @@ public class AddNewNoticeFormFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Worksite selectedWorksite = addNewNoticeFormViewModel.getOpenWorksite().get(sp_worksiteName.getSelectedItemPosition());
-                addNewNoticeFormViewModel.addNotice(new Notice(0, et_noticeName.getText().toString(), et_memo.getText().toString(), selectedWorksite, 0,selectedWorksite.getId()));
+                addNewNoticeFormViewModel.addNotice(new Notice(0, et_noticeName.getText().toString(), et_memo.getText().toString(), selectedWorksite, 0, selectedWorksite.getId()));
                 bt_add.setEnabled(false);
             }
         });

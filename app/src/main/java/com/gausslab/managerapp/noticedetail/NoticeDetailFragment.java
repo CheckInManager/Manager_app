@@ -24,8 +24,7 @@ import com.gausslab.managerapp.model.Worksite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoticeDetailFragment extends Fragment
-{
+public class NoticeDetailFragment extends Fragment {
     private FragmentNoticedetailBinding binding;
     private NoticeDetailViewModel noticeDetailViewModel;
 
@@ -34,13 +33,11 @@ public class NoticeDetailFragment extends Fragment
     private Spinner sp_worksiteName;
     private Button bt_ok;
 
-    public NoticeDetailFragment()
-    {
+    public NoticeDetailFragment() {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         noticeDetailViewModel = new ViewModelProvider(this).get(NoticeDetailViewModel.class);
         long loadedKeyValue = NoticeDetailFragmentArgs.fromBundle(getArguments()).getKeyValue();
@@ -49,8 +46,7 @@ public class NoticeDetailFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         binding = FragmentNoticedetailBinding.inflate(inflater, container, false);
         et_noticeName = binding.noticedetailEtNoticeName;
         et_memo = binding.noticedetailEtMemo;
@@ -62,17 +58,13 @@ public class NoticeDetailFragment extends Fragment
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //region Observer
-        noticeDetailViewModel.isDataLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>()
-        {
+        noticeDetailViewModel.isDataLoaded().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isLoaded)
-            {
-                if (isLoaded)
-                {
+            public void onChanged(Boolean isLoaded) {
+                if (isLoaded) {
                     Notice currNotice = noticeDetailViewModel.getCurrNotice();
                     et_noticeName.setText(currNotice.getTitle());
                     et_memo.setText(currNotice.getContent());
@@ -85,11 +77,9 @@ public class NoticeDetailFragment extends Fragment
             }
         });
 
-        noticeDetailViewModel.isWorksiteUpdated().observe(getViewLifecycleOwner(), new Observer<Boolean>()
-        {
+        noticeDetailViewModel.isWorksiteUpdated().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isUpdated)
-            {
+            public void onChanged(Boolean isUpdated) {
                 if (isUpdated)
                     NavHostFragment.findNavController(NoticeDetailFragment.this).navigate(R.id.action_noticeDetailFragment_to_noticeFragment);
             }
@@ -97,11 +87,9 @@ public class NoticeDetailFragment extends Fragment
         //endregion
 
         //region Listener
-        bt_ok.setOnClickListener(new View.OnClickListener()
-        {
+        bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 int selectedIndex = sp_worksiteName.getSelectedItemPosition();
                 Worksite selectedWorksite = noticeDetailViewModel.getWorksiteList().get(selectedIndex);
                 noticeDetailViewModel.updateNotice(et_noticeName.getText().toString(), et_memo.getText().toString(), selectedWorksite);
@@ -111,12 +99,11 @@ public class NoticeDetailFragment extends Fragment
         //endregion
     }
 
-    private void setupAdapter(){
+    private void setupAdapter() {
         Notice currNotice = noticeDetailViewModel.getCurrNotice();
         List<Worksite> worksiteList = noticeDetailViewModel.getWorksiteList();
         List<String> worksiteNameList = new ArrayList<>();
-        for (Worksite worksite : worksiteList)
-        {
+        for (Worksite worksite : worksiteList) {
             worksiteNameList.add(worksite.getWorksiteName());
         }
         sp_worksiteName.setAdapter(new ArrayAdapter<String>(requireContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, worksiteNameList));

@@ -122,12 +122,12 @@ public class AddNewWorksiteFormFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 String strMonth;
-                if(String.valueOf(month+1).length()<2){
-                    strMonth = "0"+(month+1);
-                }else{
-                    strMonth =""+(month+1);
+                if (String.valueOf(month + 1).length() < 2) {
+                    strMonth = "0" + (month + 1);
+                } else {
+                    strMonth = "" + (month + 1);
                 }
-                String s = "" + year + "" + strMonth+ "" + dayOfMonth;
+                String s = "" + year + "" + strMonth + "" + dayOfMonth;
                 SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
                 ArrayList<String> result = new ArrayList<>();
                 try {
@@ -136,7 +136,6 @@ public class AddNewWorksiteFormFragment extends Fragment {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                Log.d("DEBUG", "onDateSet: "+DateFormatter.formatTimestampToDate(longStartDate));
                 et_startDate.setText(s);
             }
         };
@@ -145,10 +144,10 @@ public class AddNewWorksiteFormFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 String strMonth;
-                if(String.valueOf(month+1).length()<2){
-                    strMonth = "0"+(month+1);
-                }else{
-                    strMonth =""+(month+1);
+                if (String.valueOf(month + 1).length() < 2) {
+                    strMonth = "0" + (month + 1);
+                } else {
+                    strMonth = "" + (month + 1);
                 }
                 String s = "" + year + "" + strMonth + "" + dayOfMonth;
                 SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -159,8 +158,6 @@ public class AddNewWorksiteFormFragment extends Fragment {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-                Log.d("DEBUG", "onDateSet: "+DateFormatter.formatTimestampToDate(longEndDate));
                 et_endDate.setText(s);
             }
         };
@@ -204,7 +201,7 @@ public class AddNewWorksiteFormFragment extends Fragment {
                         } else {
                             showDialog();
                         }
-                    }else {
+                    } else {
                         Toast.makeText(requireContext(), R.string.toast_dateWrong, Toast.LENGTH_SHORT).show();
                     }
                 } else {

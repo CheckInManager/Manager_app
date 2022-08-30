@@ -22,7 +22,6 @@ public class AddWorkerViewModel extends ViewModel {
     private final UserRepository userRepository = UserRepository.getInstance();
     private final WorksiteRepository worksiteRepository = WorksiteRepository.getInstance();
     private MutableLiveData<Boolean> openWorksiteListLoaded = new MutableLiveData<>(false);
-    private final MutableLiveData<Boolean> changedSpinnerStringLoaded = new MutableLiveData<>(false);
     private List<String> phoneNumberList = new ArrayList<>();
     private List<Worksite> worksiteList = new ArrayList<>();
     private String worksiteKeyValue;
@@ -103,30 +102,11 @@ public class AddWorkerViewModel extends ViewModel {
         });
     }
 
-    public void changeSpinnerStringToKeyValue(String worksiteName) {
-        worksiteRepository.changeSpinnerStringToKeyValue(worksiteName, result -> {
-            if (result instanceof Result.Success) {
-                worksiteKeyValue = ((Result.Success<String>) result).getData();
-                changedSpinnerStringLoaded.postValue(true);
-            } else {
-                changedSpinnerStringLoaded.postValue(false);
-            }
-        });
-    }
-
-    public String getWorksiteKeyValue() {
-        return worksiteKeyValue;
-    }
-
     public List<Worksite> getOpenWorksite() {
         return worksiteList;
     }
 
     public LiveData<Boolean> openWorksiteListLoaded() {
         return openWorksiteListLoaded;
-    }
-
-    public LiveData<Boolean> isChangedSpinnerString() {
-        return changedSpinnerStringLoaded;
     }
 }

@@ -16,70 +16,58 @@ import com.gausslab.managerapp.util.DateFormatter;
 
 import java.util.List;
 
-public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecyclerViewAdapter.ViewHolder>
-{
+public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecyclerViewAdapter.ViewHolder> {
     private List<Notice> noticeList;
     private OnNoticeInteractionListener listener;
 
-    public NoticeRecyclerViewAdapter(List<Notice> items, OnNoticeInteractionListener clickListener)
-    {
+    public NoticeRecyclerViewAdapter(List<Notice> items, OnNoticeInteractionListener clickListener) {
         noticeList = items;
         listener = clickListener;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(ObjectNoticeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Notice currNotice = noticeList.get(position);
         holder.tv_noticeName.setText(currNotice.getTitle());
         holder.tv_worksiteName.setText(currNotice.getWorksite().getWorksiteName());
         holder.tv_time.setText(DateFormatter.formatTimestampToDate(currNotice.getTimestamp()));
-        holder.bt_delete.setOnClickListener(new View.OnClickListener()
-        {
+        holder.bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 listener.onDelete(currNotice);
             }
         });
-        holder.cv_card.setOnClickListener(new View.OnClickListener()
-        {
+        holder.cv_card.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 listener.onClick(noticeList.get(holder.getAdapterPosition()));
             }
         });
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return noticeList.size();
     }
 
-    public void setNoticeList(List<Notice> newNoticeList)
-    {
+    public void setNoticeList(List<Notice> newNoticeList) {
         noticeList = newNoticeList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final CardView cv_card;
         public final TextView tv_noticeName;
         public final TextView tv_worksiteName;
         public final Button bt_delete;
         public final TextView tv_time;
 
-        public ViewHolder(ObjectNoticeBinding binding)
-        {
+        public ViewHolder(ObjectNoticeBinding binding) {
             super(binding.getRoot());
             cv_card = binding.objNoticeCard;
             tv_noticeName = binding.objNoticeTvNoticeName;
@@ -89,8 +77,7 @@ public class NoticeRecyclerViewAdapter extends RecyclerView.Adapter<NoticeRecycl
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return super.toString() + "";
         }
     }

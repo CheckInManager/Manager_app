@@ -134,7 +134,6 @@ public class WorksiteRepository {
     }
 
 
-
     public void registerNoticeListListener() {
         dataSource.getNoticeList(new ListenerCallback<Result<List<Notice>>>() {
             @Override
@@ -171,7 +170,7 @@ public class WorksiteRepository {
         return noticeList;
     }
 
-    public void getNotice(long noticeId, CompletedCallback<Result<Notice>> callback){
+    public void getNotice(long noticeId, CompletedCallback<Result<Notice>> callback) {
         dataSource.getNotice(noticeId, callback);
     }
 

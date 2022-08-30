@@ -51,7 +51,6 @@ public class CheckedInWorkersBySiteRecyclerViewAdapter extends RecyclerView.Adap
                 listener.onClick(userList.get(holder.getAdapterPosition()));
             }
         });
-
     }
 
     @Override

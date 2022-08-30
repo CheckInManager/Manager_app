@@ -11,7 +11,7 @@ public class AccidentHistory {
     public AccidentHistory() {
     }
 
-    public AccidentHistory(String description, String place, String date, String time, String userPhoneNumber,String keyValue) {
+    public AccidentHistory(String description, String place, String date, String time, String userPhoneNumber, String keyValue) {
         this.description = description;
         this.place = place;
         this.date = date;

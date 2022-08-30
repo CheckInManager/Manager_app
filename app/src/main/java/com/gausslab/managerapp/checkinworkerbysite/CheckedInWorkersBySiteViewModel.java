@@ -82,11 +82,11 @@ public class CheckedInWorkersBySiteViewModel extends ViewModel {
         return userList;
     }
 
-    public void deleteUser(User toRemove){
-        userRepository.deleteUser(toRemove, result->{
-           if(result instanceof Result.Success){
+    public void deleteUser(User toRemove) {
+        userRepository.deleteUser(toRemove, result -> {
+            if (result instanceof Result.Success) {
 
-           }
+            }
         });
     }
 
