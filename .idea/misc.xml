@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/layout/fragment_todayworksite_list.xml" value="0.34375" />
         <entry key="app/src/main/res/layout/fragment_workerinformation.xml" value="0.34375" />
         <entry key="app/src/main/res/layout/object_checkedinworkersbysite.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/object_notice.xml" value="0.2105978260869565" />
         <entry key="app/src/main/res/layout/object_todayworksite.xml" value="0.48854166666666665" />
         <entry key="app/src/main/res/layout/object_workeraccidenthistorys.xml" value="0.4875" />
       </map>

@@ -115,7 +115,7 @@ public class AddNewNoticeFormFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Worksite selectedWorksite = addNewNoticeFormViewModel.getOpenWorksite().get(sp_worksiteName.getSelectedItemPosition());
-                addNewNoticeFormViewModel.addNotice(new Notice(0, et_noticeName.getText().toString(), et_memo.getText().toString(), selectedWorksite, 0));
+                addNewNoticeFormViewModel.addNotice(new Notice(0, et_noticeName.getText().toString(), et_memo.getText().toString(), selectedWorksite, 0,selectedWorksite.getId()));
                 bt_add.setEnabled(false);
             }
         });

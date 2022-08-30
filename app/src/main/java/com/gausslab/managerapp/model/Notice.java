@@ -7,18 +7,20 @@ public class Notice
     private String content;
     private Worksite worksite;
     private long timestamp;
+    private long worksiteId;
 
     public Notice()
     {
     }
 
-    public Notice(long id, String title, String content, Worksite worksite, long timestamp)
+    public Notice(long id, String title, String content, Worksite worksite, long timestamp,long worksiteId)
     {
         this.id = id;
         this.title = title;
         this.content = content;
         this.worksite = worksite;
         this.timestamp = timestamp;
+        this.worksiteId = worksiteId;
     }
 
     public long getId()
@@ -69,5 +71,13 @@ public class Notice
     public void setTimestamp(long timestamp)
     {
         this.timestamp = timestamp;
+    }
+
+    public long getWorksiteId() {
+        return worksiteId;
+    }
+
+    public void setWorksiteId(long worksiteId) {
+        this.worksiteId = worksiteId;
     }
 }
